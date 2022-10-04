@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server/index.js",
     "webpack": "webpack --mode development --watch"
   },
   "repository": {
@@ -21,6 +22,7 @@
     "axios": "^0.27.2",
     "dotenv": "^16.0.3",
     "express": "^4.18.1",
+    "express-static-gzip": "^2.1.7",
     "jquery": "^3.6.1",
     "nodemon": "^2.0.20",
     "pg": "^8.8.0",
