@@ -28,4 +28,5 @@ jobs:
         cache: 'npm'
     - run: npm install
     - run: npm run webpack_CI
+    - run: pm2 restart index
 #     - run: npm test
