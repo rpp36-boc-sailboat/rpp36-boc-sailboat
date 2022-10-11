@@ -4,9 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest --coverage",
     "start": "nodemon server/index.js",
-    "webpack": "webpack --mode development --watch"
+    "webpack": "webpack --mode development -w",
+    "webpack_CI": "webpack --mode development"
   },
   "repository": {
     "type": "git",
@@ -20,6 +21,7 @@
   "homepage": "https://github.com/rpp36-boc-sailboat/rpp36-boc-sailboat#readme",
   "dependencies": {
     "axios": "^0.27.2",
+    "chart.js": "^3.9.1",
     "dotenv": "^16.0.3",
     "express": "^4.18.1",
     "express-static-gzip": "^2.1.7",
@@ -27,7 +29,9 @@
     "nodemon": "^2.0.20",
     "pg": "^8.8.0",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-chartjs-2": "^4.3.1",
+    "react-dom": "^18.2.0",
+    "supertest": "^6.3.0"
   },
   "devDependencies": {
     "@babel/core": "^7.19.3",

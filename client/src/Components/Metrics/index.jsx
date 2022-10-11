@@ -1,9 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import axios from "axios";
-import Metrics from "./Components/Metrics/index.jsx";
+import { TestChart } from "./chart1.jsx";
 
-class App extends React.Component {
+class Metrics extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -14,13 +14,12 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <div>Encompass</div>
-        <Metrics />
+        <li>Time frame</li>
+        <li>Categories</li>
+        <TestChart />
       </div>
     );
   }
 }
 
-ReactDOM.createRoot(document.getElementById("app")).render(<App />);
-
-export default App;
+export default Metrics;
