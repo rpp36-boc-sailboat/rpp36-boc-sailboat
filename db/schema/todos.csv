@@ -1,0 +1,9 @@
+todo_id,user_id,task,description,category_id,start_time,end_time,completed,appointment
+1,6,Call Lauren,,11,2022-10-12 22:00,2022-10-12 22:30,TRUE,FALSE
+2,6,Call Mom,,11,2022-10-15 15:30,2022-10-15 16:00,FALSE,FALSE
+3,6,Read a technical book,Learn about password security,9,,,FALSE,FALSE
+4,6,Read a novel,Find something fun,10,,,FALSE,FALSE
+5,6,Mow the lawn,,8,,,TRUE,FALSE
+6,6,Winterize the sprinklers,,8,2022-10-14 13:00,2022-10-14 14:00,FALSE,TRUE
+7,6,Book a Tee Time,"Four people, CGC, Friday 8am",6,,,FALSE,FALSE
+8,6,Workout,Go to the gym!,10,2022-10-16 9:00,2022-10-16 11:00,FALSE,FALSE
