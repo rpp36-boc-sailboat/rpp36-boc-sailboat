@@ -5,8 +5,8 @@ import SignIn from "./Components/Accounts/SignIn.jsx";
 import SignUp from "./Components/Accounts/SignUp.jsx";
 import Metrics from "./Components/Metrics/index.jsx";
 import Calendar from "./Components/Calendar.jsx";
-// import TodoCreate from './components/TodoCreate.jsx';
-// import CategoryCreate from './components/CategoryCreate.jsx';
+import TodoCreate from './components/Forms/TodoCreate.jsx';
+import CategoryCreate from './components/Forms/CategoryCreate.jsx';
 
 class App extends React.Component {
   constructor(props) {

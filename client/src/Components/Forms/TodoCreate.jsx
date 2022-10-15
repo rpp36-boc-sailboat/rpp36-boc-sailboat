@@ -66,9 +66,9 @@ const TodoCreate = (props) => {
         onBlur={formik.handleBlur}
         style={{ display: "block" }}
       >
-        {props.categories.map(option => {
+        {props.categories.map((option, i) => {
           return (
-            <option value={option.value} label={option.key} />
+            <option value={option.value} label={option.key} key={i}/>
           )
         })}
     </select>
