@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import axios from "axios";
 import Metrics from "./Components/Metrics/index.jsx";
+import Calendar from "./Components/Calendar.jsx";
 
 class App extends React.Component {
   constructor(props) {
@@ -16,6 +17,7 @@ class App extends React.Component {
       <div>
         <div>Encompass</div>
         <Metrics />
+        <Calendar />
       </div>
     );
   }
