@@ -7,6 +7,7 @@ const TodoCreate = (props) => {
 
   const formik = useFormik({
     initialValues: {
+      userID: props.userID,
       taskName: '',
       start: '',
       end: '',

@@ -12,7 +12,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      test: 1,
+      userID: 1,
       categories: [
         {key: 'None', value: 0},
         {key: 'Option 1', value: 1},
@@ -27,7 +27,11 @@ class App extends React.Component {
 
   componentDidMount() {
     let categories = [];
-    axios.get('/categories')
+    axios.get('/categories', {
+      params: {
+        id: this.state.userID
+      }
+    })
     .then(result => result.data.map((option, i) => {
       return categories.push({key: option.category, value: option.category_id})
     }))
@@ -44,9 +48,9 @@ class App extends React.Component {
         <Metrics />
         <Calendar />
         <h1>THIS CREATES A TODO ENTRY</h1>
-        <TodoCreate categories={this.state.categories}/>
+        <TodoCreate userID={this.state.userID} categories={this.state.categories}/>
         <h1>THIS CREATES A CATEGORY</h1>
-        <CategoryCreate />
+        <CategoryCreate userID={this.state.userID}/>
       </div>
     );
   }

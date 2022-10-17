@@ -20,7 +20,7 @@ app.post('/category', function(req, res) {
 })
 
 app.get('/categories', function(req, res) {
-  db.getCategories()
+  db.getCategories(req.query.id)
   .then(result => res.send(result))
 })
 
