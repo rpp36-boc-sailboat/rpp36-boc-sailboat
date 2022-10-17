@@ -10,7 +10,7 @@ const TodoCreate = (props) => {
       taskName: '',
       start: '',
       end: '',
-      category: 'none',
+      category: 0,
       description: '',
       completed: false,
       appointment: false
