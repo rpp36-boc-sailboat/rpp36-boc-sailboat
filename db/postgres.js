@@ -48,8 +48,30 @@ const createTodo = function(todo) {
   })
 }
 
+const createCategory = function(category) {
+  console.log('THIS IS THE DATABASE: ', category);
+  return pool
+  .connect()
+  .then(client => {
+    return client
+      .query(`
+      INSERT INTO categories (category, color)
+      VALUES ('${category.category}', '${category.color}')
+      `)
+      .then(res => {
+        client.release();
+        return res.rows;
+      })
+      .catch(err => {
+        client.release();
+        console.log(err.stack);
+      })
+  })
+}
+
 module.exports = {
   pool,
   getTodos,
-  createTodo
+  createTodo,
+  createCategory
 };

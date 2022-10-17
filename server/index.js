@@ -15,8 +15,8 @@ app.post('/todo', function(req, res) {
 })
 
 app.post('/category', function(req, res) {
-  console.log(req.body)
-  res.sendStatus(200)
+  db.createCategory(req.body)
+  .then(result => res.send(result))
 })
 
 app.get("/test", (req, res) => {
