@@ -14,13 +14,13 @@ class App extends React.Component {
     this.state = {
       test: 1,
       categories: [
-        {key: 'None', value: 'none'},
-        {key: 'Option 1', value: 'option1'},
-        {key: 'Option 2', value: 'option2'},
-        {key: 'Option 3', value: 'option3'},
-        {key: 'Option 4', value: 'option4'},
-        {key: 'Option 5', value: 'option5'},
-        {key: 'Other', value: 'other'}
+        {key: 'None', value: 0},
+        {key: 'Option 1', value: 1},
+        {key: 'Option 2', value: 2},
+        {key: 'Option 3', value: 3},
+        {key: 'Option 4', value: 4},
+        {key: 'Option 5', value: 5},
+        {key: 'Other', value: 6}
       ]
     };
   }
