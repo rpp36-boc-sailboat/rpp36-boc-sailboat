@@ -25,6 +25,17 @@ class App extends React.Component {
     };
   }
 
+  componentDidMount() {
+    let categories = [];
+    axios.get('/categories')
+    .then(result => result.data.map((option, i) => {
+      return categories.push({key: option.category, value: option.category_id})
+    }))
+    .then(this.setState({
+      categories: categories
+    }))
+  }
+
   render() {
     return (
       <div>

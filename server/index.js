@@ -19,6 +19,11 @@ app.post('/category', function(req, res) {
   .then(result => res.send(result))
 })
 
+app.get('/categories', function(req, res) {
+  db.getCategories()
+  .then(result => res.send(result))
+})
+
 app.get("/test", (req, res) => {
   // res.send("Greetings!");
   res.status(200);
