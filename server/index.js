@@ -2,20 +2,45 @@ const express = require("express");
 const axios = require("axios");
 const app = express();
 const port = 3000;
+const db = require("./report.js");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
 app.use(express.static("client/public"));
 
-app.get("/test", (req, res) => {
-  // res.send("Greetings!");
-  res.status(200);
-  res.end();
+app.get("/categories", (req, res) => {
+  db.findAllCategories((err, result) => {
+    if (err) {
+      res.status(500).send(err).end();
+    } else {
+      res.status(200).json({ results: result });
+    }
+  });
+});
+
+app.get("/allTodos", (req, res) => {
+  db.findAllToDos((err, result) => {
+    if (err) {
+      res.status(500).send(err).end();
+    } else {
+      res.status(200).json({ results: result });
+    }
+  });
+});
+
+app.get("/allTodos_TR", (req, res) => {
+  // console.log("ggg", req.query.timeRange);
+  db.findAllToDos_TR(req.query.timeRange, (err, result) => {
+    if (err) {
+      res.status(500).send(err).end();
+    } else {
+      res.status(200).json({ results: result });
+    }
+  });
 });
 
 app.listen(port, () => {
-console.log("listening on port: ", port);
+  console.log("listening on port: ", port);
 });
 
 module.exports = app;

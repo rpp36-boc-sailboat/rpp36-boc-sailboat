@@ -10,6 +10,7 @@ CREATE DATABASE encompass;
 
 CREATE EXTENSION citext;
 
+drop table if exists users cascade;
 CREATE TABLE users (
   user_id SERIAL,
   firstName TEXT NOT NULL,
@@ -25,6 +26,7 @@ CREATE TABLE users (
     CHECK(char_length(lastName) <= 20)
 );
 
+drop table if exists categories cascade;
 CREATE TABLE categories (
   category_id SERIAL,
   category CITEXT,
@@ -41,6 +43,7 @@ CREATE TABLE categories (
   UNIQUE (user_id, color)
 );
 
+drop table if exists todos cascade;
 CREATE TABLE todos (
   todo_id SERIAL,
   user_id INT,
