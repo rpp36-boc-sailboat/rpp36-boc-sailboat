@@ -1,5 +1,6 @@
 const express = require("express");
 const axios = require("axios");
+const db = require("../db/postgres.js");
 const app = express();
 const port = 3000;
 
@@ -7,6 +8,21 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(express.static("client/public"));
+
+app.post('/todo', function(req, res) {
+  db.createTodo(req.body)
+  .then(result => res.send(result))
+})
+
+app.post('/category', function(req, res) {
+  db.createCategory(req.body)
+  .then(result => res.send(result))
+})
+
+app.get('/categories', function(req, res) {
+  db.getCategories(req.query.id)
+  .then(result => res.send(result))
+})
 
 app.get("/test", (req, res) => {
   // res.send("Greetings!");
