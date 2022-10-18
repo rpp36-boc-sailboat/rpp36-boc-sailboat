@@ -5,6 +5,7 @@ import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
 import AddEventModal from './Appointments/AppointmentModal.jsx'
+import BookAptModal from './Appointments/BookAptModal.jsx'
 
 class CalendarClass extends React.Component {
   constructor(props) {
@@ -13,11 +14,12 @@ class CalendarClass extends React.Component {
       weekendsVisible: true,
       currentEvents: [],
       modalOpen: false,
+      bookOpen: false,
     }
     this.addEvents = this.addEvents.bind(this);
     this.onEventAdded.bind(this);
     this.closeModal.bind(this);
-    // const [modalOpen, setModalOpen] = false;
+    this.handleEventClick.bind(this);
     this.calendarRef = React.createRef(null);
   }
 
@@ -39,7 +41,16 @@ class CalendarClass extends React.Component {
   }
 
   closeModal() {
-    this.setState({modalOpen: false});
+    this.setState({modalOpen: false, bookOpen: false});
+  }
+
+  handleEventClick(e) {
+    this.setState({bookOpen: true});
+    // if (confirm(`Would you like to book the appointment: ${e.event.title} \nat ${e.event.start} - ${e.event.end}`)) {
+    //   console.log('add to-do for user: ', this.props.userID, ' and user of calendar');
+    //   // alter db before removing
+    //   e.event.remove();
+    // }
   }
 
   render() {
@@ -61,8 +72,10 @@ class CalendarClass extends React.Component {
           dayMaxEvents={true}
           weekends={true}
           events={this.props.events}
+          eventClick={this.handleEventClick.bind(this)}
         />
         <AddEventModal isOpen={this.state.modalOpen} onClose={this.closeModal.bind(this)} onEventAdded={e => this.onEventAdded(e)} />
+        <BookAptModal isOpen={this.state.bookOpen} onClose={this.closeModal.bind(this)} />
       </React.Fragment>
     );
   }

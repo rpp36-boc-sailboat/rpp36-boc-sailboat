@@ -51,7 +51,7 @@ class App extends React.Component {
         <div>Encompass</div>
         <SignUp />
         <Metrics />
-        <CalendarClass events={this.state.currentEvents}/>
+        <CalendarClass events={this.state.currentEvents} userID={this.state.userID}/>
         <h1>THIS CREATES A TODO ENTRY</h1>
         <TodoCreate userID={this.state.userID} categories={this.state.categories}/>
         <h1>THIS CREATES A CATEGORY</h1>
