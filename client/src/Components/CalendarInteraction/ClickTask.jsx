@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 
 class ClickTask extends React.Component {
   constructor(props); {
@@ -6,6 +7,29 @@ class ClickTask extends React.Component {
   }
 
   // increase z-index
+
+  handleEdit() {
+    // click initilizes the view and ability to edit the todo, after edit is done send put request to server to update the database
+  }
+
+  handleSharing() {
+    //handle sharing, other component
+  }
+
+  deleteTask() {
+    // current axios delete should be server? this one should just carry the todo_id and send it to an endpoint
+    axios.delete(`http://localhost:3000/${todo_id}`)
+    .then(res => {
+      console.log(res.data);
+    })
+    .catch((error) => {
+      console.log(error);
+    })
+  }
+
+  backToMain() {
+    //have a modal or some sort of different render based on boolean and just switch it back to original view
+  }
 
   render() {
     return (
