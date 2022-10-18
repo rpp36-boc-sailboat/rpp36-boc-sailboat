@@ -4,7 +4,7 @@ import axios from "axios";
 import SignIn from "./Components/Accounts/SignIn.jsx";
 import SignUp from "./Components/Accounts/SignUp.jsx";
 import Metrics from "./Components/Metrics/index.jsx";
-import Calendar from "./Components/Calendar.jsx";
+import CalendarClass from "./Components/Calendar.jsx";
 import TodoCreate from './Components/Forms/TodoCreate.jsx';
 import CategoryCreate from './Components/Forms/CategoryCreate.jsx';
 
@@ -21,7 +21,8 @@ class App extends React.Component {
         {key: 'Option 4', value: 4},
         {key: 'Option 5', value: 5},
         {key: 'Other', value: 6}
-      ]
+      ],
+      currentEvents: [{title: 'newEvent', date: '2022-10-17'}]
     };
   }
 
@@ -47,7 +48,7 @@ class App extends React.Component {
         <SignIn />
         <SignUp />
         <Metrics />
-        <Calendar />
+        <CalendarClass events={this.state.currentEvents}/>
         <h1>THIS CREATES A TODO ENTRY</h1>
         <TodoCreate userID={this.state.userID} categories={this.state.categories}/>
         <h1>THIS CREATES A CATEGORY</h1>
