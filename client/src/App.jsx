@@ -7,6 +7,10 @@ import Metrics from "./Components/Metrics/index.jsx";
 import CalendarClass from "./Components/Calendar.jsx";
 import TodoCreate from './Components/Forms/TodoCreate.jsx';
 import CategoryCreate from './Components/Forms/CategoryCreate.jsx';
+import Modal from 'react-modal';
+
+Modal.setAppElement('#app');
+
 
 class App extends React.Component {
   constructor(props) {
@@ -28,17 +32,17 @@ class App extends React.Component {
 
   componentDidMount() {
     let categories = [];
-    axios.get('/categories', {
-      params: {
-        id: this.state.userID
-      }
-    })
-    .then(result => result.data.map((option, i) => {
-      return categories.push({key: option.category, value: option.category_id})
-    }))
-    .then(this.setState({
-      categories: categories
-    }))
+    // axios.get('/categories', {
+    //   params: {
+    //     id: this.state.userID
+    //   }
+    // })
+    // .then(result => result.data.map((option, i) => {
+    //   return categories.push({key: option.category, value: option.category_id})
+    // }))
+    // .then(this.setState({
+    //   categories: categories
+    // }))
   }
 
   render() {
