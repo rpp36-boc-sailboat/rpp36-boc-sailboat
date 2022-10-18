@@ -49,6 +49,7 @@ class App extends React.Component {
     return (
       <div>
         <div>Encompass</div>
+        <SignIn />
         <SignUp />
         <Metrics />
         <CalendarClass events={this.state.currentEvents}/>
