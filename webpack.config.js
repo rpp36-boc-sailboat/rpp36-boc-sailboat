@@ -1,7 +1,8 @@
-var path = require("path");
-var SRC_DIR = path.join(__dirname, "/client/src");
-var DIST_DIR = path.join(__dirname, "/client/public");
+var path = require('path');
+var SRC_DIR = path.join(__dirname, '/client/src');
+var DIST_DIR = path.join(__dirname, '/client/public');
 // const CompressionPlugin = require('compression-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
   // mode: 'development',
@@ -28,14 +29,18 @@ module.exports = {
           loader: "url-loader?limit=100000",
         },
       },
+      {
+        test: /\.css$/,
+        use: [
+          { loader: MiniCssExtractPlugin.loader },
+          { loader: 'css-loader', options: { importLoaders: 1 } }
+        ]
+      }
     ],
   },
-  // plugins: [
-  //   new CompressionPlugin(
-  //     {
-  //       deleteOriginalAssets: true,
-  //     }
-
-  //   ),
-  // ],
+  plugins: [
+    new MiniCssExtractPlugin({
+      filename: 'main.css'
+    })
+  ],
 };
