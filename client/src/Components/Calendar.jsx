@@ -1,45 +1,47 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { Calendar } from '@fullcalendar/core';
-import interactionPlugin from '@fullcalendar/interaction';
-import dayGridPlugin from '@fullcalendar/daygrid';
-import timeGridPlugin from '@fullcalendar/timegrid';
-import listPlugin from '@fullcalendar/list';
+import FullCalendar from '@fullcalendar/react' // must go before plugins
+import dayGridPlugin from '@fullcalendar/daygrid'
+import timeGridPlugin from '@fullcalendar/timegrid'
+import interactionPlugin from '@fullcalendar/interaction'
 
 class CalendarClass extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      weekendsVisible: true,
+      currentEvents: []
+    }
+    this.addEvents = this.addEvents.bind(this);
   }
 
-  componentDidMount() {
-    document.addEventListener('DOMContentLoaded', function() {
-      var calendarEl = document.getElementById('calendar');
-
-      var calendar = new Calendar(calendarEl, {
-        plugins: [ interactionPlugin, dayGridPlugin, timeGridPlugin, listPlugin ],
-        headerToolbar: {
-          left: 'prev,next today',
-          center: 'title',
-          right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
-        },
-        initialDate: '2022-09-01',
-        navLinks: true, // can click day/week names to navigate views
-        editable: true,
-        dayMaxEvents: true, // allow "more" link when too many events
-        events: [
-          {
-            title: 'All Day Event',
-            start: '2022-09-10',
-          },
-        ]
-      });
-      calendar.render();
+  addEvents(title, date) {
+    let current = this.state.currentEvents;
+    current.push({
+      title, date
+    })
+    this.setState({
+      current
     });
   }
 
   render() {
     return (
-      <div id='calendar'></div>
+      <FullCalendar
+          plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+          headerToolbar={{
+            left: 'prev,next today',
+            center: 'title',
+            right: 'dayGridMonth,timeGridWeek,timeGridDay'
+          }}
+          initialView='dayGridMonth'
+          editable={true}
+          selectable={true}
+          selectMirror={true}
+          dayMaxEvents={true}
+          weekends={true}
+          events={this.props.events}
+        />
     );
   }
 }
