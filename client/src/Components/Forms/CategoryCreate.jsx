@@ -7,6 +7,7 @@ const CategoryCreate = (props) => {
 
   const formik = useFormik({
     initialValues: {
+      userID: props.userID,
       category: 'none',
       color: '#BEBEBE'
     },
