@@ -13,6 +13,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useForm } from 'react-hook-form';
+import jwt_decode from 'jwt-decode';
 
 function Copyright(props) {
   return (
@@ -32,10 +33,41 @@ const theme = createTheme();
 export default function SignUp() {
   const {
     register,
+    watch,
     handleSubmit,
     formState: { errors },
   } = useForm();
+
+
   const onSubmit = (data) => console.log(data);
+
+  var handleCallbackResponse = function(response) {
+    console.log("Encoded JWT ID token: " + response.credential);
+    var googleUser = jwt_decode(response.credential);
+    console.log(googleUser);
+    setUser(googleUser);
+    document.getElementById("googleSignUp").hidden=true;
+  };
+
+  var handleSignOut = function(event) {
+    setUser({});
+    document.getElementById("googleSignUp").hidden=false;
+  };
+
+  React.useEffect(() => {
+    /* global google */
+    google.accounts.id.initialize({
+      client_id: "613322576609-rqh45grths58apdat1427ogk93jlasfb.apps.googleusercontent.com",
+      callback: handleCallbackResponse
+    });
+
+    google.accounts.id.renderButton(
+      document.getElementById("googleSignUp"),
+      { theme: "outline", size: "large" }
+    );
+
+    google.accounts.id.prompt();
+  }, []);
 
   return (
     <ThemeProvider theme={theme}>
@@ -49,7 +81,7 @@ export default function SignUp() {
         <CssBaseline />
         <Box
           sx={{
-            marginTop: 8,
+            marginTop: 3,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
@@ -61,17 +93,27 @@ export default function SignUp() {
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
-          <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ mt: 3 }}>
+          <Box sx={{ mt: 5 }}>
+            <div
+              id="googleSignUp"
+              align="center"
+            >
+            </div>
+            <p align="center">
+              or
+            </p>
+          </Box>
+          <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ mt: 1 }}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  autoComplete="given-name"
-                  name="firstName"
-                  required
+                  autoFocus
                   fullWidth
+                  required
+                  autoComplete="given-name"
                   id="firstName"
                   label="First Name"
-                  autoFocus
+                  name="firstName"
                   {...register('firstName', {
                     required: 'Required field',
                     pattern: {
@@ -85,12 +127,13 @@ export default function SignUp() {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  required
+                  autoFocus
                   fullWidth
+                  required
+                  autoComplete="family-name"
                   id="lastName"
                   label="Last Name"
                   name="lastName"
-                  autoComplete="family-name"
                   {...register('lastName', {
                     required: 'Required field',
                     pattern: {
@@ -104,11 +147,13 @@ export default function SignUp() {
               </Grid>
               <Grid item xs={12}>
                 <TextField
+                  autoFocus
                   fullWidth
+                  required
+                  autoComplete="email"
                   id="email"
                   label="Email Address"
                   name="email"
-                  autoComplete="email"
                   {...register('email', {
                     required: 'Required field',
                     pattern: {
@@ -122,13 +167,14 @@ export default function SignUp() {
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  required
+                  autoFocus
                   fullWidth
-                  name="password"
-                  label="Password"
-                  type="password"
-                  id="password"
+                  required
                   autoComplete="new-password"
+                  id="password"
+                  label="Password"
+                  name="password"
+                  type="password"
                   {...register('password', {
                     required: 'Required field',
                     pattern: {
@@ -138,6 +184,28 @@ export default function SignUp() {
                   })}
                   error={!!errors?.password}
                   helperText={errors?.password ? errors.password.message : null}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  autoFocus
+                  fullWidth
+                  required
+                  autoComplete="confirm-password"
+                  id="confirmPassword"
+                  label="Confirm Password"
+                  name="confirmPassword"
+                  type="password"
+                  {...register('confirmPassword', {
+                    required: 'Required field',
+                    validate: (val, string) => {
+                      if (watch('password') != val) {
+                        return "Passwords must match";
+                      }
+                    },
+                  })}
+                  error={!!errors?.confirmPassword}
+                  helperText={errors?.confirmPassword ? errors.confirmPassword.message : null}
                 />
               </Grid>
               <Grid item xs={12}>

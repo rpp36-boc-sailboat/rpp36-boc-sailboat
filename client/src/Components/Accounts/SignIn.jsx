@@ -13,6 +13,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useForm } from 'react-hook-form';
+import jwt_decode from 'jwt-decode';
 
 function Copyright(props) {
   return (
@@ -30,12 +31,43 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignIn() {
+  const [ user, setUser ] = React.useState([]);
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
+
   const onSubmit = (data) => console.log(data);
+
+  var handleCallbackResponse = function(response) {
+    console.log("Encoded JWT ID token: " + response.credential);
+    var googleUser = jwt_decode(response.credential);
+    console.log(googleUser);
+    setUser(googleUser);
+    document.getElementById("googleSignIn").hidden=true;
+  };
+
+  var handleSignOut = function(event) {
+    setUser({});
+    document.getElementById("googleSignIn").hidden=false;
+  };
+
+  React.useEffect(() => {
+    /* global google */
+    google.accounts.id.initialize({
+      client_id: "613322576609-rqh45grths58apdat1427ogk93jlasfb.apps.googleusercontent.com",
+      callback: handleCallbackResponse
+    });
+
+    google.accounts.id.renderButton(
+      document.getElementById("googleSignIn"),
+      { theme: "outline", size: "large" }
+    );
+
+    google.accounts.id.prompt();
+  }, []);
 
   return (
     <ThemeProvider theme={theme}>
@@ -49,7 +81,7 @@ export default function SignIn() {
         <CssBaseline />
         <Box
           sx={{
-            marginTop: 8,
+            marginTop: 3,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
@@ -61,49 +93,66 @@ export default function SignIn() {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
+          <Box sx={{ mt: 5 }}>
+            <div
+              id="googleSignIn"
+              align="center"
+            >
+            </div>
+            <p align="center">
+              or
+            </p>
+          </Box>
           <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ mt: 1 }}>
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label='Email Address'
-              name="email"
-              autoComplete="email"
-              autoFocus
-              {...register("email", {
-                required: "Required field",
-                pattern: {
-                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                  message: "Invalid email address",
-                },
-              })}
-              error={!!errors?.email}
-              helperText={errors?.email ? errors.email.message : null}
-            />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-              {...register('password', {
-                required: 'Required field',
-                pattern: {
-                  value: /(?=^.{8,}$)(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[^A-Za-z0-9])(\S+$).*/,
-                  message: 'Incorrect password',
-                },
-              })}
-              error={!!errors?.password}
-              helperText={errors?.password ? errors.password.message : null}
-            />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <TextField
+                  autoFocus
+                  fullWidth
+                  required
+                  autoComplete="email"
+                  id="email"
+                  label='Email Address'
+                  name="email"
+                  {...register("email", {
+                    required: "Required field",
+                    pattern: {
+                      value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                      message: "Invalid email address",
+                    },
+                  })}
+                  error={!!errors?.email}
+                  helperText={errors?.email ? errors.email.message : null}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  autoFocus
+                  fullWidth
+                  required
+                  autoComplete="current-password"
+                  id="password"
+                  label="Password"
+                  name="password"
+                  type="password"
+                  {...register('password', {
+                    required: 'Required field',
+                    pattern: {
+                      value: /(?=^.{8,}$)(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[^A-Za-z0-9])(\S+$).*/,
+                      message: 'Incorrect password',
+                    },
+                  })}
+                  error={!!errors?.password}
+                  helperText={errors?.password ? errors.password.message : null}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <FormControlLabel
+                  control={<Checkbox value="remember" color="primary" />}
+                  label="Remember me"
+                />
+              </Grid>
+            </Grid>
             <Button
               type="submit"
               fullWidth
@@ -126,7 +175,7 @@ export default function SignIn() {
             </Grid>
           </Box>
         </Box>
-        <Copyright sx={{ mt: 8, mb: 4 }} />
+        <Copyright sx={{ mt: 3, mb: 3 }} />
       </Container>
     </ThemeProvider>
   );
