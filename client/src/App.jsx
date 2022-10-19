@@ -7,6 +7,10 @@ import Metrics from "./Components/Metrics/index.jsx";
 import CalendarClass from "./Components/Calendar.jsx";
 import TodoCreate from './Components/Forms/TodoCreate.jsx';
 import CategoryCreate from './Components/Forms/CategoryCreate.jsx';
+import Modal from 'react-modal';
+
+Modal.setAppElement('#app');
+
 
 class App extends React.Component {
   constructor(props) {
@@ -45,6 +49,7 @@ class App extends React.Component {
     return (
       <div>
         <div>Encompass</div>
+        <SignIn />
         <SignUp />
         <Metrics />
         <CalendarClass events={this.state.currentEvents}/>
