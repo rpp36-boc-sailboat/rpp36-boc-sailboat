@@ -8,27 +8,27 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("client/public"));
 
-app.get("/categories", (req, res) => {
-  db.findAllCategories((err, result) => {
-    if (err) {
-      res.status(500).send(err).end();
-    } else {
-      res.status(200).json({ results: result });
-    }
-  });
-});
+// app.get("/categories", (req, res) => {
+//   db.findAllCategories((err, result) => {
+//     if (err) {
+//       res.status(500).send(err).end();
+//     } else {
+//       res.status(200).json({ results: result });
+//     }
+//   });
+// });
 
-app.get("/allTodos", (req, res) => {
-  db.findAllToDos((err, result) => {
-    if (err) {
-      res.status(500).send(err).end();
-    } else {
-      res.status(200).json({ results: result });
-    }
-  });
-});
+// app.get("/allTodos", (req, res) => {
+//   db.findAllToDos((err, result) => {
+//     if (err) {
+//       res.status(500).send(err).end();
+//     } else {
+//       res.status(200).json({ results: result });
+//     }
+//   });
+// });
 
-app.get("/allTodos_TR", (req, res) => {
+app.get("/completedTasks", (req, res) => {
   // console.log("ggg", req.query.timeRange);
   db.findAllToDos_TR(req.query.timeRange, (err, result) => {
     if (err) {

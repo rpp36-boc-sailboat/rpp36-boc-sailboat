@@ -2,38 +2,59 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import axios from "axios";
 import { TestChart } from "./chart1.jsx";
+import ReportTable from "./Report_Table.jsx";
 
 class Metrics extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      allData: [],
       categoriesANDcolor: [],
       categories: [],
       timeFrame: "Today",
       category: "",
-      todos: [],
+      // todos: [],
     };
   }
   componentDidMount() {
-    axios.get("/categories").then((allCategories) => {
-      var categoriesANDcolor = [];
-      var categories = [];
-      for (var cat of allCategories.data.results) {
-        categoriesANDcolor.push([cat.category, cat.color]);
-        if (!categories.includes(cat.category)) {
-          categories.push(cat.category);
+    axios
+      .get("/completedTasks", {
+        params: {
+          timeRange: "Today",
+        },
+      })
+      .then((allCompletedToDos) => {
+        let allData = allCompletedToDos.data.results;
+        // console.log("xxx", allData);
+        let categoriesANDcolor = [];
+        let categories = [];
+        for (let cat of allCompletedToDos.data.results) {
+          categoriesANDcolor.push([cat.category, cat.color]);
+          if (!categories.includes(cat.category)) {
+            categories.push(cat.category);
+          }
         }
-      }
-      this.setState({ categoriesANDcolor, categories });
-    });
+        this.setState({ categoriesANDcolor, categories, allData });
+      });
+    // axios.get("/categories").then((allCategories) => {
+    //   let categoriesANDcolor = [];
+    //   let categories = [];
+    //   for (let cat of allCategories.data.results) {
+    //     categoriesANDcolor.push([cat.category, cat.color]);
+    //     if (!categories.includes(cat.category)) {
+    //       categories.push(cat.category);
+    //     }
+    //   }
+    //   this.setState({ categoriesANDcolor, categories });
+    // });
 
-    axios.get("/allTodos").then((allToDos) => {
-      var todos = [];
-      for (var cat of allToDos.data.results) {
-        todos.push([cat.category_id, cat.start_time, cat.end_time]);
-      }
-      this.setState({ todos });
-    });
+    // axios.get("/allTodos").then((allToDos) => {
+    //   var todos = [];
+    //   for (var cat of allToDos.data.results) {
+    //     todos.push([cat.category_id, cat.start_time, cat.end_time]);
+    //   }
+    //   this.setState({ todos });
+    // });
   }
   specifyCategory(input) {
     // console.log("cat input", input);
@@ -48,14 +69,22 @@ class Metrics extends React.Component {
     this.setState({ timeFrame: input });
 
     axios
-      .get("/allTodos_TR", {
+      .get("/completedTasks", {
         params: {
           timeRange: input,
         },
       })
-      .then((allToDos) => {
-        // var todos = [];
-        // this.setState({ todos });
+      .then((allCompletedToDos) => {
+        let allData = allCompletedToDos.data.results;
+        let categoriesANDcolor = [];
+        let categories = [];
+        for (let cat of allCompletedToDos.data.results) {
+          categoriesANDcolor.push([cat.category, cat.color]);
+          if (!categories.includes(cat.category)) {
+            categories.push(cat.category);
+          }
+        }
+        this.setState({ categoriesANDcolor, categories, allData });
       });
   }
 
@@ -92,7 +121,7 @@ class Metrics extends React.Component {
             ))}
           </select>
         </div>
-
+        <ReportTable data={this.state.allData} />
         <TestChart data={this.state} />
 
         <div> download report</div>
