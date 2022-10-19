@@ -66,6 +66,7 @@ class CalendarClass extends React.Component {
             right: 'dayGridMonth,timeGridWeek,timeGridDay'
           }}
           initialView='dayGridMonth'
+          views={{dayGridMonth: { titleFormat: {year: 'numeric', month: 'short'}}, day: { titleFormat: {year: 'numeric', month: 'short', day: '2-digit'}}}}
           editable={true}
           selectable={true}
           selectMirror={true}

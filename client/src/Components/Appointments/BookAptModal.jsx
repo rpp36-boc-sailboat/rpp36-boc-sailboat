@@ -6,7 +6,6 @@ export default function ({isOpen, onClose}) {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log(onClose);
     onClose();
   }
   return (

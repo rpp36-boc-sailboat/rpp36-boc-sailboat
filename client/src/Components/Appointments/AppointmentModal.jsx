@@ -8,6 +8,16 @@ export default function ({isOpen, onClose, onEventAdded}) {
 
   const onSubmit = (e) => {
     e.preventDefault();
+    // sent eventObj to server and get an id
+    let eventObj = {
+      id: 'unique id',
+      addDay: true,
+      title: 'title',
+      start: 'start time',
+      end: 'end time',
+      editable: false,
+    };
+
     onEventAdded({
       title,
       start,
