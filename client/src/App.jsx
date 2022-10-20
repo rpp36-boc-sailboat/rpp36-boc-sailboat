@@ -17,6 +17,7 @@ class App extends React.Component {
     super(props);
     this.state = {
       userID: 1,
+      todos: [],
       categories: [
         {key: 'None', value: 0},
         {key: 'Option 1', value: 1},
@@ -31,7 +32,16 @@ class App extends React.Component {
   }
 
   componentDidMount() {
+    let todos = [];
     let categories = [];
+    axios.get('/todos', {
+      params: {
+        id: this.state.userID
+      }
+    })
+    .then(result => result.data.map((option, i) => {
+      return todos.push(option)
+    }))
     axios.get('/categories', {
       params: {
         id: this.state.userID
@@ -41,6 +51,7 @@ class App extends React.Component {
       return categories.push({key: option.category, value: option.category_id})
     }))
     .then(this.setState({
+      todos: todos,
       categories: categories
     }))
   }

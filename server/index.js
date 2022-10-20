@@ -16,6 +16,11 @@ app.post('/todo', function(req, res) {
   .then(result => res.send(result))
 })
 
+app.get('/todos', function(req, res) {
+  db.getTodos(req.query.id)
+  .then(result => res.send(result))
+})
+
 app.post('/category', function(req, res) {
   db.createCategory(req.body)
   .then(result => res.send(result))
