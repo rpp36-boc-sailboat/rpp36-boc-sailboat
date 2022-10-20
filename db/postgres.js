@@ -47,6 +47,25 @@ const createTodo = function(todo) {
   })
 }
 
+const deleteTodo = function(todoID) {
+  return pool
+  .connect()
+  .then(client => {
+    return client
+      .query(`
+      DELETE FROM todos WHERE todo_id = ${todoID}
+      `)
+      .then(res => {
+        client.release();
+        return res.rows;
+      })
+      .catch(err => {
+        client.release();
+        console.log(err.stack);
+      })
+  })
+}
+
 const getCategories = function(id) {
   return pool
   .connect()
@@ -88,6 +107,7 @@ module.exports = {
   pool,
   getTodos,
   createTodo,
+  deleteTodo,
   getCategories,
   createCategory
 };
