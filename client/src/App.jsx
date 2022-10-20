@@ -29,7 +29,7 @@ class App extends React.Component {
         {key: 'Option 5', value: 5},
         {key: 'Other', value: 6}
       ],
-      currentEvents: [{title: 'newEvent', date: '2022-10-17'}]
+      currentEvents: [{id: 4, title: 'newEvent', date: '2022-10-17'}]
     };
   }
 
@@ -65,7 +65,7 @@ class App extends React.Component {
         <SignIn />
         <SignUp />
         <Metrics />
-        <CalendarClass events={this.state.currentEvents}/>
+        <CalendarClass events={this.state.currentEvents} userID={this.state.userID}/>
         <h1>THIS CREATES A TODO ENTRY</h1>
         <TodoCreate userID={this.state.userID} categories={this.state.categories}/>
         <h1>THIS CREATES A CATEGORY</h1>
