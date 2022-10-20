@@ -7,6 +7,7 @@ import Metrics from "./Components/Metrics/index.jsx";
 import CalendarClass from "./Components/Calendar.jsx";
 import TodoCreate from './Components/Forms/TodoCreate.jsx';
 import CategoryCreate from './Components/Forms/CategoryCreate.jsx';
+import DeleteButton from './Components/Forms/DeleteButton.jsx';
 import Modal from 'react-modal';
 
 Modal.setAppElement('#app');
@@ -17,6 +18,7 @@ class App extends React.Component {
     super(props);
     this.state = {
       userID: 1,
+      todoID: 104,
       todos: [],
       categories: [
         {key: 'None', value: 0},
@@ -68,6 +70,8 @@ class App extends React.Component {
         <TodoCreate userID={this.state.userID} categories={this.state.categories}/>
         <h1>THIS CREATES A CATEGORY</h1>
         <CategoryCreate userID={this.state.userID}/>
+        <h1>THIS DELETES SOMETHING</h1>
+        <DeleteButton todoID={this.state.todoID}/>
       </div>
     );
   }

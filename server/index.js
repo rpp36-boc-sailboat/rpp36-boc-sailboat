@@ -19,6 +19,12 @@ app.get('/todos', function(req, res) {
   .then(result => res.send(result))
 })
 
+app.delete('/todos', function(req, res) {
+  console.log(req)
+  db.deleteTodo(req.query.todoID)
+  .then(res.send('DELETED'))
+})
+
 app.post('/category', function(req, res) {
   db.createCategory(req.body)
   .then(result => res.send(result))
