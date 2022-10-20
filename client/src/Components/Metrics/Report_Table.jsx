@@ -30,7 +30,6 @@ const ReportTable = (props) => {
 
 const Tasks = (props) => {
   var timeSpent;
-
   var firstDate = new Date(props.task.start_time);
   var secondDate = new Date(props.task.end_time);
   var firstDateInSeconds = firstDate.getTime() / 1000;

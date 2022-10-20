@@ -1,7 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import axios from "axios";
-import { TestChart } from "./chart1.jsx";
+import { ReportPieChart } from "./Report_PieChart.jsx";
+import { ReportBarChart } from "./Report_BarChart.jsx";
 import ReportTable from "./Report_Table.jsx";
 
 class Metrics extends React.Component {
@@ -12,7 +13,7 @@ class Metrics extends React.Component {
       categoriesANDcolor: [],
       categories: [],
       timeFrame: "Today",
-      category: "",
+      category: "All",
       // todos: [],
     };
   }
@@ -21,13 +22,14 @@ class Metrics extends React.Component {
       .get("/completedTasks", {
         params: {
           timeRange: "Today",
+          catg: "All",
         },
       })
       .then((allCompletedToDos) => {
         let allData = allCompletedToDos.data.results;
         // console.log("xxx", allData);
         let categoriesANDcolor = [];
-        let categories = [];
+        let categories = ["All"];
         for (let cat of allCompletedToDos.data.results) {
           categoriesANDcolor.push([cat.category, cat.color]);
           if (!categories.includes(cat.category)) {
@@ -56,35 +58,57 @@ class Metrics extends React.Component {
     //   this.setState({ todos });
     // });
   }
-  specifyCategory(input) {
-    // console.log("cat input", input);
-    // var updatedArr = this.state.categoriesANDcolor.filter(
-    //   (val) => val[0] === input
-    // );
-    this.setState({ category: input });
-    // this.setState({ categoriesANDcolor: updatedArr });
-  }
-  specifyTimeframe(input) {
-    // console.log("time input", input);
-    this.setState({ timeFrame: input });
+  specifyCategory(input, timeR) {
+    axios
+      .get("/completedTasksPerCatg", {
+        params: {
+          timeRange: timeR,
+          catg: input,
+        },
+      })
+      .then((allCatgData) => {
+        this.setState({ allData: allCatgData.data.results });
 
+        let categoriesANDcolor = [];
+        // let categories = ["All"];
+        for (let cat of allCatgData.data.results) {
+          categoriesANDcolor.push([cat.category, cat.color]);
+          // if (!categories.includes(cat.category)) {
+          //   categories.push(cat.category);
+          // }
+        }
+        this.setState({
+          categoriesANDcolor,
+          // categories,
+          category: input,
+          timeFrame: timeR,
+        });
+      });
+  }
+  specifyTimeframe(input, catg) {
     axios
       .get("/completedTasks", {
         params: {
           timeRange: input,
+          catg: catg,
         },
       })
       .then((allCompletedToDos) => {
         let allData = allCompletedToDos.data.results;
         let categoriesANDcolor = [];
-        let categories = [];
+        // let categories = ["All"];
         for (let cat of allCompletedToDos.data.results) {
           categoriesANDcolor.push([cat.category, cat.color]);
-          if (!categories.includes(cat.category)) {
-            categories.push(cat.category);
-          }
+          // if (!categories.includes(cat.category)) {
+          //   categories.push(cat.category);
+          // }
         }
-        this.setState({ categoriesANDcolor, categories, allData });
+        this.setState({
+          categoriesANDcolor,
+          // categories,
+          allData,
+          timeFrame: input,
+        });
       });
   }
 
@@ -97,7 +121,7 @@ class Metrics extends React.Component {
             name="timeframe"
             id="timeframe"
             onChange={(e) => {
-              this.specifyTimeframe(e.target.value);
+              this.specifyTimeframe(e.target.value, this.state.category);
             }}
           >
             <option value="Today">Today</option>
@@ -113,7 +137,7 @@ class Metrics extends React.Component {
             name="Category"
             id="Category"
             onChange={(e) => {
-              this.specifyCategory(e.target.value);
+              this.specifyCategory(e.target.value, this.state.timeFrame);
             }}
           >
             {this.state.categories.map((cat, i) => (
@@ -122,7 +146,12 @@ class Metrics extends React.Component {
           </select>
         </div>
         <ReportTable data={this.state.allData} />
-        <TestChart data={this.state} />
+
+        {this.state.category === "All" ? (
+          <ReportPieChart data={this.state} />
+        ) : (
+          <ReportBarChart data={this.state} />
+        )}
 
         <div> download report</div>
       </div>

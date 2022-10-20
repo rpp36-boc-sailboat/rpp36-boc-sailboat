@@ -18,7 +18,7 @@ class App extends React.Component {
     return (
       <div>
         <div>Encompass</div>
-        <SignUp />
+        {/* <SignUp /> */}
         <Metrics />
         <Calendar />
       </div>

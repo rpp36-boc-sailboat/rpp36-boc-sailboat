@@ -4,34 +4,7 @@ import { Pie, Doughnut } from "react-chartjs-2";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-// export const data = {
-//   labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-//   datasets: [
-//     {
-//       label: "# of Votes",
-//       data: [12, 19, 3, 5, 2, 3],
-//       backgroundColor: [
-//         "rgba(255, 99, 132, 0.2)",
-//         "rgba(54, 162, 235, 0.2)",
-//         "rgba(255, 206, 86, 0.2)",
-//         "rgba(75, 192, 192, 0.2)",
-//         "rgba(153, 102, 255, 0.2)",
-//         "rgba(255, 159, 64, 0.2)",
-//       ],
-//       borderColor: [
-//         "rgba(255, 99, 132, 1)",
-//         "rgba(54, 162, 235, 1)",
-//         "rgba(255, 206, 86, 1)",
-//         "rgba(75, 192, 192, 1)",
-//         "rgba(153, 102, 255, 1)",
-//         "rgba(255, 159, 64, 1)",
-//       ],
-//       borderWidth: 1,
-//     },
-//   ],
-// };
-
-export function TestChart(props) {
+export function ReportPieChart(props) {
   // console.log("pro", props.data.allData);
 
   var chartLegend = [];
@@ -43,15 +16,11 @@ export function TestChart(props) {
     }
   }
 
-  // if (props.data.category !== "") {
-  //   // filter chart by cat
-  // }
-
-  // calculate pie chart data
-  // sum duration for each category (say 2 meetings = 1 + 30 =1 hr and 30min)
   var catgDurations = {};
   for (let key of props.data.categories) {
-    catgDurations[key] = [];
+    if (key !== "All") {
+      catgDurations[key] = [];
+    }
   }
 
   for (let key in catgDurations) {
@@ -98,11 +67,6 @@ export function TestChart(props) {
     totalTimeSpent += catgTotalSec;
   }
   catgDurations.totalTimeSpent = totalTimeSpent;
-
-  console.log("OO", catgDurations, chartData);
-
-  // get total hours spent ( sum of all durations taken)
-  // feed into dataset.data, the fraction of each cat (total/cat duration)
 
   const data = {
     labels: chartLegend,
