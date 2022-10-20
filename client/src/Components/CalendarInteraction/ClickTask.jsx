@@ -18,7 +18,7 @@ class ClickTask extends React.Component {
 
   deleteTask() {
     // current axios delete should be server? this one should just carry the todo_id and send it to an endpoint
-    axios.delete(`http://localhost:3000/${todo_id}`)
+    axios.delete(`/tasks`)
     .then(res => {
       console.log(res.data);
     })
