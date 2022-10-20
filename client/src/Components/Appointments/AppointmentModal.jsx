@@ -22,8 +22,8 @@ export default function ({isOpen, onClose, onEventAdded, userID}) {
 
     axios.post('/todo', eventObj)
     .then((result) => {
-      console.log(result);
       onEventAdded({
+        id: result.data[0].todo_id,
         title,
         start,
         end,

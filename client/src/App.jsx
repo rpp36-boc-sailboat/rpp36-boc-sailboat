@@ -26,7 +26,7 @@ class App extends React.Component {
         {key: 'Option 5', value: 5},
         {key: 'Other', value: 6}
       ],
-      currentEvents: [{title: 'newEvent', date: '2022-10-17'}]
+      currentEvents: [{id: 4, title: 'newEvent', date: '2022-10-17'}]
     };
   }
 

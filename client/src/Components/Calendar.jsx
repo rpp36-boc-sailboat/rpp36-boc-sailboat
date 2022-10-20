@@ -15,11 +15,14 @@ class CalendarClass extends React.Component {
       currentEvents: [],
       modalOpen: false,
       bookOpen: false,
+      selectedEvent: null,
+      selectedEventID: null,
     }
     this.addEvents = this.addEvents.bind(this);
     this.onEventAdded.bind(this);
     this.closeModal.bind(this);
     this.handleEventClick.bind(this);
+    this.onEventBooked.bind(this);
     this.calendarRef = React.createRef(null);
   }
 
@@ -34,8 +37,6 @@ class CalendarClass extends React.Component {
   }
 
   onEventAdded(e) {
-    // update server and db
-    // on success, add event
     let calendarApi = this.calendarRef.current.getApi();
     calendarApi.addEvent(e);
   }
@@ -45,12 +46,11 @@ class CalendarClass extends React.Component {
   }
 
   handleEventClick(e) {
-    this.setState({bookOpen: true});
-    // if (confirm(`Would you like to book the appointment: ${e.event.title} \nat ${e.event.start} - ${e.event.end}`)) {
-    //   console.log('add to-do for user: ', this.props.userID, ' and user of calendar');
-    //   // alter db before removing
-    //   e.event.remove();
-    // }
+    this.setState({bookOpen: true, selectedEvent: e, selectedEventID: e.event.id});
+  }
+  onEventBooked(e) {
+    this.state.selectedEvent.event.remove();
+    this.setState({selectedEvent: null, selectedEventID: null});
   }
 
   render() {
@@ -76,7 +76,7 @@ class CalendarClass extends React.Component {
           eventClick={this.handleEventClick.bind(this)}
         />
         <AddEventModal isOpen={this.state.modalOpen} onClose={this.closeModal.bind(this)} onEventAdded={e => this.onEventAdded(e)} userID={this.props.userID} />
-        <BookAptModal isOpen={this.state.bookOpen} onClose={this.closeModal.bind(this)} />
+        <BookAptModal isOpen={this.state.bookOpen} onClose={this.closeModal.bind(this)} onEventBooked={e => this.onEventBooked(e)} selectedEventID={this.state.selectedEventID} />
       </React.Fragment>
     );
   }

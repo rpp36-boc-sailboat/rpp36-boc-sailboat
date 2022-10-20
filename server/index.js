@@ -24,8 +24,8 @@ app.get('/categories', function(req, res) {
   .then(result => res.send(result))
 })
 
-app.post('/appt/create', function(req, res) {
-  db.createTodo(req.body)
+app.put('/bookedApt', function(req, res) {
+  db.bookAppointment(req.body)
   .then(result => res.send(result))
 })
 
