@@ -24,6 +24,11 @@ app.get('/categories', function(req, res) {
   .then(result => res.send(result))
 })
 
+app.post('/appt/create', function(req, res) {
+  db.createTodo(req.body)
+  .then(result => res.send(result))
+})
+
 app.get("/test", (req, res) => {
   // res.send("Greetings!");
   res.status(200);

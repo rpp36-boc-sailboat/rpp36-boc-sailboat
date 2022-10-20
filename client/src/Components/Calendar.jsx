@@ -75,7 +75,7 @@ class CalendarClass extends React.Component {
           events={this.props.events}
           eventClick={this.handleEventClick.bind(this)}
         />
-        <AddEventModal isOpen={this.state.modalOpen} onClose={this.closeModal.bind(this)} onEventAdded={e => this.onEventAdded(e)} />
+        <AddEventModal isOpen={this.state.modalOpen} onClose={this.closeModal.bind(this)} onEventAdded={e => this.onEventAdded(e)} userID={this.props.userID} />
         <BookAptModal isOpen={this.state.bookOpen} onClose={this.closeModal.bind(this)} />
       </React.Fragment>
     );

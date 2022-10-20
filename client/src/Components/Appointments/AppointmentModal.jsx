@@ -1,29 +1,36 @@
 import React, {useState} from 'react';
 import Modal from 'react-modal';
+import axios from 'axios';
 
-export default function ({isOpen, onClose, onEventAdded}) {
+export default function ({isOpen, onClose, onEventAdded, userID}) {
   const [title, setTitle] = useState('');
   const [start, setStart] = useState('');
   const [end, setEnd] = useState('');
 
   const onSubmit = (e) => {
     e.preventDefault();
-    // sent eventObj to server and get an id
     let eventObj = {
-      id: 'unique id',
-      addDay: true,
-      title: 'title',
-      start: 'start time',
-      end: 'end time',
-      editable: false,
+      userID: userID,
+      taskName: title,
+      description: '',
+      category: 1,
+      start: start,
+      end: end,
+      completed: false,
+      appointment: true,
     };
 
-    onEventAdded({
-      title,
-      start,
-      end,
-    });
-
+    axios.post('/todo', eventObj)
+    .then((result) => {
+      console.log(result);
+      onEventAdded({
+        title,
+        start,
+        end,
+      });
+    }).catch((err) => {
+      alert('Could not add appointment.');
+    })
     onClose();
   }
   return (
