@@ -7,6 +7,7 @@ import Metrics from "./Components/Metrics/index.jsx";
 import CalendarClass from "./Components/Calendar.jsx";
 import TodoCreate from './Components/Forms/TodoCreate.jsx';
 import CategoryCreate from './Components/Forms/CategoryCreate.jsx';
+import DeleteButton from './Components/Forms/DeleteButton.jsx';
 import Modal from 'react-modal';
 
 Modal.setAppElement('#app');
@@ -17,6 +18,8 @@ class App extends React.Component {
     super(props);
     this.state = {
       userID: 1,
+      todoID: 104,
+      todos: [],
       categories: [
         {key: 'None', value: 0},
         {key: 'Option 1', value: 1},
@@ -31,7 +34,16 @@ class App extends React.Component {
   }
 
   componentDidMount() {
+    let todos = [];
     let categories = [];
+    axios.get('/todos', {
+      params: {
+        id: this.state.userID
+      }
+    })
+    .then(result => result.data.map((option, i) => {
+      return todos.push(option)
+    }))
     axios.get('/categories', {
       params: {
         id: this.state.userID
@@ -41,6 +53,7 @@ class App extends React.Component {
       return categories.push({key: option.category, value: option.category_id})
     }))
     .then(this.setState({
+      todos: todos,
       categories: categories
     }))
   }
@@ -57,6 +70,8 @@ class App extends React.Component {
         <TodoCreate userID={this.state.userID} categories={this.state.categories}/>
         <h1>THIS CREATES A CATEGORY</h1>
         <CategoryCreate userID={this.state.userID}/>
+        <h1>THIS DELETES SOMETHING</h1>
+        <DeleteButton todoID={this.state.todoID}/>
       </div>
     );
   }
