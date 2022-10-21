@@ -120,6 +120,23 @@ const bookAppointment = function(id) {
   })
 }
 
+const getAppointments = function(id) {
+  return pool
+  .connect()
+  .then(client => {
+    return client
+      .query(`SELECT * FROM todos WHERE user_id=${id} and appointment=true`)
+      .then(res => {
+        client.release();
+        return res.rows;
+      })
+      .catch(err => {
+        client.release();
+        console.log(err.stack);
+      })
+  })
+}
+
 module.exports = {
   pool,
   getTodos,
@@ -127,5 +144,6 @@ module.exports = {
   deleteTodo,
   getCategories,
   createCategory,
-  bookAppointment
+  bookAppointment,
+  getAppointments
 };
