@@ -5,6 +5,7 @@ import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
 import AddEventModal from './Appointments/AppointmentModal.jsx'
+import BookAptModal from './Appointments/BookAptModal.jsx'
 
 class CalendarClass extends React.Component {
   constructor(props) {
@@ -13,11 +14,15 @@ class CalendarClass extends React.Component {
       weekendsVisible: true,
       currentEvents: [],
       modalOpen: false,
+      bookOpen: false,
+      selectedEvent: null,
+      selectedEventID: null,
     }
     this.addEvents = this.addEvents.bind(this);
     this.onEventAdded.bind(this);
     this.closeModal.bind(this);
-    // const [modalOpen, setModalOpen] = false;
+    this.handleEventClick.bind(this);
+    this.onEventBooked.bind(this);
     this.calendarRef = React.createRef(null);
   }
 
@@ -32,14 +37,20 @@ class CalendarClass extends React.Component {
   }
 
   onEventAdded(e) {
-    // update server and db
-    // on success, add event
     let calendarApi = this.calendarRef.current.getApi();
     calendarApi.addEvent(e);
   }
 
   closeModal() {
-    this.setState({modalOpen: false});
+    this.setState({modalOpen: false, bookOpen: false});
+  }
+
+  handleEventClick(e) {
+    this.setState({bookOpen: true, selectedEvent: e, selectedEventID: e.event.id});
+  }
+  onEventBooked(e) {
+    this.state.selectedEvent.event.remove();
+    this.setState({selectedEvent: null, selectedEventID: null});
   }
 
   render() {
@@ -55,14 +66,17 @@ class CalendarClass extends React.Component {
             right: 'dayGridMonth,timeGridWeek,timeGridDay'
           }}
           initialView='dayGridMonth'
+          views={{dayGridMonth: { titleFormat: {year: 'numeric', month: 'short'}}, day: { titleFormat: {year: 'numeric', month: 'short', day: '2-digit'}}}}
           editable={true}
           selectable={true}
           selectMirror={true}
           dayMaxEvents={true}
           weekends={true}
           events={this.props.events}
+          eventClick={this.handleEventClick.bind(this)}
         />
-        <AddEventModal isOpen={this.state.modalOpen} onClose={this.closeModal.bind(this)} onEventAdded={e => this.onEventAdded(e)} />
+        <AddEventModal isOpen={this.state.modalOpen} onClose={this.closeModal.bind(this)} onEventAdded={e => this.onEventAdded(e)} userID={this.props.userID} />
+        <BookAptModal isOpen={this.state.bookOpen} onClose={this.closeModal.bind(this)} onEventBooked={e => this.onEventBooked(e)} selectedEventID={this.state.selectedEventID} />
       </React.Fragment>
     );
   }

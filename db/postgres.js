@@ -35,6 +35,25 @@ const createTodo = function(todo) {
       .query(`
       INSERT INTO todos (user_id, task, description, category_id, start_time, end_time, completed, appointment)
       VALUES ('${todo.userID}', '${todo.taskName}', '${todo.description}', '${todo.category}', '${todo.start}', '${todo.end}', '${todo.completed}', '${todo.appointment}')
+      returning todo_id`)
+      .then(res => {
+        client.release();
+        return res.rows;
+      })
+      .catch(err => {
+        client.release();
+        console.log(err.stack);
+      })
+  })
+}
+
+const deleteTodo = function(todoID) {
+  return pool
+  .connect()
+  .then(client => {
+    return client
+      .query(`
+      DELETE FROM todos WHERE todo_id = ${todoID}
       `)
       .then(res => {
         client.release();
@@ -84,10 +103,29 @@ const createCategory = function(category) {
   })
 }
 
+const bookAppointment = function(id) {
+  return pool
+  .connect()
+  .then(client => {
+    return client
+    .query(`UPDATE todos SET appointment=false WHERE todo_id=${id.selectedEventID}`)
+    .then(res => {
+      client.release();
+      return res.rows;
+    })
+    .catch(err => {
+      client.release();
+      console.log(err.stack);
+    })
+  })
+}
+
 module.exports = {
   pool,
   getTodos,
   createTodo,
+  deleteTodo,
   getCategories,
-  createCategory
+  createCategory,
+  bookAppointment
 };

@@ -8,6 +8,7 @@ import CalendarClass from "./Components/Calendar.jsx";
 import TodoCreate from './Components/Forms/TodoCreate.jsx';
 import TodoList from './Components/CalendarInteraction/TodoList.jsx';
 import CategoryCreate from './Components/Forms/CategoryCreate.jsx';
+import DeleteButton from './Components/Forms/DeleteButton.jsx';
 import Modal from 'react-modal';
 
 Modal.setAppElement('#app');
@@ -18,6 +19,7 @@ class App extends React.Component {
     super(props);
     this.state = {
       userID: 1,
+      todoID: 104,
       todos: [],
       categories: [
         {key: 'None', value: 0},
@@ -28,8 +30,7 @@ class App extends React.Component {
         {key: 'Option 5', value: 5},
         {key: 'Other', value: 6}
       ],
-      currentEvents: [{title: 'newEvent', date: '2022-10-17'}],
-      flag: false
+      currentEvents: [{id: 4, title: 'newEvent', date: '2022-10-17'}]
     };
   }
 
@@ -60,19 +61,21 @@ class App extends React.Component {
       return (
         <div>
           <div>Encompass</div>
-          {/* <SignIn />
+          <SignIn />
           <SignUp />
-          <Metrics /> */}
-          <CalendarClass events={this.state.currentEvents}/>
+          <Metrics />
+          <CalendarClass events={this.state.currentEvents} userID={this.state.userID}/>
           <h1>THIS CREATES A TODO ENTRY</h1>
           <TodoCreate userID={this.state.userID} categories={this.state.categories}/>
           <h1>THIS CREATES A CATEGORY</h1>
           <CategoryCreate userID={this.state.userID}/>
+          <h1>THIS DELETES SOMETHING</h1>
+          <DeleteButton todoID={this.state.todoID}/>
           <TodoList todos={this.state.todos} />
         </div>
       );
+    }
   }
-}
 
 ReactDOM.createRoot(document.getElementById("app")).render(<App />);
 
