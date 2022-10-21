@@ -37,16 +37,16 @@ app.get("/test", (req, res) => {
   res.end();
 });
 
-app.delete('/delete', (req, res) => {
-  var todo_id = req.body.id;
-  axios.delete(`http://localhost:3000/tasks/${todo_id}`)
-})
-.then(res => {
-  console.log(res.data);
-})
-.catch((error) => {
-  console.log(error);
-})
+// app.delete('/delete', (req, res) => {
+//   var todo_id = req.body.id;
+//   axios.delete(`http://localhost:3000/tasks/${todo_id}`)
+// })
+// .then(res => {
+//   console.log(res.data);
+// })
+// .catch((error) => {
+//   console.log(error);
+// })
 
 app.listen(port, () => {
 console.log("listening on port: ", port);
