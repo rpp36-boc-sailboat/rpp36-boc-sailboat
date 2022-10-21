@@ -6,6 +6,7 @@ import SignUp from "./Components/Accounts/SignUp.jsx";
 import Metrics from "./Components/Metrics/index.jsx";
 import CalendarClass from "./Components/Calendar.jsx";
 import TodoCreate from './Components/Forms/TodoCreate.jsx';
+import TodoList from './Components/CalendarInteraction/TodoList.jsx';
 import CategoryCreate from './Components/Forms/CategoryCreate.jsx';
 import DeleteButton from './Components/Forms/DeleteButton.jsx';
 import AppointmentShare from './Components/Appointments/AppointmentShare.jsx';
@@ -36,28 +37,26 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    let todos = [];
-    let categories = [];
     axios.get('/todos', {
       params: {
         id: this.state.userID
       }
     })
-    .then(result => result.data.map((option, i) => {
-      return todos.push(option)
-    }))
+    .then(result => {
+      this.setState({...this.state, todos: result.data});
+    })
+
     axios.get('/categories', {
       params: {
         id: this.state.userID
       }
     })
-    .then(result => result.data.map((option, i) => {
-      return categories.push({key: option.category, value: option.category_id})
-    }))
-    .then(this.setState({
-      todos: todos,
-      categories: categories
-    }))
+    .then(result => {
+      const categories = result.data.map((option, i) => {
+        return {key: option.category, value: option.category_id}
+      });
+      this.setState({...this.state, categories})
+    });
   }
 
   render() {
@@ -82,7 +81,6 @@ class App extends React.Component {
       </Router>
     );
   }
-}
 
 ReactDOM.createRoot(document.getElementById("app")).render(<App />);
 

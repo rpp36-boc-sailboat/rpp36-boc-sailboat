@@ -11,6 +11,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static("client/public"));
 app.use('/share/*', express.static("client/public"));
 
+var baseURL = 'http://54.85.127.105/';
+
 app.post('/todo', function(req, res) {
   db.createTodo(req.body)
   .then(result => res.send(result))
@@ -56,6 +58,17 @@ app.get("/test", (req, res) => {
   res.status(200);
   res.end();
 });
+
+// app.delete('/delete', (req, res) => {
+//   var todo_id = req.body.id;
+//   axios.delete(`http://localhost:3000/tasks/${todo_id}`)
+// })
+// .then(res => {
+//   console.log(res.data);
+// })
+// .catch((error) => {
+//   console.log(error);
+// })
 
 app.listen(port, () => {
 console.log("listening on port: ", port);
