@@ -64,9 +64,9 @@ class App extends React.Component {
       <Router>
         <div>
           <div>Encompass</div>
-          {/* <SignIn />
+          <SignIn />
           <SignUp />
-          <Metrics /> */}
+          <Metrics />
           <Routes>
             <Route exact path="/" element={<CalendarClass events={this.state.currentEvents} userID={this.state.userID} />} />
             <Route path="/share/appointment" element={<AppointmentShare userID={this.state.userID} />} />
