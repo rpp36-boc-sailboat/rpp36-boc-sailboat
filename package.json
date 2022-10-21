@@ -54,6 +54,7 @@
     "react-hook-form": "^7.37.0",
     "react-modal": "^3.16.1",
     "supertest": "^6.3.0",
+    "swiper": "^8.4.4",
     "yup": "^0.32.11"
   },
   "devDependencies": {
