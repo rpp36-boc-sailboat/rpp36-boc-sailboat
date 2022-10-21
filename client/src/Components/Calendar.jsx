@@ -14,15 +14,10 @@ class CalendarClass extends React.Component {
       weekendsVisible: true,
       currentEvents: [],
       modalOpen: false,
-      bookOpen: false,
-      selectedEvent: null,
-      selectedEventID: null,
     }
     this.addEvents = this.addEvents.bind(this);
     this.onEventAdded.bind(this);
     this.closeModal.bind(this);
-    this.handleEventClick.bind(this);
-    this.onEventBooked.bind(this);
     this.calendarRef = React.createRef(null);
   }
 
@@ -42,15 +37,7 @@ class CalendarClass extends React.Component {
   }
 
   closeModal() {
-    this.setState({modalOpen: false, bookOpen: false});
-  }
-
-  handleEventClick(e) {
-    this.setState({bookOpen: true, selectedEvent: e, selectedEventID: e.event.id});
-  }
-  onEventBooked(e) {
-    this.state.selectedEvent.event.remove();
-    this.setState({selectedEvent: null, selectedEventID: null});
+    this.setState({modalOpen: false});
   }
 
   render() {
@@ -73,10 +60,8 @@ class CalendarClass extends React.Component {
           dayMaxEvents={true}
           weekends={true}
           events={this.props.events}
-          eventClick={this.handleEventClick.bind(this)}
         />
         <AddEventModal isOpen={this.state.modalOpen} onClose={this.closeModal.bind(this)} onEventAdded={e => this.onEventAdded(e)} userID={this.props.userID} />
-        <BookAptModal isOpen={this.state.bookOpen} onClose={this.closeModal.bind(this)} onEventBooked={e => this.onEventBooked(e)} selectedEventID={this.state.selectedEventID} />
       </React.Fragment>
     );
   }

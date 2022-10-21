@@ -9,7 +9,9 @@ import TodoCreate from './Components/Forms/TodoCreate.jsx';
 import TodoList from './Components/CalendarInteraction/TodoList.jsx';
 import CategoryCreate from './Components/Forms/CategoryCreate.jsx';
 import DeleteButton from './Components/Forms/DeleteButton.jsx';
+import AppointmentShare from './Components/Appointments/AppointmentShare.jsx';
 import Modal from 'react-modal';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 Modal.setAppElement('#app');
 
@@ -58,13 +60,17 @@ class App extends React.Component {
   }
 
   render() {
-      return (
+    return (
+      <Router>
         <div>
           <div>Encompass</div>
           {/* <SignIn />
           <SignUp />
           <Metrics /> */}
-          <CalendarClass events={this.state.currentEvents} userID={this.state.userID}/>
+          <Routes>
+            <Route exact path="/" element={<CalendarClass events={this.state.currentEvents} userID={this.state.userID} />} />
+            <Route path="/share/appointment" element={<AppointmentShare userID={this.state.userID} />} />
+          </Routes>
           <h1>THIS CREATES A TODO ENTRY</h1>
           <TodoCreate userID={this.state.userID} categories={this.state.categories}/>
           <h1>THIS CREATES A CATEGORY</h1>
@@ -73,9 +79,10 @@ class App extends React.Component {
           <DeleteButton todoID={this.state.todoID}/>
           <TodoList todos={this.state.todos} />
         </div>
-      );
-    }
+      </Router>
+    );
   }
+}
 
 ReactDOM.createRoot(document.getElementById("app")).render(<App />);
 
