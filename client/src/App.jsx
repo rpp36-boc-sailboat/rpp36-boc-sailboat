@@ -6,6 +6,7 @@ import SignUp from "./Components/Accounts/SignUp.jsx";
 import Metrics from "./Components/Metrics/index.jsx";
 import CalendarClass from "./Components/Calendar.jsx";
 import TodoCreate from './Components/Forms/TodoCreate.jsx';
+import TodoList from './Components/CalendarInteraction/TodoList.jsx';
 import CategoryCreate from './Components/Forms/CategoryCreate.jsx';
 import DeleteButton from './Components/Forms/DeleteButton.jsx';
 import Modal from 'react-modal';
@@ -34,48 +35,47 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    let todos = [];
-    let categories = [];
     axios.get('/todos', {
       params: {
         id: this.state.userID
       }
     })
-    .then(result => result.data.map((option, i) => {
-      return todos.push(option)
-    }))
+    .then(result => {
+      this.setState({...this.state, todos: result.data});
+    })
+
     axios.get('/categories', {
       params: {
         id: this.state.userID
       }
     })
-    .then(result => result.data.map((option, i) => {
-      return categories.push({key: option.category, value: option.category_id})
-    }))
-    .then(this.setState({
-      todos: todos,
-      categories: categories
-    }))
+    .then(result => {
+      const categories = result.data.map((option, i) => {
+        return {key: option.category, value: option.category_id}
+      });
+      this.setState({...this.state, categories})
+    });
   }
 
   render() {
-    return (
-      <div>
-        <div>Encompass</div>
-        <SignIn />
-        <SignUp />
-        <Metrics />
-        <CalendarClass events={this.state.currentEvents} userID={this.state.userID}/>
-        <h1>THIS CREATES A TODO ENTRY</h1>
-        <TodoCreate userID={this.state.userID} categories={this.state.categories}/>
-        <h1>THIS CREATES A CATEGORY</h1>
-        <CategoryCreate userID={this.state.userID}/>
-        <h1>THIS DELETES SOMETHING</h1>
-        <DeleteButton todoID={this.state.todoID}/>
-      </div>
-    );
+      return (
+        <div>
+          <div>Encompass</div>
+          <SignIn />
+          <SignUp />
+          <Metrics />
+          <CalendarClass events={this.state.currentEvents} userID={this.state.userID}/>
+          <h1>THIS CREATES A TODO ENTRY</h1>
+          <TodoCreate userID={this.state.userID} categories={this.state.categories}/>
+          <h1>THIS CREATES A CATEGORY</h1>
+          <CategoryCreate userID={this.state.userID}/>
+          <h1>THIS DELETES SOMETHING</h1>
+          <DeleteButton todoID={this.state.todoID}/>
+          <TodoList todos={this.state.todos} />
+        </div>
+      );
+    }
   }
-}
 
 ReactDOM.createRoot(document.getElementById("app")).render(<App />);
 
