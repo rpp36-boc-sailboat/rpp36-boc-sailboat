@@ -77,6 +77,7 @@ class App extends React.Component {
           <CategoryCreate userID={this.state.userID}/>
           <h1>THIS DELETES SOMETHING</h1>
           <DeleteButton todoID={this.state.todoID}/>
+          <TodoList todos={this.state.todos} />
         </div>
       </Router>
     );
