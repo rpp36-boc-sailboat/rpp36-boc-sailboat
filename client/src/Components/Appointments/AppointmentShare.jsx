@@ -31,9 +31,11 @@ class AppointmentShare extends React.Component {
         id: this.props.userID
       }
     }).then((result) => {
-      result.data.map((option, i) => {
-        newApts.push(option)
-      })
+      if (result.data.length > 0) {
+        result.data.map((option, i) => {
+          newApts.push(option)
+        })
+      }
       return newApts;
     }).then((apts) => {
       this.setState({appointments: apts}, () => {

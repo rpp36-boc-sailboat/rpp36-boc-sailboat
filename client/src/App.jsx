@@ -65,12 +65,12 @@ class App extends React.Component {
       <Router>
         <div>
           <div>Encompass</div>
-          {/* <SignIn /> */}
-          {/* <SignUp /> */}
+          <SignIn />
+          <SignUp />
           <Metrics />
           <Routes>
-            <Route path="/" element={<CalendarClass events={this.state.currentEvents} userID={this.state.userID} />} />
-            <Route path="appointment" element={<AppointmentShare userID={this.state.userID} />} />
+            <Route exact path="/" element={<CalendarClass events={this.state.currentEvents} userID={this.state.userID} />} />
+            <Route path="/share/appointment" element={<AppointmentShare userID={this.state.userID} />} />
           </Routes>
           <h1>THIS CREATES A TODO ENTRY</h1>
           <TodoCreate userID={this.state.userID} categories={this.state.categories}/>

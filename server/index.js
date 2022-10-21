@@ -9,6 +9,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(express.static("client/public"));
+app.use('/share/*', express.static("client/public"));
 
 app.post('/todo', function(req, res) {
   db.createTodo(req.body)
@@ -46,9 +47,9 @@ app.get('/appointments', function(req, res) {
   .then(result => res.send(result))
 })
 
-app.get('*', (req,res) =>{
-  res.sendFile(path.join(__dirname, '..', 'client', 'public', 'index.html'));
-});
+// app.get('*', (req,res) =>{
+//   res.sendFile(path.join(__dirname, '..', 'client', 'public', 'index.html'));
+// });
 
 app.get("/test", (req, res) => {
   // res.send("Greetings!");
