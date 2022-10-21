@@ -1,6 +1,7 @@
 const express = require("express");
 const axios = require("axios");
 const db = require("../db/postgres.js");
+const path = require('path')
 const app = express();
 const port = 3000;
 
@@ -39,6 +40,15 @@ app.put('/bookedApt', function(req, res) {
   db.bookAppointment(req.body)
   .then(result => res.send(result))
 })
+
+app.get('/appointments', function(req, res) {
+  db.getAppointments(req.query.id)
+  .then(result => res.send(result))
+})
+
+app.get('*', (req,res) =>{
+  res.sendFile(path.join(__dirname, '..', 'client', 'public', 'index.html'));
+});
 
 app.get("/test", (req, res) => {
   // res.send("Greetings!");
