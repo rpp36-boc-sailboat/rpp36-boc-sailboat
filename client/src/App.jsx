@@ -81,6 +81,7 @@ class App extends React.Component {
       </Router>
     );
   }
+}
 
 ReactDOM.createRoot(document.getElementById("app")).render(<App />);
 
