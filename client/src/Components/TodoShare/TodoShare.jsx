@@ -3,12 +3,11 @@ import FullCalendar from '@fullcalendar/react' // must go before plugins
 import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
-import BookAptModal from './BookAptModal.jsx'
 import Modal from 'react-modal';
 import axios from 'axios';
 
 
-class AppointmentShare extends React.Component {
+class TodoShare extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -30,14 +29,16 @@ class AppointmentShare extends React.Component {
     const url = new URLSearchParams(window.location.search);
     const id = url.get('user_id');
 
-    axios.get('/appointments', {
+    axios.get('/todos', {
       params: {
         id: id
       }
     }).then((result) => {
       if (result.data.length > 0) {
         result.data.map((option, i) => {
-          newApts.push(option)
+          if (option.appointment === false) {
+            newApts.push(option)
+          }
         })
       }
       return newApts;
@@ -90,10 +91,9 @@ class AppointmentShare extends React.Component {
           events={this.state.appointments}
           eventClick={this.handleEventClick.bind(this)}
         />
-        <BookAptModal isOpen={this.state.bookOpen} onClose={this.closeModal.bind(this)} onEventBooked={e => this.onEventBooked(e)} selectedEventID={this.state.selectedEventID} />
       </React.Fragment>
     );
   }
 }
 
-export default AppointmentShare;
+export default TodoShare;
