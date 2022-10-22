@@ -43,12 +43,12 @@ class CalendarClass extends React.Component {
 
   shareClick(e) {
     if (e.target.value === 'calendar') {
-      let link = window.location.href + `/share/calendar/?user_id=${this.props.userID}`;
+      let link = window.location.href + `share/calendar/?user_id=${this.props.userID}`;
       navigator.clipboard.writeText(link).then((x) => {
         alert(`${link} copied to clipboard.`);
       })
     } else {
-      let link = window.location.href + `/share/appointment/?user_id=${this.props.userID}`;
+      let link = window.location.href + `share/appointment/?user_id=${this.props.userID}`;
       navigator.clipboard.writeText(link).then((x) => {
         alert(`${link} copied to clipboard.`);
       })
