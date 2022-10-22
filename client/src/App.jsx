@@ -10,6 +10,7 @@ import TodoList from './Components/CalendarInteraction/TodoList.jsx';
 import CategoryCreate from './Components/Forms/CategoryCreate.jsx';
 import DeleteButton from './Components/Forms/DeleteButton.jsx';
 import AppointmentShare from './Components/Appointments/AppointmentShare.jsx';
+import TodoShare from './Components/TodoShare/TodoShare.jsx';
 import Modal from 'react-modal';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
@@ -70,6 +71,7 @@ class App extends React.Component {
           <Routes>
             <Route exact path="/" element={<CalendarClass events={this.state.currentEvents} userID={this.state.userID} />} />
             <Route path="/share/appointment" element={<AppointmentShare userID={this.state.userID} />} />
+            <Route path="/share/calendar" element={<TodoShare userID={this.state.userID} />} />
           </Routes>
           <h1>THIS CREATES A TODO ENTRY</h1>
           <TodoCreate userID={this.state.userID} categories={this.state.categories}/>
