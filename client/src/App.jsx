@@ -71,13 +71,13 @@ class App extends React.Component {
             <Route exact path="/" element={<CalendarClass events={this.state.currentEvents} userID={this.state.userID} />} />
             <Route path="/share/appointment" element={<AppointmentShare userID={this.state.userID} />} />
           </Routes>
+          <TodoList todos={this.state.todos} />
           <h1>THIS CREATES A TODO ENTRY</h1>
           <TodoCreate userID={this.state.userID} categories={this.state.categories}/>
           <h1>THIS CREATES A CATEGORY</h1>
           <CategoryCreate userID={this.state.userID}/>
           <h1>THIS DELETES SOMETHING</h1>
           <DeleteButton todoID={this.state.todoID}/>
-          <TodoList todos={this.state.todos} />
         </div>
       </Router>
     );

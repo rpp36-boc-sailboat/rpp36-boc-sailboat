@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import FullCalendar from '@fullcalendar/react' // must go before plugins
 import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
-import interactionPlugin from '@fullcalendar/interaction'
+import interactionPlugin, { Draggable } from '@fullcalendar/interaction'
 import AddEventModal from './Appointments/AppointmentModal.jsx'
 import BookAptModal from './Appointments/BookAptModal.jsx'
 
@@ -40,6 +40,19 @@ class CalendarClass extends React.Component {
     this.setState({modalOpen: false});
   }
 
+  componentDidMount() {
+      let containerEl = document.getElementById('taskList');
+      new Draggable(containerEl, {
+      itemSelector: '.singleTodo',
+      eventData: function(eventEl) {
+        console.log(eventEl)
+        return {
+          title: eventEl.innerText
+        };
+      }
+    })
+  }
+
   render() {
     return (
       <React.Fragment>
@@ -48,7 +61,7 @@ class CalendarClass extends React.Component {
           ref={this.calendarRef}
           plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
           headerToolbar={{
-            left: 'prev,next today',
+            left: 'prev,next',
             center: 'title',
             right: 'dayGridMonth,timeGridWeek,timeGridDay'
           }}
@@ -60,6 +73,13 @@ class CalendarClass extends React.Component {
           dayMaxEvents={true}
           weekends={true}
           events={this.props.events}
+          draggable={true}
+          drop= {function(info) {
+            // is the "remove after drop" checkbox checked?
+              // if so, remove the element from the "Draggable Events" list
+              info.draggedEl.parentNode.removeChild(info.draggedEl);
+              console.log(info.draggedEl)
+          }}
         />
         <AddEventModal isOpen={this.state.modalOpen} onClose={this.closeModal.bind(this)} onEventAdded={e => this.onEventAdded(e)} userID={this.props.userID} />
       </React.Fragment>
