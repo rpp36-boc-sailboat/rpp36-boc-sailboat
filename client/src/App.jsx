@@ -17,10 +17,10 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <div>Encompass</div>
+        {/* <div>Encompass</div> */}
         {/* <SignUp /> */}
         <Metrics />
-        <Calendar />
+        {/* <Calendar /> */}
       </div>
     );
   }

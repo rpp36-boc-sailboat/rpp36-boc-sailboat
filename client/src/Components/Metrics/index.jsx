@@ -1,8 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import axios from "axios";
+import html2canvas from "html2canvas";
+import { jsPDF } from "jspdf";
 import { ReportPieChart } from "./Report_PieChart.jsx";
 import { ReportBarChart } from "./Report_BarChart.jsx";
+
 import ReportTable from "./Report_Table.jsx";
 
 class Metrics extends React.Component {
@@ -11,7 +14,7 @@ class Metrics extends React.Component {
     this.state = {
       allData: [],
       categoriesANDcolor: [],
-      categories: [],
+      categories: [], // NOT RESETTING when time/cat changes
       timeFrame: "Today",
       category: "All",
       // todos: [],
@@ -38,25 +41,6 @@ class Metrics extends React.Component {
         }
         this.setState({ categoriesANDcolor, categories, allData });
       });
-    // axios.get("/categories").then((allCategories) => {
-    //   let categoriesANDcolor = [];
-    //   let categories = [];
-    //   for (let cat of allCategories.data.results) {
-    //     categoriesANDcolor.push([cat.category, cat.color]);
-    //     if (!categories.includes(cat.category)) {
-    //       categories.push(cat.category);
-    //     }
-    //   }
-    //   this.setState({ categoriesANDcolor, categories });
-    // });
-
-    // axios.get("/allTodos").then((allToDos) => {
-    //   var todos = [];
-    //   for (var cat of allToDos.data.results) {
-    //     todos.push([cat.category_id, cat.start_time, cat.end_time]);
-    //   }
-    //   this.setState({ todos });
-    // });
   }
   specifyCategory(input, timeR) {
     axios
@@ -70,16 +54,16 @@ class Metrics extends React.Component {
         this.setState({ allData: allCatgData.data.results });
 
         let categoriesANDcolor = [];
-        // let categories = ["All"];
+        let categories = ["All"];
         for (let cat of allCatgData.data.results) {
           categoriesANDcolor.push([cat.category, cat.color]);
-          // if (!categories.includes(cat.category)) {
-          //   categories.push(cat.category);
-          // }
+          if (!categories.includes(cat.category)) {
+            categories.push(cat.category);
+          }
         }
         this.setState({
           categoriesANDcolor,
-          // categories,
+          categories,
           category: input,
           timeFrame: timeR,
         });
@@ -96,25 +80,77 @@ class Metrics extends React.Component {
       .then((allCompletedToDos) => {
         let allData = allCompletedToDos.data.results;
         let categoriesANDcolor = [];
-        // let categories = ["All"];
+        let categories = ["All"];
         for (let cat of allCompletedToDos.data.results) {
           categoriesANDcolor.push([cat.category, cat.color]);
-          // if (!categories.includes(cat.category)) {
-          //   categories.push(cat.category);
-          // }
+          if (!categories.includes(cat.category)) {
+            categories.push(cat.category);
+          }
         }
         this.setState({
           categoriesANDcolor,
-          // categories,
+          categories,
           allData,
           timeFrame: input,
         });
       });
   }
 
+  timeUpdated(input) {
+    console.log("hit", this.state.category);
+    // when invoked from table duration update, run the above three functions (or one at a time)
+
+    if (this.state.category === "All") {
+      axios
+        .get("/completedTasks", {
+          params: {
+            timeRange: "Today",
+            catg: "All",
+          },
+        })
+        .then((allCompletedToDos) => {
+          let allData = allCompletedToDos.data.results;
+          // console.log("xxx", allData);
+          let categoriesANDcolor = [];
+          let categories = ["All"];
+          for (let cat of allCompletedToDos.data.results) {
+            categoriesANDcolor.push([cat.category, cat.color]);
+            if (!categories.includes(cat.category)) {
+              categories.push(cat.category);
+            }
+          }
+          this.setState({ categoriesANDcolor, categories, allData });
+        });
+    } else {
+      this.specifyCategory(input, this.state.timeFrame);
+    }
+  }
+
+  printDocument() {
+    // console.log("inputRef", inputRef.current);
+    // const inputRef = useRef(null);
+    const printable = document.getElementById("Print");
+    html2canvas(printable, {
+      // width: 600,
+      // height: 600,
+      scale: 2,
+    })
+      .then((canvas) => {
+        // console.log("CANN", canvas);
+        const imgData = canvas.toDataURL("image/png");
+        const pdf = new jsPDF();
+        pdf.addImage(imgData, "JPEG", 0, 0);
+        pdf.save("Report.pdf");
+      })
+      .catch((err) => {
+        console.log("errrr", err);
+      });
+  }
+
   render() {
     return (
       <div>
+        <br></br>
         <div>
           <label htmlFor="timeframe">Timeframe:</label>
           <select
@@ -130,7 +166,7 @@ class Metrics extends React.Component {
             {/* <option value="Custom">Custom</option> */}
           </select>
         </div>
-
+        <br></br>
         <div>
           <label htmlFor="Category">Category:</label>
           <select
@@ -145,15 +181,27 @@ class Metrics extends React.Component {
             ))}
           </select>
         </div>
-        <ReportTable data={this.state.allData} />
+        <br></br>
 
-        {this.state.category === "All" ? (
-          <ReportPieChart data={this.state} />
-        ) : (
-          <ReportBarChart data={this.state} />
-        )}
+        <hr></hr>
 
-        <div> download report</div>
+        <div id="Print">
+          <ReportTable
+            data={this.state.allData}
+            timeUpdated={this.timeUpdated.bind(this)}
+          />
+          <br></br>
+          <hr></hr>
+          {this.state.category === "All" ? (
+            <ReportPieChart data={this.state} />
+          ) : (
+            <ReportBarChart data={this.state} />
+          )}
+        </div>
+        <br></br>
+        <button onClick={this.printDocument.bind(this)}>
+          Download Report (PDF)
+        </button>
       </div>
     );
   }

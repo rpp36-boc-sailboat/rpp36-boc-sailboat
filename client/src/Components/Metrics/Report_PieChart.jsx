@@ -5,7 +5,8 @@ import { Pie, Doughnut } from "react-chartjs-2";
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 export function ReportPieChart(props) {
-  // console.log("pro", props.data.allData);
+  // console.log("pro", props.data);
+  // console.log("here");
 
   var chartLegend = [];
   var chartColors = [];
@@ -68,6 +69,8 @@ export function ReportPieChart(props) {
   }
   catgDurations.totalTimeSpent = totalTimeSpent;
 
+  // console.log("xx", catgDurations);
+
   const data = {
     labels: chartLegend,
     datasets: [
@@ -95,5 +98,10 @@ export function ReportPieChart(props) {
     ],
   };
 
-  return <Pie data={data} />;
+  return (
+    <Pie
+      data={data}
+      // options={{ responsive: true, maintainAspectRatio: true }}
+    />
+  );
 }

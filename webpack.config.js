@@ -1,8 +1,8 @@
-var path = require('path');
-var SRC_DIR = path.join(__dirname, '/client/src');
-var DIST_DIR = path.join(__dirname, '/client/public');
+var path = require("path");
+var SRC_DIR = path.join(__dirname, "/client/src");
+var DIST_DIR = path.join(__dirname, "/client/public");
 // const CompressionPlugin = require('compression-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
   // mode: 'development',
@@ -12,6 +12,7 @@ module.exports = {
     path: DIST_DIR,
   },
   module: {
+    // noParse: [/html2canvas/],
     rules: [
       {
         test: /\.jsx?/,
@@ -33,14 +34,14 @@ module.exports = {
         test: /\.css$/,
         use: [
           { loader: MiniCssExtractPlugin.loader },
-          { loader: 'css-loader', options: { importLoaders: 1 } }
-        ]
-      }
+          { loader: "css-loader", options: { importLoaders: 1 } },
+        ],
+      },
     ],
   },
   plugins: [
     new MiniCssExtractPlugin({
-      filename: 'main.css'
-    })
+      filename: "main.css",
+    }),
   ],
 };
