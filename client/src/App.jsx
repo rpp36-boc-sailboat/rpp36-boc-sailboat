@@ -14,6 +14,7 @@ import TodoShare from './Components/TodoShare/TodoShare.jsx';
 import Modal from 'react-modal';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar/Nav.jsx"
+import Landing from "./components/Landing.jsx"
 
 Modal.setAppElement('#app');
 
@@ -22,7 +23,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      userID: 1,
+      userID: 2,
       todoID: 104,
       todos: [],
       categories: [
@@ -62,8 +63,10 @@ class App extends React.Component {
   }
 
   render() {
+    const status = this.state.userID >1
     return (
-      <BrowserRouter>
+      <>
+      {status && <BrowserRouter>
         {/* <div>
           <div>Encompass</div> */}
           {/* <SignUp />
@@ -80,21 +83,13 @@ class App extends React.Component {
           <CategoryCreate userID={this.state.userID}/> <DeleteButton todoID={this.state.todoID}/></>}></Route>
           <Route exact path ="/settings" element ={<>settings</>}></Route>
           <Route exact path ="/signout"  element ={<>signout</>}></Route>
-
-
-
         </Routes>
 
+      </BrowserRouter>}
+      {!status&& <Landing/>}
+      </>
 
-          {/* <h1>THIS CREATES A TODO ENTRY</h1>
-          <TodoCreate userID={this.state.userID} categories={this.state.categories}/>
-          <h1>THIS CREATES A CATEGORY</h1>
-          <CategoryCreate userID={this.state.userID}/>
-          <h1>THIS DELETES SOMETHING</h1>
-          <DeleteButton todoID={this.state.todoID}/>
-          <TodoList todos={this.state.todos} /> */}
 
-      </BrowserRouter>
     );
   }
 }
