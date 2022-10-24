@@ -106,8 +106,6 @@ class CalendarClass extends React.Component {
           events={this.props.events}
           draggable={true}
           drop= {function(info) {
-            // is the "remove after drop" checkbox checked?
-              // if so, remove the element from the "Draggable Events" list
               info.draggedEl.parentNode.removeChild(info.draggedEl);
               let time = info.dateStr;
               let todo_id = info.draggedEl.getAttribute('todoId');

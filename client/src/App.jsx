@@ -45,7 +45,7 @@ class App extends React.Component {
         if (start_time === undefined) unplannedEvents.push(todo);
         else currentEvents.push({todo_id, title: task, start: start_time, end: end_time});
       })
-      this.setState({...this.state, todos: result.data, currentEvents, unplannedEvents});
+      this.setState({todos: result.data, currentEvents, unplannedEvents});
     })
 
     axios.get('/categories', {
@@ -57,7 +57,8 @@ class App extends React.Component {
       const categories = result.data.map((option, i) => {
         return {key: option.category, value: option.category_id, color: option.color}
       });
-      this.setState({...this.state, categories})
+      console.log(categories);
+      this.setState({categories})
     });
   }
 
@@ -66,8 +67,8 @@ class App extends React.Component {
       <Router>
         <div>
           <div>Encompass</div>
-          <SignIn />
-          <SignUp />
+          {/* <SignIn />
+          <SignUp /> */}
           <Metrics />
           <Routes>
             <Route exact path="/" element={<CalendarClass events={this.state.currentEvents} userID={this.state.userID} />} />
