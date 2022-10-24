@@ -25,13 +25,13 @@ class TodoList extends React.Component {
   // }
 
   render() {
-    console.log(Array.isArray(this.props.todos));
+    // console.log(Array.isArray(this.props.todos));
     return (
-      <>
-        <Swiper slidesPerView={6} grid={{rows: 1}} spaceBetween={5} pagination={{clickable: true}} modules={[Grid, Pagination]}>
-          {this.props.todos.map((todo) => <SwiperSlide> <Todo todo={todo} /> </SwiperSlide>)}
+      <div id='taskList'>
+        <Swiper slidesPerView={6} grid={{rows: 1}} spaceBetween={10} pagination={{clickable: true}} modules={[Grid, Pagination]}>
+          {this.props.todos.map((todo) => <SwiperSlide> <Todo key={todo.todo_id} todo={todo} categories={this.props.categories}/> </SwiperSlide>)}
         </Swiper>
-      </>
+      </div>
     )
   }
 }
