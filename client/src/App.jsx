@@ -27,15 +27,9 @@ class App extends React.Component {
       todoID: 104,
       todos: [],
       categories: [
-        {key: 'None', value: 0},
-        {key: 'Option 1', value: 1},
-        {key: 'Option 2', value: 2},
-        {key: 'Option 3', value: 3},
-        {key: 'Option 4', value: 4},
-        {key: 'Option 5', value: 5},
-        {key: 'Other', value: 6}
       ],
-      currentEvents: [{id: 4, title: 'newEvent', date: '2022-10-17'}]
+      currentEvents: [],
+      unplannedEvents: []
     };
   }
 
@@ -46,7 +40,14 @@ class App extends React.Component {
       }
     })
     .then(result => {
-      this.setState({...this.state, todos: result.data});
+      let currentEvents = [];
+      let unplannedEvents = [];
+      result.data.forEach((todo) => {
+        var {todo_id, task, start_time, end_time} = todo;
+        if (start_time === undefined) unplannedEvents.push(todo);
+        else currentEvents.push({todo_id, title: task, start: start_time, end: end_time});
+      })
+      this.setState({...this.state, todos: result.data, currentEvents, unplannedEvents});
     })
 
     axios.get('/categories', {
@@ -56,7 +57,7 @@ class App extends React.Component {
     })
     .then(result => {
       const categories = result.data.map((option, i) => {
-        return {key: option.category, value: option.category_id}
+        return {key: option.category, value: option.category_id, color: option.color}
       });
       this.setState({...this.state, categories})
     });
