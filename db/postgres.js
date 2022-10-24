@@ -154,6 +154,28 @@ const editTodo = function(todo) {
   })
 }
 
+const setStartTime = function(todo_id, startTime) {
+  return pool
+  .connect()
+  .then(client => {
+    let time = startTime.includes('T') ? startTime.slice(0, 10).concat(' ', startTime.slice(11, 19)) : startTime;
+    let timestamp = time.length === 10 ? `'${time}','yyyy-mm-dd'` : `'${time}','yyyy-mm-dd HH24:MI:SS'`;
+    return client
+      .query(`
+      UPDATE todos SET start_time=TO_TIMESTAMP(${timestamp})
+      WHERE todo_id=${todo_id}
+      `)
+      .then(res => {
+        client.release();
+        return res.rows;
+      })
+      .catch(err => {
+        client.release();
+        console.log(err.stack);
+      })
+  })
+}
+
 module.exports = {
   pool,
   getTodos,
@@ -164,4 +186,5 @@ module.exports = {
   bookAppointment,
   getAppointments,
   editTodo,
+  setStartTime
 };
