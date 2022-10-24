@@ -61,6 +61,7 @@ class Metrics extends React.Component {
             categories.push(cat.category);
           }
         }
+        // console.log("cats", categories);
         this.setState({
           categoriesANDcolor,
           categories,
@@ -127,16 +128,11 @@ class Metrics extends React.Component {
   }
 
   printDocument() {
-    // console.log("inputRef", inputRef.current);
-    // const inputRef = useRef(null);
     const printable = document.getElementById("Print");
     html2canvas(printable, {
-      // width: 600,
-      // height: 600,
-      scale: 2,
+      scale: 1,
     })
       .then((canvas) => {
-        // console.log("CANN", canvas);
         const imgData = canvas.toDataURL("image/png");
         const pdf = new jsPDF();
         pdf.addImage(imgData, "JPEG", 0, 0);
@@ -208,6 +204,7 @@ class Metrics extends React.Component {
 }
 
 const CategoryList = (props) => {
+  console.log("cats", props);
   return <option value={`${props.cat}`}>{props.cat}</option>;
 };
 
