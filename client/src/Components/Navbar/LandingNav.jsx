@@ -3,12 +3,14 @@ import {Outlet,Link } from "react-router-dom";
 const LandingNav= () =>{
   return (
   <div>
-    <li>
-      <Link to="/">Landing</Link>
-    </li>
-    <li>
-      <Link to="/signup">signup</Link>
-    </li>
+    <ul>
+      <li>
+        <Link to="/"></Link>
+      </li>
+      <li>
+        <Link to="/signup">signup</Link>
+      </li>
+    </ul>
 
     <Outlet />
   </div>

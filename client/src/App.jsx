@@ -23,7 +23,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      userID: 2,
+      userID: 1,
       todoID: 104,
       todos: [],
       categories: [
@@ -64,7 +64,7 @@ class App extends React.Component {
   }
 
   render() {
-    const status = this.state.userID >1
+    const status = this.state.userID >=1
     return (
       <>
       {status && <BrowserRouter>
@@ -80,12 +80,10 @@ class App extends React.Component {
           </Route>
           <Route exact path ='/metrics' element={<Metrics />}></Route>
           <Route exact path ='/forms' element={<> <TodoCreate userID={this.state.userID} categories={this.state.categories}/>
-
           <CategoryCreate userID={this.state.userID}/> <DeleteButton todoID={this.state.todoID}/></>}></Route>
           <Route exact path ="/settings" element ={<>settings</>}></Route>
           <Route exact path ="/signout"  element ={<>signout</>}></Route>
         </Routes>
-
       </BrowserRouter>}
       {!status&& <Landing/>}
       </>

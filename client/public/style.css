@@ -32,3 +32,19 @@ label {
   -webkit-align-items: center;
   align-items: center;
 }
+
+.header {
+  padding: 4px;
+  background: #edf2f4;
+  border-bottom: 1px solid #999;
+}
+ul {
+  list-style-type: none;
+  margin: 0.5;
+  padding: 0.5;
+}
+
+li {
+  display: inline-block;
+  margin:auto;
+}
