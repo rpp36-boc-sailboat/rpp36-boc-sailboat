@@ -12,7 +12,8 @@ import DeleteButton from './Components/Forms/DeleteButton.jsx';
 import AppointmentShare from './Components/Appointments/AppointmentShare.jsx';
 import TodoShare from './Components/TodoShare/TodoShare.jsx';
 import Modal from 'react-modal';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Navbar from "./components/Navbar/Nav.jsx"
 
 Modal.setAppElement('#app');
 
@@ -62,26 +63,31 @@ class App extends React.Component {
 
   render() {
     return (
-      <Router>
-        <div>
-          <div>Encompass</div>
-          <SignIn />
-          <SignUp />
-          <Metrics />
-          <Routes>
-            <Route exact path="/" element={<CalendarClass events={this.state.currentEvents} userID={this.state.userID} />} />
+      <BrowserRouter>
+        {/* <div>
+          <div>Encompass</div> */}
+          {/* <SignUp />
+          <SignIn/> */}
+        {/* <Navbar/> */}
+        <Routes>
+          <Route path ="/" element ={<Navbar/>}>
+          {/* <Route exact path="/" element={<CalendarClass events={this.state.currentEvents} userID={this.state.userID} />} /> */}
             <Route path="/share/appointment" element={<AppointmentShare userID={this.state.userID} />} />
             <Route path="/share/calendar" element={<TodoShare userID={this.state.userID} />} />
-          </Routes>
-          <h1>THIS CREATES A TODO ENTRY</h1>
+            <Route path="metrics" element={<Metrics />} />
+          </Route>
+        </Routes>
+
+
+          {/* <h1>THIS CREATES A TODO ENTRY</h1>
           <TodoCreate userID={this.state.userID} categories={this.state.categories}/>
           <h1>THIS CREATES A CATEGORY</h1>
           <CategoryCreate userID={this.state.userID}/>
           <h1>THIS DELETES SOMETHING</h1>
           <DeleteButton todoID={this.state.todoID}/>
-          <TodoList todos={this.state.todos} />
-        </div>
-      </Router>
+          <TodoList todos={this.state.todos} /> */}
+
+      </BrowserRouter>
     );
   }
 }
