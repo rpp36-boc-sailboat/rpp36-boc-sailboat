@@ -6,6 +6,7 @@ import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
 import AddEventModal from './Appointments/AppointmentModal.jsx'
 import BookAptModal from './Appointments/BookAptModal.jsx'
+import axios from 'axios'
 
 class CalendarClass extends React.Component {
   constructor(props) {
@@ -19,6 +20,8 @@ class CalendarClass extends React.Component {
     this.onEventAdded.bind(this);
     this.closeModal.bind(this);
     this.shareClick.bind(this);
+    this.eventDropped.bind(this);
+    this.eventEditTime.bind(this);
     this.calendarRef = React.createRef(null);
   }
 
@@ -42,30 +45,36 @@ class CalendarClass extends React.Component {
   }
 
   shareClick(e) {
+    var link;
     if (e.target.value === 'calendar') {
-      let link = window.location.href + `share/calendar/?user_id=${this.props.userID}`;
-      var aux = document.createElement('input');
-      aux.setAttribute('value', link);
-      document.body.appendChild(aux);
-      aux.select();
-      document.execCommand('copy');
-      document.body.removeChild(aux);
-
-      // navigator.clipboard.writeText(link).then((x) => {
-        alert(`${link} copied to clipboard.`);
-      // })
+      link = window.location.href + `share/calendar/?user_id=${this.props.userID}`;
     } else {
-      let link = window.location.href + `share/appointment/?user_id=${this.props.userID}`;
-      var aux = document.createElement('input');
-      aux.setAttribute('value', link);
-      document.body.appendChild(aux);
-      aux.select();
-      document.execCommand('copy');
-      document.body.removeChild(aux);
-      // navigator.clipboard.writeText(link).then((x) => {
-        alert(`${link} copied to clipboard.`);
-      // })
+      link = window.location.href + `share/appointment/?user_id=${this.props.userID}`;
     }
+    var aux = document.createElement('input');
+    aux.setAttribute('value', link);
+    document.body.appendChild(aux);
+    aux.select();
+    document.execCommand('copy');
+    document.body.removeChild(aux);
+    alert(`Share link copied to clipboard.`);
+  }
+
+  eventDropped(e) {
+    let event = {
+      start: e.event.toPlainObject().start,
+      end: e.event.toPlainObject().end || null,
+      id: e.event.toPlainObject().id,
+    }
+    // axios.put('/todo', event);
+  }
+
+  eventEditTime(e) {
+    let event = {
+      end: e.event.toPlainObject().end,
+      id: e.event.toPlainObject().id,
+    }
+    // axios.put('/todo', event);
   }
 
   render() {
@@ -90,6 +99,8 @@ class CalendarClass extends React.Component {
           dayMaxEvents={true}
           weekends={true}
           events={this.props.events}
+          eventDrop={this.eventDropped.bind(this)}
+          eventResize={this.eventEditTime.bind(this)}
         />
         <AddEventModal isOpen={this.state.modalOpen} onClose={this.closeModal.bind(this)} onEventAdded={e => this.onEventAdded(e)} userID={this.props.userID} />
       </React.Fragment>

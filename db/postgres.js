@@ -137,6 +137,23 @@ const getAppointments = function(id) {
   })
 }
 
+const editTodo = function(todo) {
+  return pool
+  .connect()
+  .then(client => {
+    return client
+      .query(`UPDATE todos SET start_time=${todo.start}, end_time=${todo.end} WHERE todo_id=${todo.id}`)
+      .then(res => {
+        client.release();
+        return res.rows;
+      })
+      .catch(err => {
+        client.release();
+        console.log(err.stack);
+      })
+  })
+}
+
 module.exports = {
   pool,
   getTodos,
@@ -145,5 +162,6 @@ module.exports = {
   getCategories,
   createCategory,
   bookAppointment,
-  getAppointments
+  getAppointments,
+  editTodo,
 };
