@@ -10,6 +10,7 @@ import TodoList from './Components/CalendarInteraction/TodoList.jsx';
 import CategoryCreate from './Components/Forms/CategoryCreate.jsx';
 import DeleteButton from './Components/Forms/DeleteButton.jsx';
 import AppointmentShare from './Components/Appointments/AppointmentShare.jsx';
+import TodoShare from './Components/TodoShare/TodoShare.jsx';
 import Modal from 'react-modal';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
@@ -23,8 +24,15 @@ class App extends React.Component {
       userID: 1,
       todoID: 104,
       todos: [],
+<<<<<<< HEAD
       categories: [],
       currentEvents: [{id: 4, title: 'newEvent', date: '2022-10-17'}]
+=======
+      categories: [
+      ],
+      currentEvents: [],
+      unplannedEvents: []
+>>>>>>> c859b1fd0f6022a59b63092915705c3d9904780b
     };
   }
 
@@ -35,7 +43,14 @@ class App extends React.Component {
       }
     })
     .then(result => {
-      this.setState({...this.state, todos: result.data});
+      let currentEvents = [];
+      let unplannedEvents = [];
+      result.data.forEach((todo) => {
+        var {todo_id, task, start_time, end_time} = todo;
+        if (start_time === undefined) unplannedEvents.push(todo);
+        else currentEvents.push({todo_id, title: task, start: start_time, end: end_time});
+      })
+      this.setState({...this.state, todos: result.data, currentEvents, unplannedEvents});
     })
 
     axios.get('/categories', {
@@ -62,14 +77,15 @@ class App extends React.Component {
           <Routes>
             <Route exact path="/" element={<CalendarClass events={this.state.currentEvents} userID={this.state.userID} />} />
             <Route path="/share/appointment" element={<AppointmentShare userID={this.state.userID} />} />
+            <Route path="/share/calendar" element={<TodoShare userID={this.state.userID} />} />
           </Routes>
+          <TodoList todos={this.state.todos} categories={this.state.categories}/>
           <h1>THIS CREATES A TODO ENTRY</h1>
           <TodoCreate userID={this.state.userID} categories={this.state.categories}/>
           <h1>THIS CREATES A CATEGORY</h1>
           <CategoryCreate userID={this.state.userID}/>
           <h1>THIS DELETES SOMETHING</h1>
           <DeleteButton todoID={this.state.todoID}/>
-          <TodoList todos={this.state.todos} categories={this.state.categories} />
         </div>
       </Router>
     );

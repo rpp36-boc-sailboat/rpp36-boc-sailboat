@@ -1,4 +1,5 @@
 import React from 'react';
+
 class Todo extends React.Component {
   constructor(props) {
     super(props);
@@ -6,11 +7,11 @@ class Todo extends React.Component {
       backgroundColor: 'red'
     }
   }
+
   componentDidUpdate(prevProps) {
-    if (this.props.categories[0] !== prevProps.categories[0]) {
+    if (this.props.categories.length !== prevProps.categories.length) {
       for (var i = 0; i < this.props.categories.length; i++) {
         if (this.props.todo.category_id === this.props.categories[i].value) {
-          console.log(this.props.todo.category_id, this.props.categories[i].color)
           this.setState({
             backgroundColor: this.props.categories[i].color
           })
@@ -18,6 +19,7 @@ class Todo extends React.Component {
       }
     }
   }
+
   render() {
     return (
       <div className='singleTodo' key={this.props.todo_id} style={{background: this.state.backgroundColor}}>
