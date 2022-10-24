@@ -1370,8 +1370,9 @@ label {
 
 .swiper-slide {
   text-align: center;
+  width: auto;
+  height: auto;
   font-size: 14px;
-  background: rgb(126, 126, 126);
   height: calc((100% - 30px) / 2) !important;
 
   /* Center slide text vertically */
