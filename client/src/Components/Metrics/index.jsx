@@ -20,6 +20,7 @@ class Metrics extends React.Component {
       // todos: [],
     };
   }
+
   componentDidMount() {
     axios
       .get("/completedTasks", {
@@ -42,6 +43,7 @@ class Metrics extends React.Component {
         this.setState({ categoriesANDcolor, categories, allData });
       });
   }
+
   specifyCategory(input, timeR) {
     axios
       .get("/completedTasksPerCatg", {
@@ -70,6 +72,7 @@ class Metrics extends React.Component {
         });
       });
   }
+
   specifyTimeframe(input, catg) {
     axios
       .get("/completedTasks", {

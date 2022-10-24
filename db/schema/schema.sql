@@ -43,6 +43,8 @@ CREATE TABLE categories (
   UNIQUE (user_id, color)
 );
 
+SELECT setval('categories_category_id_seq', (SELECT MAX(category_id) FROM categories)+1);
+
 drop table if exists todos cascade;
 CREATE TABLE todos (
   todo_id SERIAL,
@@ -50,8 +52,8 @@ CREATE TABLE todos (
   task TEXT NOT NULL,
   description TEXT,
   category_id INT,
-  start_time TIMESTAMP,
-  end_time TIMESTAMP,
+  start_time TIMESTAMP DEFAULT NULL,
+  end_time TIMESTAMP DEFAULT NULL,
   completed BOOLEAN DEFAULT FALSE,
   appointment BOOLEAN DEFAULT FALSE,
 
@@ -65,6 +67,8 @@ CREATE TABLE todos (
   CONSTRAINT chk_task
     CHECK (char_length(task) <= 100)
 );
+
+SELECT setval('todos_todo_id_seq', (SELECT MAX(todo_id) FROM todos)+1);
 
 -- Load some preliminary data
 

@@ -1,4 +1,4 @@
-const pool = require("../db/postgres.js");
+const { pool } = require("../db/postgres.js");
 
 const findAllToDos_TR = (timeRange, catg, cb) => {
   let findAllToDosQuery;
