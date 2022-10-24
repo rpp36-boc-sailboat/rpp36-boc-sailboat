@@ -24,8 +24,7 @@ class App extends React.Component {
       userID: 1,
       todoID: 104,
       todos: [],
-      categories: [
-      ],
+      categories: [],
       currentEvents: [],
       unplannedEvents: []
     };

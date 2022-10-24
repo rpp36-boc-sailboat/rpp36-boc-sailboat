@@ -1371,8 +1371,9 @@ label {
 .swiper-slide {
   text-align: center;
   font-size: 14px;
-  background: rgb(126, 126, 126);
+  background: rgb(255, 255, 255);
   height: calc((100% - 30px) / 2) !important;
+  /* width: 60px; */
 
   /* Center slide text vertically */
   display: -webkit-box;

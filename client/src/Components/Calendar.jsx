@@ -77,17 +77,24 @@ class CalendarClass extends React.Component {
     let event = {
       start: e.event.toPlainObject().start,
       end: e.event.toPlainObject().end || null,
-      id: e.event.toPlainObject().id,
+      id: e.event.toPlainObject().extendedProps.todo_id,
     }
-    // axios.put('/todo', event);
+    axios.put('/todo', event)
+    .catch((err) => {
+      alert('unable to edit this event.');
+    });
   }
 
   eventEditTime(e) {
     let event = {
-      end: e.event.toPlainObject().end,
-      id: e.event.toPlainObject().id,
+      start: e.event.toPlainObject().start,
+      end: e.event.toPlainObject().end || null,
+      id: e.event.toPlainObject().extendedProps.todo_id,
     }
-    // axios.put('/todo', event);
+    axios.put('/todo', event)
+    .catch((err) => {
+      alert('unable to edit this event.');
+    });
   }
 
   render() {
