@@ -12,7 +12,9 @@ import DeleteButton from './Components/Forms/DeleteButton.jsx';
 import AppointmentShare from './Components/Appointments/AppointmentShare.jsx';
 import TodoShare from './Components/TodoShare/TodoShare.jsx';
 import Modal from 'react-modal';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Navbar from "./Components/Navbar/Nav.jsx"
+import Landing from "./Components/Landing.jsx"
 
 Modal.setAppElement('#app');
 
@@ -21,7 +23,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      userID: 1,
+      userID:1,
       todoID: 104,
       todos: [],
       categories: [
@@ -62,27 +64,31 @@ class App extends React.Component {
   }
 
   render() {
+    const status = this.state.userID >=1
     return (
-      <Router>
-        <div>
-          <div>Encompass</div>
-          <SignIn />
-          <SignUp />
-          <Metrics />
-          <Routes>
-            <Route exact path="/" element={<CalendarClass events={this.state.currentEvents} userID={this.state.userID} />} />
+      <>
+      {status && <BrowserRouter>
+        {/* <div>
+          <div>Encompass</div> */}
+          {/* <SignUp />
+          <SignIn/> */}
+        <Navbar/>
+        <Routes>
+          <Route exact path="/" element={<><TodoList todos={this.state.todos} /><CalendarClass events={this.state.currentEvents} userID={this.state.userID}/></>}>
             <Route path="/share/appointment" element={<AppointmentShare userID={this.state.userID} />} />
             <Route path="/share/calendar" element={<TodoShare userID={this.state.userID} />} />
-          </Routes>
-          <TodoList todos={this.state.todos} categories={this.state.categories}/>
-          <h1>THIS CREATES A TODO ENTRY</h1>
-          <TodoCreate userID={this.state.userID} categories={this.state.categories}/>
-          <h1>THIS CREATES A CATEGORY</h1>
-          <CategoryCreate userID={this.state.userID}/>
-          <h1>THIS DELETES SOMETHING</h1>
-          <DeleteButton todoID={this.state.todoID}/>
-        </div>
-      </Router>
+          </Route>
+          <Route exact path ='/metrics' element={<Metrics />}></Route>
+          <Route exact path ='/forms' element={<> <TodoCreate userID={this.state.userID} categories={this.state.categories}/>
+          <CategoryCreate userID={this.state.userID}/> <DeleteButton todoID={this.state.todoID}/></>}></Route>
+          <Route exact path ="/settings" element ={<>settings</>}></Route>
+          <Route exact path ="/signout"  element ={<>signout</>}></Route>
+        </Routes>
+      </BrowserRouter>}
+      {!status&& <Landing/>}
+      </>
+
+
     );
   }
 }
