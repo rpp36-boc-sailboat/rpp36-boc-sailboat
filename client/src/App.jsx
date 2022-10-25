@@ -45,7 +45,7 @@ class App extends React.Component {
       let unplannedEvents = [];
       result.data.forEach((todo) => {
         var {todo_id, task, start_time, end_time, category_id} = todo;
-        if (start_time === undefined) unplannedEvents.push(todo);
+        if (!start_time) unplannedEvents.push(todo);
         else currentEvents.push({todo_id, title: task, start: start_time, end: end_time, category_id});
       })
       this.setState({todos: result.data, currentEvents, unplannedEvents});
@@ -66,6 +66,7 @@ class App extends React.Component {
 
 
   render() {
+    console.log(this.state.unplannedEvents)
     const status = this.state.userID >=1
     return (
       <>
@@ -76,7 +77,7 @@ class App extends React.Component {
           <SignIn/> */}
         <Navbar/>
         <Routes>
-          <Route exact path="/" element={<><TodoList todos={this.state.todos} categories={this.state.categories} /><CalendarClass events={this.state.currentEvents} userID={this.state.userID} categories={this.state.categories}/></>}>
+          <Route exact path="/" element={<><TodoList todos={this.state.unplannedEvents} categories={this.state.categories} /><CalendarClass events={this.state.currentEvents} userID={this.state.userID} categories={this.state.categories}/></>}>
             <Route path="/share/appointment" element={<AppointmentShare userID={this.state.userID} />} />
             <Route path="/share/calendar" element={<TodoShare userID={this.state.userID} />} />
           </Route>
