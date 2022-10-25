@@ -89,18 +89,17 @@ class App extends React.Component {
           <SignIn/> */}
         <Navbar/>
         <Routes>
-          <Route exact path="/" element={<><TodoList todos={this.state.unplannedEvents}/><CalendarClass events={this.state.currentEvents} userID={this.state.userID}/></>}>
-            <Route path="/share/appointment" element={<AppointmentShare userID={this.state.userID} />} />
-            <Route path="/share/calendar" element={<TodoShare userID={this.state.userID} />} />
-          </Route>
+          <Route exact path="/" element={<><TodoList todos={this.state.unplannedEvents}/><CalendarClass events={this.state.currentEvents} userID={this.state.userID}/></>} />
+          <Route path="/share/appointment" element={<AppointmentShare userID={this.state.userID} />} />
+          <Route path="/share/calendar" element={<TodoShare userID={this.state.userID} />} />
           <Route exact path ='/metrics' element={<Metrics />}></Route>
           <Route exact path ='/forms' element={<> <TodoCreate userID={this.state.userID} categories={this.state.categories}/>
           <CategoryCreate userID={this.state.userID}/> <DeleteButton todoID={this.state.todoID}/></>}></Route>
-          <Route exact path ="/settings" element ={<>settings</>}></Route>
-          <Route exact path ="/signout"  element ={<>signout</>}></Route>
+          <Route path ="/settings" element ={<>settings</>}></Route>
+          <Route path ="/signout"  element ={<>signout</>}></Route>
         </Routes>
       </BrowserRouter>}
-      {!status&& <Landing/>}
+      {!status && <Landing/>}
       </>
     )
   }

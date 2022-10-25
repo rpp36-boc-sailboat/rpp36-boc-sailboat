@@ -54,6 +54,10 @@ app.get('/appointments', function(req, res) {
   .then(result => res.send(result))
 })
 
+app.put('/todo', function(req, res) {
+  db.editTodo(req.body)
+  .then(result => res.send(result))
+})
 // app.get('*', (req,res) =>{
 //   res.sendFile//(path.join(__dirname, '..', 'client', 'public', 'index.html'))/;
 // });
