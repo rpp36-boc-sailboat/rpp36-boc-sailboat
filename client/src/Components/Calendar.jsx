@@ -6,7 +6,9 @@ import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin, { Draggable } from '@fullcalendar/interaction'
 import AddEventModal from './Appointments/AppointmentModal.jsx'
 import BookAptModal from './Appointments/BookAptModal.jsx'
-import axios from "axios";
+import axios from 'axios'
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import EventAvailableIcon from '@mui/icons-material/EventAvailable';
 
 class CalendarClass extends React.Component {
   constructor(props) {
@@ -19,6 +21,8 @@ class CalendarClass extends React.Component {
     this.onEventAdded.bind(this);
     this.closeModal.bind(this);
     this.shareClick.bind(this);
+    this.eventDropped.bind(this);
+    this.eventEditTime.bind(this);
     this.calendarRef = React.createRef(null);
   }
 
@@ -64,38 +68,52 @@ class CalendarClass extends React.Component {
   }
 
   shareClick(e) {
-    if (e.target.value === 'calendar') {
-      let link = window.location.href + `share/calendar/?user_id=${this.props.userID}`;
-      var aux = document.createElement('input');
-      aux.setAttribute('value', link);
-      document.body.appendChild(aux);
-      aux.select();
-      document.execCommand('copy');
-      document.body.removeChild(aux);
-
-      // navigator.clipboard.writeText(link).then((x) => {
-        alert(`${link} copied to clipboard.`);
-      // })
+    var link;
+    console.log(e.target.value);
+    if (e.target.attributes[5].value === 'calendar') {
+      link = window.location.href + `share/calendar/?user_id=${this.props.userID}`;
     } else {
-      let link = window.location.href + `share/appointment/?user_id=${this.props.userID}`;
-      var aux = document.createElement('input');
-      aux.setAttribute('value', link);
-      document.body.appendChild(aux);
-      aux.select();
-      document.execCommand('copy');
-      document.body.removeChild(aux);
-      // navigator.clipboard.writeText(link).then((x) => {
-        alert(`${link} copied to clipboard.`);
-      // })
+      link = window.location.href + `share/appointment/?user_id=${this.props.userID}`;
     }
+    var aux = document.createElement('input');
+    aux.setAttribute('value', link);
+    document.body.appendChild(aux);
+    aux.select();
+    document.execCommand('copy');
+    document.body.removeChild(aux);
+    alert(`Share link copied to clipboard.`);
+  }
+
+  eventDropped(e) {
+    let event = {
+      start: e.event.toPlainObject().start,
+      end: e.event.toPlainObject().end || null,
+      id: e.event.toPlainObject().extendedProps.todo_id,
+    }
+    axios.put('/todo', event)
+    .catch((err) => {
+      alert('unable to edit this event.');
+    });
+  }
+
+  eventEditTime(e) {
+    let event = {
+      start: e.event.toPlainObject().start,
+      end: e.event.toPlainObject().end || null,
+      id: e.event.toPlainObject().extendedProps.todo_id,
+    }
+    axios.put('/todo', event)
+    .catch((err) => {
+      alert('unable to edit this event.');
+    });
   }
 
   render() {
     return (
       <React.Fragment>
         <button onClick={() => this.setState({modalOpen: true})}>Add Appointment</button>
-        <button value='calendar' onClick={this.shareClick.bind(this)}>Share Calendar</button>
-        <button value='appointment' onClick={this.shareClick.bind(this)}>Share Appointment</button>
+        <CalendarMonthIcon value={'calendar'} onClick={this.shareClick.bind(this)}>calendar</CalendarMonthIcon>
+        <EventAvailableIcon value={'appointment'} onClick={this.shareClick.bind(this)}>appointment</EventAvailableIcon>
         <FullCalendar
           ref={this.calendarRef}
           plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
@@ -115,6 +133,8 @@ class CalendarClass extends React.Component {
           selectMirror={true}
           dayMaxEvents={true}
           weekends={true}
+          eventDrop={this.eventDropped.bind(this)}
+          eventResize={this.eventEditTime.bind(this)}
           events={this.state.currentEvents}
           draggable={true}
           drop= {function(info) {

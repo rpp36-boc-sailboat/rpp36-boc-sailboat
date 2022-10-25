@@ -177,6 +177,40 @@ const getAppointments = function(id) {
   })
 }
 
+const editTodo = function(todo) {
+  if (!todo.end) {
+    return pool
+    .connect()
+    .then(client => {
+      return client
+        .query(`UPDATE todos SET start_time='${todo.start}', end_time=null WHERE todo_id=${todo.id}`)
+        .then(res => {
+          client.release();
+          return res.rows;
+        })
+        .catch(err => {
+          client.release();
+          console.log(err.stack);
+        })
+    })
+  } else {
+    return pool
+    .connect()
+    .then(client => {
+      return client
+        .query(`UPDATE todos SET start_time='${todo.start}', end_time='${todo.end}' WHERE todo_id=${todo.id}`)
+        .then(res => {
+          client.release();
+          return res.rows;
+        })
+        .catch(err => {
+          client.release();
+          console.log(err.stack);
+        })
+    })
+  }
+}
+
 const setStartTime = function(todo_id, startTime) {
   return pool
   .connect()
@@ -210,5 +244,6 @@ module.exports = {
   createCategory,
   bookAppointment,
   getAppointments,
+  editTodo,
   setStartTime
 };
