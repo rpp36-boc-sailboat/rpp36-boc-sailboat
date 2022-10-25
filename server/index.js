@@ -12,9 +12,17 @@ app.use(express.static("client/public"));
 app.use('/share/*', express.static("client/public"));
 
 app.post('/todo', function(req, res) {
-  db.createTodo(req.body)
-  .then(result => res.send(result))
-})
+  if (req.body.start && req.body.end) {
+    db.createTodoStartAndEnd(req.body)
+    .then(result => res.send(result))
+  } else if (req.body.start) {
+    db.createTodoStartOnly(req.body)
+    .then(result => res.send(result))
+  } else {
+    db.createTodo(req.body)
+    .then(result => res.send(result))
+  }
+ })
 
 app.get('/todos', function(req, res) {
   db.getTodos(req.query.id)
@@ -22,7 +30,6 @@ app.get('/todos', function(req, res) {
 })
 
 app.delete('/todos', function(req, res) {
-  console.log(req)
   db.deleteTodo(req.query.todoID)
   .then(res.send('DELETED'))
 })
