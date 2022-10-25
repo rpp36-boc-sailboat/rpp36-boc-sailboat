@@ -16,7 +16,7 @@ class Todo extends React.Component {
 
   render() {
     return (
-      <div className='singleTodo' key={this.props.todo_id} style={{background: this.state.backgroundColor}}>
+      <div className='singleTodo' data-todoid={this.props.todo.todo_id} key={this.props.todo.todo_id} style={{background: this.state.backgroundColor}}>
         <h4>{this.props.todo.task}</h4>
       </div>
     )

@@ -27,7 +27,8 @@ class App extends React.Component {
       categories: [
       ],
       currentEvents: [],
-      unplannedEvents: []
+      unplannedEvents: [],
+      categories: []
     };
   }
 
@@ -41,9 +42,9 @@ class App extends React.Component {
       let currentEvents = [];
       let unplannedEvents = [];
       result.data.forEach((todo) => {
-        var {todo_id, task, start_time, end_time} = todo;
+        var {todo_id, task, start_time, end_time, category_id} = todo;
         if (start_time === undefined) unplannedEvents.push(todo);
-        else currentEvents.push({todo_id, title: task, start: start_time, end: end_time});
+        else currentEvents.push({todo_id, title: task, start: start_time, end: end_time, category_id});
       })
       this.setState({todos: result.data, currentEvents, unplannedEvents});
     })
@@ -57,7 +58,6 @@ class App extends React.Component {
       const categories = result.data.map((option, i) => {
         return {key: option.category, value: option.category_id, color: option.color}
       });
-      console.log(categories);
       this.setState({categories})
     });
   }
@@ -71,7 +71,7 @@ class App extends React.Component {
           <SignUp /> */}
           <Metrics />
           <Routes>
-            <Route exact path="/" element={<CalendarClass events={this.state.currentEvents} userID={this.state.userID} />} />
+            <Route exact path="/" element={<CalendarClass events={this.state.currentEvents} userID={this.state.userID} categories={this.state.categories}/>} />
             <Route path="/share/appointment" element={<AppointmentShare userID={this.state.userID} />} />
             <Route path="/share/calendar" element={<TodoShare userID={this.state.userID} />} />
           </Routes>
