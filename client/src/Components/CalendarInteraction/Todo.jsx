@@ -4,19 +4,8 @@ class Todo extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      backgroundColor: 'white'
-    }
-  }
-
-  componentDidUpdate(prevProps) {
-    if (this.props.categories.length !== prevProps.categories.length) {
-      for (var i = 0; i < this.props.categories.length; i++) {
-        if (this.props.todo.category_id === this.props.categories[i].value) {
-          this.setState({
-            backgroundColor: this.props.categories[i].color
-          })
-        }
-      }
+      backgroundColor: props.color,
+      textColor: props.text
     }
   }
 
