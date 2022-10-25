@@ -42,29 +42,13 @@ class CalendarClass extends React.Component {
       itemSelector: '.singleTodo',
       eventData: function(eventEl) {
         return {
-          title: eventEl.innerText
+          title: eventEl.innerText,
+          backgroundColor: eventEl.getAttribute('background'),
+          borderColor: eventEl.getAttribute('background'),
+          textColor: eventEl.getAttribute('text')
         };
       }
     })
-  }
-
-  componentDidUpdate(prevProps) {
-    if (this.state.currentEvents.length === 0 && this.props.events.length !== 0
-      && this.props.categories.length !== 0) {
-      let categories = {};
-      this.props.categories.forEach((category) => {
-        categories[category.value] = [category.key, category.color];
-      })
-      this.props.events.map((event) => {
-        event['backgroundColor'] = categories[event.category_id][1];
-        event['borderColor'] = categories[event.category_id][1];
-        event['category'] = categories[event.category_id][0];
-        return event;
-      });
-      this.setState({
-        currentEvents: this.props.events
-      })
-    }
   }
 
   shareClick(e) {
@@ -135,16 +119,17 @@ class CalendarClass extends React.Component {
           weekends={true}
           eventDrop={this.eventDropped.bind(this)}
           eventResize={this.eventEditTime.bind(this)}
-          events={this.state.currentEvents}
+          events={this.props.events}
           draggable={true}
           drop= {function(info) {
+            console.log(info)
               info.draggedEl.parentNode.removeChild(info.draggedEl);
               let time = info.dateStr;
               let todo_id = info.draggedEl.getAttribute('data-todoid');
-              axios.put('/setTime', {
-                todo_id,
-                time
-              })
+              // axios.put('/setTime', {
+              //   todo_id,
+              //   time
+              // })
           }}
         />
         <AddEventModal isOpen={this.state.modalOpen} onClose={this.closeModal.bind(this)} onEventAdded={e => this.onEventAdded(e)} userID={this.props.userID} />
