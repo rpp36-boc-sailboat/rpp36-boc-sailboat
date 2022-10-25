@@ -5,19 +5,19 @@ import { Pie, Doughnut } from "react-chartjs-2";
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 export function ReportPieChart(props) {
-  // console.log("pro", props.data);
+  // console.log("pro", props);
   // console.log("here");
 
-  var chartLegend = [];
-  var chartColors = [];
-  for (var cat of props.data.categoriesANDcolor) {
+  let chartLegend = [];
+  let chartColors = [];
+  for (let cat of props.data.categoriesANDcolor) {
     if (!chartLegend.includes(cat[0])) {
       chartLegend.push(cat[0]);
       chartColors.push(cat[1]);
     }
   }
 
-  var catgDurations = {};
+  let catgDurations = {};
   for (let key of props.data.categories) {
     if (key !== "All") {
       catgDurations[key] = [];
@@ -37,28 +37,28 @@ export function ReportPieChart(props) {
 
   function secondsToHms(d) {
     d = Number(d);
-    var h = Math.floor(d / 3600);
-    var m = Math.floor((d % 3600) / 60);
-    var s = Math.floor((d % 3600) % 60);
+    let h = Math.floor(d / 3600);
+    let m = Math.floor((d % 3600) / 60);
+    let s = Math.floor((d % 3600) % 60);
 
-    var hDisplay = h > 0 ? h + (h == 1 ? " hour " : " hours ") : "";
-    var mDisplay = m > 0 ? m + (m == 1 ? " minute " : " minutes ") : "";
-    var sDisplay = s > 0 ? s + (s == 1 ? " second" : " seconds") : "";
+    let hDisplay = h > 0 ? h + (h == 1 ? " hour " : " hours ") : "";
+    let mDisplay = m > 0 ? m + (m == 1 ? " minute " : " minutes ") : "";
+    let sDisplay = s > 0 ? s + (s == 1 ? " second" : " seconds") : "";
     return hDisplay + mDisplay + sDisplay;
   }
 
-  var totalTimeSpent = 0;
-  var chartData = [];
+  let totalTimeSpent = 0;
+  let chartData = [];
   for (let catg in catgDurations) {
     let catgTotalSec = 0;
 
     for (let i = 0; i < catgDurations[catg].length; i++) {
-      var start = new Date(catgDurations[catg][i][0]);
-      var end = new Date(catgDurations[catg][i][1]);
+      let start = new Date(catgDurations[catg][i][0]);
+      let end = new Date(catgDurations[catg][i][1]);
 
-      var start_sec = start.getTime() / 1000;
-      var end_sec = end.getTime() / 1000;
-      var difference = Math.abs(start_sec - end_sec);
+      let start_sec = start.getTime() / 1000;
+      let end_sec = end.getTime() / 1000;
+      let difference = Math.abs(start_sec - end_sec);
       catgTotalSec += difference;
     }
 
@@ -68,8 +68,6 @@ export function ReportPieChart(props) {
     totalTimeSpent += catgTotalSec;
   }
   catgDurations.totalTimeSpent = totalTimeSpent;
-
-  // console.log("xx", catgDurations);
 
   const data = {
     labels: chartLegend,
@@ -98,9 +96,21 @@ export function ReportPieChart(props) {
     ],
   };
 
+  const options = {
+    plugins: {
+      legend: {
+        display: true,
+        // position: "bottom",
+        // align: "start",
+      },
+    },
+  };
+
   return (
     <Pie
+      className="charts"
       data={data}
+      options={options}
       // options={{ responsive: true, maintainAspectRatio: true }}
     />
   );

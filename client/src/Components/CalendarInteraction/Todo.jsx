@@ -1,11 +1,11 @@
-import React from 'react';
+import React from "react";
 
 class Todo extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      backgroundColor: 'red'
-    }
+      backgroundColor: "red",
+    };
   }
 
   componentDidUpdate(prevProps) {
@@ -13,8 +13,8 @@ class Todo extends React.Component {
       for (var i = 0; i < this.props.categories.length; i++) {
         if (this.props.todo.category_id === this.props.categories[i].value) {
           this.setState({
-            backgroundColor: this.props.categories[i].color
-          })
+            backgroundColor: this.props.categories[i].color,
+          });
         }
       }
     }
@@ -22,10 +22,14 @@ class Todo extends React.Component {
 
   render() {
     return (
-      <div className='singleTodo' key={this.props.todo_id} style={{background: this.state.backgroundColor}}>
+      <div
+        className="singleTodo"
+        key={this.props.todo_id}
+        style={{ background: this.state.backgroundColor }}
+      >
         <h4>{this.props.todo.task}</h4>
       </div>
-    )
+    );
   }
 }
 
