@@ -44,25 +44,6 @@ class CalendarClass extends React.Component {
     })
   }
 
-  componentDidUpdate(prevProps) {
-    if (this.state.currentEvents.length === 0 && this.props.events.length !== 0
-      && this.props.categories.length !== 0) {
-      let categories = {};
-      this.props.categories.forEach((category) => {
-        categories[category.value] = [category.key, category.color];
-      })
-      this.props.events.map((event) => {
-        event['backgroundColor'] = categories[event.category_id][1];
-        event['borderColor'] = categories[event.category_id][1];
-        event['category'] = categories[event.category_id][0];
-        return event;
-      });
-      this.setState({
-        currentEvents: this.props.events
-      })
-    }
-  }
-
   shareClick(e) {
     if (e.target.value === 'calendar') {
       let link = window.location.href + `share/calendar/?user_id=${this.props.userID}`;
@@ -115,7 +96,7 @@ class CalendarClass extends React.Component {
           selectMirror={true}
           dayMaxEvents={true}
           weekends={true}
-          events={this.state.currentEvents}
+          events={this.props.events}
           draggable={true}
           drop= {function(info) {
               info.draggedEl.parentNode.removeChild(info.draggedEl);
