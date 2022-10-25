@@ -65,13 +65,16 @@ class App extends React.Component {
       let unplannedEvents = [];
       let todos = this.state.todos.map((todo) => {
         var {todo_id, task, start_time, end_time, category_id} = todo;
-        let [color, category] = this.state.categoryColors[category_id];
+        var [color, category] = this.state.categoryColors[category_id];
+        var [red, blue, green] = [parseInt(color.slice(1, 3), 16), parseInt(color.slice(3, 5), 16), parseInt(color.slice(5, 7), 16)];
+        var text = (red*0.299 + green*0.587 + blue*0.114) > 186 ? '#000000' : '#ffffff';
         todo['backgroundColor'] = color;
         todo['borderColor'] = color;
         todo['category'] = category;
+        todo['textColor'] = text;
         if (!start_time) unplannedEvents.push(todo);
         else currentEvents.push({todo_id, title: task, start: start_time,
-          end: end_time, category_id, backgroundColor: color, borderColor: color});
+          end: end_time, category_id, backgroundColor: color, borderColor: color, textColor: text});
         return todo;
       })
       this.setState({currentEvents, unplannedEvents, todos});
