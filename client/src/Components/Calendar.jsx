@@ -7,6 +7,8 @@ import interactionPlugin, { Draggable } from '@fullcalendar/interaction'
 import AddEventModal from './Appointments/AppointmentModal.jsx'
 import BookAptModal from './Appointments/BookAptModal.jsx'
 import axios from 'axios'
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import EventAvailableIcon from '@mui/icons-material/EventAvailable';
 
 class CalendarClass extends React.Component {
   constructor(props) {
@@ -59,7 +61,7 @@ class CalendarClass extends React.Component {
 
   shareClick(e) {
     var link;
-    if (e.target.value === 'calendar') {
+    if (e.target.attributes[5].value === 'calendar') {
       link = window.location.href + `share/calendar/?user_id=${this.props.userID}`;
     } else {
       link = window.location.href + `share/appointment/?user_id=${this.props.userID}`;
@@ -101,8 +103,8 @@ class CalendarClass extends React.Component {
     return (
       <React.Fragment>
         <button onClick={() => this.setState({modalOpen: true})}>Add Appointment</button>
-        <button value='calendar' onClick={this.shareClick.bind(this)}>Share Calendar</button>
-        <button value='appointment' onClick={this.shareClick.bind(this)}>Share Appointment</button>
+        <CalendarMonthIcon value={'calendar'} onClick={this.shareClick.bind(this)}>calendar</CalendarMonthIcon>
+        <EventAvailableIcon value={'appointment'} onClick={this.shareClick.bind(this)}>appointment</EventAvailableIcon>
         <FullCalendar
           ref={this.calendarRef}
           plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}

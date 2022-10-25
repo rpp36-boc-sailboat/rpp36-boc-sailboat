@@ -65,16 +65,6 @@ class App extends React.Component {
   render() {
     const status = this.state.userID >=1
     return (
-<<<<<<< HEAD
-      <Router>
-        <div>
-          <div>Encompass</div>
-          {/* <SignIn />
-          <SignUp />
-          <Metrics /> */}
-          <Routes>
-            <Route exact path="/" element={<CalendarClass events={this.state.currentEvents} userID={this.state.userID} />} />
-=======
       <>
       {status && <BrowserRouter>
         {/* <div>
@@ -83,16 +73,15 @@ class App extends React.Component {
           <SignIn/> */}
         <Navbar/>
         <Routes>
-          <Route exact path="/" element={<><TodoList todos={this.state.todos} /><CalendarClass events={this.state.currentEvents} userID={this.state.userID}/></>}>
->>>>>>> 9656babeb6e105f1bf572e84ec05bb6a48f2bca7
-            <Route path="/share/appointment" element={<AppointmentShare userID={this.state.userID} />} />
-            <Route path="/share/calendar" element={<TodoShare userID={this.state.userID} />} />
-          </Route>
-          <Route exact path ='/metrics' element={<Metrics />}></Route>
-          <Route exact path ='/forms' element={<> <TodoCreate userID={this.state.userID} categories={this.state.categories}/>
+          <Route path="/" element={<>{<TodoList todos={this.state.todos} />}<CalendarClass events={this.state.currentEvents} userID={this.state.userID}/></>}/>
+          <Route path="/share/appointment" element={<AppointmentShare userID={this.state.userID} />} />
+          <Route path="/share/calendar" element={<TodoShare userID={this.state.userID} />} />
+          {/* </Route> */}
+          <Route path ='/metrics' element={<Metrics />}></Route>
+          <Route path ='/forms' element={<> <TodoCreate userID={this.state.userID} categories={this.state.categories}/>
           <CategoryCreate userID={this.state.userID}/> <DeleteButton todoID={this.state.todoID}/></>}></Route>
-          <Route exact path ="/settings" element ={<>settings</>}></Route>
-          <Route exact path ="/signout"  element ={<>signout</>}></Route>
+          <Route path ="/settings" element ={<>settings</>}></Route>
+          <Route path ="/signout"  element ={<>signout</>}></Route>
         </Routes>
       </BrowserRouter>}
       {!status&& <Landing/>}

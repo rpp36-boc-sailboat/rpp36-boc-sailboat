@@ -41,6 +41,7 @@ class TodoShare extends React.Component {
           }
         })
       }
+      console.log(newApts);
       return newApts;
     }).then((apts) => {
       this.setState({appointments: apts}, () => {
