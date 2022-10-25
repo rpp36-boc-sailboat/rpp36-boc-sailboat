@@ -207,7 +207,7 @@ class Metrics extends React.Component {
 }
 
 const CategoryList = (props) => {
-  console.log("cats", props);
+  // console.log("cats", props);
   return <option value={`${props.cat}`}>{props.cat}</option>;
 };
 
