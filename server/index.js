@@ -18,6 +18,9 @@ app.post('/todo', function(req, res) {
   } else if (req.body.start) {
     db.createTodoStartOnly(req.body)
     .then(result => res.send(result))
+  } else if (req.body.end) {
+    db.createTodoEndOnly(req.body)
+    .then(result => res.send(result))
   } else {
     db.createTodo(req.body)
     .then(result => res.send(result))
