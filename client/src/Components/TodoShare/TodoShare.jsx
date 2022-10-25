@@ -41,7 +41,6 @@ class TodoShare extends React.Component {
           }
         })
       }
-      console.log(newApts);
       return newApts;
     }).then((apts) => {
       this.setState({appointments: apts}, () => {
@@ -78,9 +77,13 @@ class TodoShare extends React.Component {
           ref={this.appointmentRef}
           plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
           headerToolbar={{
-            left: 'prev,next today',
-            center: 'title',
-            right: 'dayGridMonth,timeGridWeek,timeGridDay'
+            start: 'title',
+            center: '',
+            end: 'dayGridMonth,timeGridWeek,timeGridDay'
+          }}
+          footerToolbar={{
+            left: 'prev,next',
+            right: 'today'
           }}
           initialView='dayGridMonth'
           views={{dayGridMonth: { titleFormat: {year: 'numeric', month: 'short'}}, day: { titleFormat: {year: 'numeric', month: 'short', day: '2-digit'}}}}

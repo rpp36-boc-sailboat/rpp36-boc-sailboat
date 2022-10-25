@@ -69,6 +69,7 @@ class CalendarClass extends React.Component {
 
   shareClick(e) {
     var link;
+    console.log(e.target.value);
     if (e.target.attributes[5].value === 'calendar') {
       link = window.location.href + `share/calendar/?user_id=${this.props.userID}`;
     } else {
