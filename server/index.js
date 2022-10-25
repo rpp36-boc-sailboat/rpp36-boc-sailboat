@@ -12,9 +12,17 @@ app.use(express.static("client/public"));
 app.use('/share/*', express.static("client/public"));
 
 app.post('/todo', function(req, res) {
-  db.createTodo(req.body)
-  .then(result => res.send(result))
-})
+  if (req.body.start && req.body.end) {
+    db.createTodoStartAndEnd(req.body)
+    .then(result => res.send(result))
+  } else if (req.body.start) {
+    db.createTodoStartOnly(req.body)
+    .then(result => res.send(result))
+  } else {
+    db.createTodo(req.body)
+    .then(result => res.send(result))
+  }
+ })
 
 app.get('/todo', function(req, res) {
   db.getOneTodo(req.query.id)
@@ -27,7 +35,6 @@ app.get('/todos', function(req, res) {
 })
 
 app.delete('/todos', function(req, res) {
-  console.log(req)
   db.deleteTodo(req.query.todoID)
   .then(res.send('DELETED'))
 })
@@ -52,8 +59,12 @@ app.get('/appointments', function(req, res) {
   .then(result => res.send(result))
 })
 
+app.put('/todo', function(req, res) {
+  db.editTodo(req.body)
+  .then(result => res.send(result))
+})
 // app.get('*', (req,res) =>{
-//   res.sendFile(path.join(__dirname, '..', 'client', 'public', 'index.html'));
+//   res.sendFile//(path.join(__dirname, '..', 'client', 'public', 'index.html'))/;
 // });
 
 app.get("/test", (req, res) => {

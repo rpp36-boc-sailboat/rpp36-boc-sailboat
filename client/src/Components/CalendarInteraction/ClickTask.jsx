@@ -13,14 +13,12 @@ class ClickTask extends React.Component {
   }
 
   componentDidMount() {
-    console.log(this.props.taskID);
     axios.get('/todo', {
       params: {
         id: this.props.taskID
       }
     })
     .then(result => {
-      console.log(result.data);
       this.setState({currentTask: result.data[0]})
     })
 }
@@ -40,13 +38,13 @@ class ClickTask extends React.Component {
 }
 
   render() {
-    console.log(this.state.currentTask);
     if (this.state.currentTask) {
       return (
         <Modal style={{content: {width: '250px', height: '200px'}, overlay: {color: 'black', zIndex: 99999}}} isOpen={this.props.isOpen} onRequestClose={this.props.onClose}>
           <div id='detailedTask'>
             <h3>{this.state.currentTask.task}</h3>
-            <h5>{(new Date(this.state.currentTask.start_time).toDateString())} - {(new Date(this.state.currentTask.end_time).toDateString())}</h5>
+            <p>{(new Date(this.state.currentTask.start_time).toLocaleDateString())} - {(new Date(this.state.currentTask.end_time).toLocaleDateString())}<br/>
+            {(new Date(this.state.currentTask.start_time).toLocaleTimeString())} - {(new Date(this.state.currentTask.end_time).toLocaleTimeString())}</p>
             <p>{this.state.currentTask.description}</p>
             <DeleteIcon style={{cursor: 'pointer'}} onClick={() => this.deleteTask()}/>
           </div>
