@@ -23,13 +23,14 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      userID:1,
+      userID: 1,
       todoID: 104,
       todos: [],
       categories: [
       ],
       currentEvents: [],
-      unplannedEvents: []
+      unplannedEvents: [],
+      categories: []
     };
   }
 
@@ -43,11 +44,11 @@ class App extends React.Component {
       let currentEvents = [];
       let unplannedEvents = [];
       result.data.forEach((todo) => {
-        var {todo_id, task, start_time, end_time} = todo;
-        if (start_time === undefined) unplannedEvents.push(todo);
-        else currentEvents.push({todo_id, title: task, start: start_time, end: end_time});
+        var {todo_id, task, start_time, end_time, category_id} = todo;
+        if (!start_time) unplannedEvents.push(todo);
+        else currentEvents.push({todo_id, title: task, start: start_time, end: end_time, category_id});
       })
-      this.setState({...this.state, todos: result.data, currentEvents, unplannedEvents});
+      this.setState({todos: result.data, currentEvents, unplannedEvents});
     })
 
     axios.get('/categories', {
@@ -59,11 +60,13 @@ class App extends React.Component {
       const categories = result.data.map((option, i) => {
         return {key: option.category, value: option.category_id, color: option.color}
       });
-      this.setState({...this.state, categories})
+      this.setState({categories})
     });
   }
 
+
   render() {
+    console.log(this.state.unplannedEvents)
     const status = this.state.userID >=1
     return (
       <>
@@ -74,7 +77,7 @@ class App extends React.Component {
           <SignIn/> */}
         <Navbar/>
         <Routes>
-          <Route exact path="/" element={<><TodoList todos={this.state.todos} /><CalendarClass events={this.state.currentEvents} userID={this.state.userID}/></>}>
+          <Route exact path="/" element={<><TodoList todos={this.state.unplannedEvents} categories={this.state.categories} /><CalendarClass events={this.state.currentEvents} userID={this.state.userID} categories={this.state.categories}/></>}>
             <Route path="/share/appointment" element={<AppointmentShare userID={this.state.userID} />} />
             <Route path="/share/calendar" element={<TodoShare userID={this.state.userID} />} />
           </Route>
@@ -87,9 +90,7 @@ class App extends React.Component {
       </BrowserRouter>}
       {!status&& <Landing/>}
       </>
-
-
-    );
+    )
   }
 }
 

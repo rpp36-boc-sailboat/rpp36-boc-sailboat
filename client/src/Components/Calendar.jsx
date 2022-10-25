@@ -16,21 +16,10 @@ class CalendarClass extends React.Component {
       currentEvents: [],
       modalOpen: false,
     }
-    this.addEvents = this.addEvents.bind(this);
     this.onEventAdded.bind(this);
     this.closeModal.bind(this);
     this.shareClick.bind(this);
     this.calendarRef = React.createRef(null);
-  }
-
-  addEvents(title, date) {
-    let current = this.state.currentEvents;
-    current.push({
-      title, date
-    })
-    this.setState({
-      current
-    });
   }
 
   onEventAdded(e) {
@@ -53,6 +42,25 @@ class CalendarClass extends React.Component {
         };
       }
     })
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.state.currentEvents.length === 0 && this.props.events.length !== 0
+      && this.props.categories.length !== 0) {
+      let categories = {};
+      this.props.categories.forEach((category) => {
+        categories[category.value] = [category.key, category.color];
+      })
+      this.props.events.map((event) => {
+        event['backgroundColor'] = categories[event.category_id][1];
+        event['borderColor'] = categories[event.category_id][1];
+        event['category'] = categories[event.category_id][0];
+        return event;
+      });
+      this.setState({
+        currentEvents: this.props.events
+      })
+    }
   }
 
   shareClick(e) {
@@ -92,9 +100,13 @@ class CalendarClass extends React.Component {
           ref={this.calendarRef}
           plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
           headerToolbar={{
+            start: 'title',
+            center: '',
+            end: 'dayGridMonth,timeGridWeek,timeGridDay'
+          }}
+          footerToolbar={{
             left: 'prev,next',
-            center: 'title',
-            right: 'dayGridMonth,timeGridWeek,timeGridDay'
+            right: 'today'
           }}
           initialView='dayGridMonth'
           views={{dayGridMonth: { titleFormat: {year: 'numeric', month: 'short'}}, day: { titleFormat: {year: 'numeric', month: 'short', day: '2-digit'}}}}
@@ -103,14 +115,12 @@ class CalendarClass extends React.Component {
           selectMirror={true}
           dayMaxEvents={true}
           weekends={true}
-          events={this.props.events}
+          events={this.state.currentEvents}
           draggable={true}
           drop= {function(info) {
-            // is the "remove after drop" checkbox checked?
-              // if so, remove the element from the "Draggable Events" list
               info.draggedEl.parentNode.removeChild(info.draggedEl);
               let time = info.dateStr;
-              let todo_id = info.draggedEl.getAttribute('todoId');
+              let todo_id = info.draggedEl.getAttribute('data-todoid');
               axios.put('/setTime', {
                 todo_id,
                 time
