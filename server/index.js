@@ -47,10 +47,16 @@ app.get('/appointments', function(req, res) {
   .then(result => res.send(result))
 })
 
+<<<<<<< HEAD
 app.put('/todo', function(req, res) {
   db.editTodo(req.body)
   .then(result => res.send(result))
 })
+=======
+// app.get('*', (req,res) =>{
+//   res.sendFile//(path.join(__dirname, '..', 'client', 'public', 'index.html'))/;
+// });
+>>>>>>> 9656babeb6e105f1bf572e84ec05bb6a48f2bca7
 
 app.get("/test", (req, res) => {
   // res.send("Greetings!");
