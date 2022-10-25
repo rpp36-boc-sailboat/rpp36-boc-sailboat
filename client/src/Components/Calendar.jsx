@@ -6,6 +6,7 @@ import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin, { Draggable } from '@fullcalendar/interaction'
 import AddEventModal from './Appointments/AppointmentModal.jsx'
 import BookAptModal from './Appointments/BookAptModal.jsx'
+import ClickTask from './CalendarInteraction/ClickTask.jsx'
 import axios from "axios";
 
 class CalendarClass extends React.Component {
@@ -15,6 +16,9 @@ class CalendarClass extends React.Component {
       weekendsVisible: true,
       currentEvents: [],
       modalOpen: false,
+      modalTask: false,
+      selectedTaskID: null,
+      selectedTask: null
     }
     this.addEvents = this.addEvents.bind(this);
     this.onEventAdded.bind(this);
@@ -42,6 +46,10 @@ class CalendarClass extends React.Component {
     this.setState({modalOpen: false});
   }
 
+  closeTask() {
+    this.setState({modalTask: false});
+  }
+
   componentDidMount() {
       let containerEl = document.getElementById('taskList');
       new Draggable(containerEl, {
@@ -53,6 +61,11 @@ class CalendarClass extends React.Component {
         };
       }
     })
+  }
+
+  handleEventClick(e) {
+    console.log('is it working', e.event.toPlainObject());
+    this.setState({modalTask: true, selectedTaskID: e.event.toPlainObject().extendedProps.todo_id, selectedTask: e});
   }
 
   shareClick(e) {
@@ -83,6 +96,11 @@ class CalendarClass extends React.Component {
   }
 
   render() {
+    // if (this.state.openTask === true) {
+    //   return (
+    //     <ClickTask openTask={this.state.openTask} userID={this.state.selectedTaskID}/>
+    //   )
+    // }
     return (
       <React.Fragment>
         <button onClick={() => this.setState({modalOpen: true})}>Add Appointment</button>
@@ -104,6 +122,7 @@ class CalendarClass extends React.Component {
           dayMaxEvents={true}
           weekends={true}
           events={this.props.events}
+          eventClick={this.handleEventClick.bind(this)}
           draggable={true}
           drop= {function(info) {
             // is the "remove after drop" checkbox checked?
@@ -118,6 +137,7 @@ class CalendarClass extends React.Component {
           }}
         />
         <AddEventModal isOpen={this.state.modalOpen} onClose={this.closeModal.bind(this)} onEventAdded={e => this.onEventAdded(e)} userID={this.props.userID} />
+        {this.state.modalTask === true ? <ClickTask isOpen={this.state.modalTask} taskID={this.state.selectedTaskID} taskEvent={this.state.selectedTask} onClose={this.closeTask.bind(this)}/> : null}
       </React.Fragment>
     );
   }

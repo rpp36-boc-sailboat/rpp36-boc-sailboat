@@ -24,15 +24,9 @@ class App extends React.Component {
       userID: 1,
       todoID: 104,
       todos: [],
-<<<<<<< HEAD
       categories: [],
-      currentEvents: [{id: 4, title: 'newEvent', date: '2022-10-17'}]
-=======
-      categories: [
-      ],
       currentEvents: [],
       unplannedEvents: []
->>>>>>> c859b1fd0f6022a59b63092915705c3d9904780b
     };
   }
 
