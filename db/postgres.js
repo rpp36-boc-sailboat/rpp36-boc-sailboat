@@ -145,7 +145,7 @@ const setStartTime = function(todo_id, startTime) {
     let timestamp = time.length === 10 ? `'${time}','yyyy-mm-dd'` : `'${time}','yyyy-mm-dd HH24:MI:SS'`;
     return client
       .query(`
-      UPDATE todos SET start_time=TO_TIMESTAMP(${timestamp})
+      UPDATE todos SET start_time=TO_TIMESTAMP(${timestamp}), end_time=TO_TIMESTAMP(${timestamp})+(30 * interval '1 minute')
       WHERE todo_id=${todo_id}
       `)
       .then(res => {

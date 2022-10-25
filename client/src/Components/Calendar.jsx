@@ -49,11 +49,12 @@ class CalendarClass extends React.Component {
       && this.props.categories.length !== 0) {
       let categories = {};
       this.props.categories.forEach((category) => {
-        categories[category.value] = category.color;
+        categories[category.value] = [category.key, category.color];
       })
       this.props.events.map((event) => {
-        event['backgroundColor'] = categories[event.category_id];
-        event['borderColor'] = categories[event.category_id];
+        event['backgroundColor'] = categories[event.category_id][1];
+        event['borderColor'] = categories[event.category_id][1];
+        event['category'] = categories[event.category_id][0];
         return event;
       });
       this.setState({
