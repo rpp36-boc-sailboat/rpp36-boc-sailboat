@@ -1,6 +1,9 @@
 import React from 'react';
 import {Outlet,Link } from "react-router-dom";
-
+import BarChartIcon from '@mui/icons-material/BarChart';
+import AddTaskIcon from '@mui/icons-material/AddTask';
+import SettingsApplicationsIcon from '@mui/icons-material/SettingsApplications';
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 const Navbar= () =>{
   return (
   <div className ="header">
@@ -12,17 +15,19 @@ const Navbar= () =>{
       </li>
       <li>
         <Link to="/metrics">
-        <button>Metrics</button></Link>
+        <BarChartIcon/></Link>
       </li>
       <li>
-        <Link to="/forms"><button>Todo</button></Link>
+        <Link to="/forms">
+        <AddTaskIcon/>
+        </Link>
       </li>
       <li>
         <Link to="/settings">
-        <button>Settings</button></Link>
+        <SettingsApplicationsIcon/></Link>
       </li>
       <li>
-        <Link to="/signout"><button>Signout</button>
+        <Link to="/signout"><ExitToAppIcon/>
         </Link>
       </li>
       <Outlet />

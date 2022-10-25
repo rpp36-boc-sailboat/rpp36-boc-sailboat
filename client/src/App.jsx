@@ -13,8 +13,8 @@ import AppointmentShare from './Components/Appointments/AppointmentShare.jsx';
 import TodoShare from './Components/TodoShare/TodoShare.jsx';
 import Modal from 'react-modal';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Navbar from "./components/Navbar/Nav.jsx"
-import Landing from "./components/Landing.jsx"
+import Navbar from "./Components/Navbar/Nav.jsx"
+import Landing from "./Components/Landing.jsx"
 
 Modal.setAppElement('#app');
 
@@ -23,8 +23,8 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      userID: 1,
-      todoID: 104,
+      userID:1,
+      todoID: 104,ß
       todos: [],
       categories: [
       ],
