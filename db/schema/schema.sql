@@ -9,13 +9,14 @@ CREATE DATABASE encompass;
 \c encompass;
 
 CREATE EXTENSION citext;
+CREATE EXTENSION pgcrypto;
 
 CREATE TABLE users (
   user_id SERIAL,
-  firstName TEXT NOT NULL,
-  lastName TEXT NOT NULL,
+  firstname TEXT NOT NULL,
+  lastname TEXT NOT NULL,
   email CITEXT UNIQUE NOT NULL,
-  gmail CITEXT UNIQUE,
+  opt_in BOOLEAN DEFAULT FALSE,
   password TEXT,
 
   PRIMARY KEY (user_id),
@@ -41,8 +42,6 @@ CREATE TABLE categories (
   UNIQUE (user_id, color)
 );
 
-SELECT setval('categories_category_id_seq', (SELECT MAX(category_id) FROM categories)+1);
-
 CREATE TABLE todos (
   todo_id SERIAL,
   user_id INT,
@@ -65,10 +64,14 @@ CREATE TABLE todos (
     CHECK (char_length(task) <= 100)
 );
 
-SELECT setval('todos_todo_id_seq', (SELECT MAX(todo_id) FROM todos)+1);
-
 -- Load some preliminary data
 
 \COPY users FROM './db/schema/users.csv' DELIMITER ',' CSV HEADER;
 \COPY categories FROM './db/schema/categories.csv' DELIMITER ',' CSV HEADER;
 \COPY todos FROM './db/schema/todos.csv' DELIMITER ',' CSV HEADER;
+
+-- After initial load, reset numbering sequence to next value
+
+SELECT setval('users_user_id_seq', (SELECT MAX(user_id) FROM users)+1);
+SELECT setval('categories_category_id_seq', (SELECT MAX(category_id) FROM categories)+1);
+SELECT setval('todos_todo_id_seq', (SELECT MAX(todo_id) FROM todos)+1);
