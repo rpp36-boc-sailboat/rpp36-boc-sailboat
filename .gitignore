@@ -4,5 +4,3 @@ bundle.js
 coverage
 bundle.js.gz
 .DS_Store
-AccountsDev*
-PagesDev*
