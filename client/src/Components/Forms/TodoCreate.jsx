@@ -25,6 +25,9 @@ const TodoCreate = (props) => {
     onSubmit: values => {
        axios.post('/todo', values)
     },
+    onClick: event => {
+      console.log('DOES THIS WORK?');
+    }
   });
 
   return(
@@ -73,7 +76,7 @@ const TodoCreate = (props) => {
           )
         })}
     </select>
-    <button>Add Category</button>
+    <button type="button" onClick={formik.handleClick}>Add Category</button>
 
     <label htmlFor="description">Description </label>
     <input
