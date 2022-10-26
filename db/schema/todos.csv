@@ -1,9 +1,12 @@
 todo_id,user_id,task,description,category_id,start_time,end_time,completed,appointment
-1,6,Call Lauren,,11,2022-10-12 22:00,2022-10-12 22:30,TRUE,FALSE
-2,6,Call Mom,,11,2022-10-15 15:30,2022-10-15 16:00,FALSE,FALSE
-3,6,Read a technical book,Learn about password security,9,,,FALSE,FALSE
-4,6,Read a novel,Find something fun,10,,,FALSE,FALSE
-5,6,Mow the lawn,,8,,,TRUE,FALSE
-6,6,Winterize the sprinklers,,8,2022-10-14 13:00,2022-10-14 14:00,FALSE,TRUE
-7,6,Book a Tee Time,"Four people, CGC, Friday 8am",6,,,FALSE,FALSE
-8,6,Workout,Go to the gym!,10,2022-10-16 9:00,2022-10-16 11:00,FALSE,FALSE
+1,1,Morning debrief,Meeting,1,2022-10-01 07:00,2022-10-01 08:00,TRUE,FALSE
+2,1,Afternoon debrief,Meeting,1,2022-10-05 09:00,2022-10-05 08:30,TRUE,FALSE
+3,1,Evening debreif,Meeting,1,2022-10-10 09:00,2022-10-10 09:30,FALSE,FALSE
+4,1,Buy food,Shop,2,2022-10-20 10:00,2022-10-20 11:30,TRUE,FALSE
+5,1,Buy water,Shop,2,2022-10-24 10:00,2022-10-24 10:30,TRUE,FALSE
+6,1,Buy cloth,Shop,2,2022-10-24 16:00,2022-10-24 16:30,FALSE,FALSE
+7,1,Wash car,Misc,3,2022-10-24 11:00,2022-10-24 11:10,TRUE,FALSE
+8,1,trash out,Misc,3,2022-10-24 12:00,2022-10-24 12:30,TRUE,FALSE
+9,1,write memo,Misc,3,2022-10-24 15:00,2022-10-24 15:30,FALSE,FALSE
+10,1,Sept Grocery,Shop,2,2022-10-01 12:00,2022-10-01 12:30,TRUE,FALSE
+11,1,Oct Grocery,Shop,2,2022-10-18 12:00,2022-10-18 12:30,TRUE,FALSE
