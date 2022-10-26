@@ -9,6 +9,7 @@ import TodoCreate from './Components/Forms/TodoCreate.jsx';
 import TodoList from './Components/CalendarInteraction/TodoList.jsx';
 import CategoryCreate from './Components/Forms/CategoryCreate.jsx';
 import DeleteButton from './Components/Forms/DeleteButton.jsx';
+import CompleteButton from './Components/Forms/CompleteButton.jsx';
 import AppointmentShare from './Components/Appointments/AppointmentShare.jsx';
 import TodoShare from './Components/TodoShare/TodoShare.jsx';
 import TaskHome from './Components/Forms/TaskHome.jsx';
@@ -25,12 +26,17 @@ class App extends React.Component {
     super(props);
     this.state = {
       userID: 1,
-      todoID: 104,
+      todoID: 124,
       todos: [],
       categories: [],
       categoryColors: {},
       currentEvents: [],
+<<<<<<< HEAD
       unplannedEvents: []
+=======
+      unplannedEvents: [],
+      categories: []
+>>>>>>> ec9900fadf5fd4655fdd6694f92c37bf9f195bdf
     };
   }
 
@@ -98,9 +104,15 @@ class App extends React.Component {
           <Route path="/share/calendar" element={<TodoShare userID={this.state.userID} />} />
           <Route exact path ='/metrics' element={<Metrics />}></Route>
           <Route exact path ='/forms' element={<> <TodoCreate userID={this.state.userID} categories={this.state.categories}/>
+<<<<<<< HEAD
           <CategoryCreate userID={this.state.userID}/> <DeleteButton todoID={this.state.todoID}/> <TaskHome todos={this.state.todos} /> </>}></Route>
           <Route path ="/settings" element ={<>settings</>}></Route>
           <Route path ="/signout"  element ={<>signout</>}></Route>
+=======
+          <CategoryCreate userID={this.state.userID}/> <DeleteButton todoID={this.state.todoID}/> <CompleteButton todoID={this.state.todoID} /> </>}></Route>
+          <Route exact path ="/settings" element ={<>settings</>}></Route>
+          <Route exact path ="/signout"  element ={<>signout</>}></Route>
+>>>>>>> ec9900fadf5fd4655fdd6694f92c37bf9f195bdf
         </Routes>
       </BrowserRouter>}
       {!status && <Landing/>}
