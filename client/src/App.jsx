@@ -87,8 +87,6 @@ class App extends React.Component {
       </BrowserRouter>}
       {!status&& <Landing/>}
       </>
-
-
     );
   }
 }
