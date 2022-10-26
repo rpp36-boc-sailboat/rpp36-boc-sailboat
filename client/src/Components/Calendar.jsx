@@ -9,6 +9,7 @@ import BookAptModal from './Appointments/BookAptModal.jsx'
 import axios from 'axios'
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import EventAvailableIcon from '@mui/icons-material/EventAvailable';
+import InsertInvitationIcon from '@mui/icons-material/InsertInvitation';
 
 class CalendarClass extends React.Component {
   constructor(props) {
@@ -95,9 +96,11 @@ class CalendarClass extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <button onClick={() => this.setState({modalOpen: true})}>Add Appointment</button>
-        <CalendarMonthIcon value={'calendar'} onClick={this.shareClick.bind(this)}>calendar</CalendarMonthIcon>
-        <EventAvailableIcon value={'appointment'} onClick={this.shareClick.bind(this)}>appointment</EventAvailableIcon>
+        <div style={{marginTop: '5px'}}>
+          <InsertInvitationIcon onClick={() => this.setState({modalOpen: true})} />
+          <CalendarMonthIcon value={'calendar'} onClick={this.shareClick.bind(this)}>calendar</CalendarMonthIcon>
+          <EventAvailableIcon value={'appointment'} onClick={this.shareClick.bind(this)}>appointment</EventAvailableIcon>
+        </div >
         <FullCalendar
           ref={this.calendarRef}
           plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}

@@ -4,13 +4,14 @@ import BarChartIcon from '@mui/icons-material/BarChart';
 import AddTaskIcon from '@mui/icons-material/AddTask';
 import SettingsApplicationsIcon from '@mui/icons-material/SettingsApplications';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
+import HomeIcon from '@mui/icons-material/Home';
 const Navbar= () =>{
   return (
   <div className ="header">
     <ul>
       <li>
         <Link to="/">
-          <button>Today</button>
+          <HomeIcon />
         </Link>
       </li>
       <li>
