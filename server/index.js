@@ -65,6 +65,7 @@ app.get("/completedTasksPerCatg", (req, res) => {
   // console.log("ggg", req.query.timeRange);
   dbMetrics.findAllPerCategory(
     req.query.catg,
+    req.query.customRange,
     req.query.timeRange,
     (err, result) => {
       if (err) {

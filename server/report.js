@@ -26,8 +26,6 @@ const findAllToDos_TR = (timeRange, customRange = "", catg, cb) => {
     ON todos.category_id=public.categories.category_id
     WHERE date_trunc('month',start_time) = date_trunc('month',CURRENT_TIMESTAMP) AND todos.completed = 'true';`;
     } else if (timeRange === "Custom") {
-      // console.log("TIMEIN DB", customRange);
-      // console.log("herrrrrrr");
       findAllToDosQuery = `SELECT *
     FROM todos
     LEFT JOIN public.categories
@@ -80,7 +78,7 @@ const findAllToDos_TR = (timeRange, customRange = "", catg, cb) => {
   });
 };
 
-const findAllPerCategory = (category, timeRange, cb) => {
+const findAllPerCategory = (category, customRange = "", timeRange, cb) => {
   let findAllToDosQuery;
   let currDate = new Date().toLocaleString().split(",")[0];
   let nextDay = new Date(new Date().getTime() + 24 * 60 * 60 * 1000)
@@ -105,10 +103,18 @@ const findAllPerCategory = (category, timeRange, cb) => {
     LEFT JOIN public.categories
     ON todos.category_id=public.categories.category_id
     WHERE date_trunc('month',start_time) = date_trunc('month',CURRENT_TIMESTAMP) AND todos.completed = 'true';`;
+    } else if (timeRange === "Custom") {
+      findAllToDosQuery = `SELECT *
+    FROM todos
+    LEFT JOIN public.categories
+    ON todos.category_id=public.categories.category_id
+    WHERE start_time > '${customRange[0]}' and start_time < '${customRange[1]}'
+    AND todos.completed = 'true';`;
     }
 
     pool.query(findAllToDosQuery, (err, result) => {
       if (err) {
+        console.log("herrr");
         cb(err);
       } else {
         cb(null, result.rows);
@@ -136,15 +142,19 @@ const findAllPerCategory = (category, timeRange, cb) => {
     ON todos.category_id=public.categories.category_id
     WHERE date_trunc('month',start_time) = date_trunc('month',CURRENT_TIMESTAMP) AND todos.completed = 'true'
     AND categories.category = '${category}';`;
+    } else if (timeRange === "Custom") {
+      findAllToDosQuery = `SELECT *
+    FROM todos
+    LEFT JOIN public.categories
+    ON todos.category_id=public.categories.category_id
+    WHERE start_time > '${customRange[0]}' and start_time < '${customRange[1]}'
+    AND todos.completed = 'true'
+    AND categories.category = '${category}';`;
     }
-
-    // let findAllPerCategoryQuery = `SELECT * from todos
-    //   LEFT JOIN public.categories
-    //   ON todos.category_id=public.categories.category_id
-    //   where categories.category = '${category}' AND todos.completed = 'true'`;
 
     pool.query(findAllToDosQuery, (err, result) => {
       if (err) {
+        // console.log("ORR herrr");
         cb(err);
       } else {
         cb(null, result.rows);

@@ -119,6 +119,7 @@ class Metrics extends React.Component {
       .get("/completedTasksPerCatg", {
         params: {
           timeRange: timeR,
+          customRange: [this.state.customStartDate, this.state.customEndDate],
           catg: input,
         },
       })
