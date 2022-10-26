@@ -11,6 +11,7 @@ import CategoryCreate from './Components/Forms/CategoryCreate.jsx';
 import DeleteButton from './Components/Forms/DeleteButton.jsx';
 import AppointmentShare from './Components/Appointments/AppointmentShare.jsx';
 import TodoShare from './Components/TodoShare/TodoShare.jsx';
+import TaskHome from './Components/Forms/TaskHome.jsx';
 import Modal from 'react-modal';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from "./Components/Navbar/Nav.jsx"
@@ -97,7 +98,7 @@ class App extends React.Component {
           <Route path="/share/calendar" element={<TodoShare userID={this.state.userID} />} />
           <Route exact path ='/metrics' element={<Metrics />}></Route>
           <Route exact path ='/forms' element={<> <TodoCreate userID={this.state.userID} categories={this.state.categories}/>
-          <CategoryCreate userID={this.state.userID}/> <DeleteButton todoID={this.state.todoID}/></>}></Route>
+          <CategoryCreate userID={this.state.userID}/> <DeleteButton todoID={this.state.todoID}/> <TaskHome todos={this.state.todos} /> </>}></Route>
           <Route path ="/settings" element ={<>settings</>}></Route>
           <Route path ="/signout"  element ={<>signout</>}></Route>
         </Routes>
