@@ -122,14 +122,13 @@ class CalendarClass extends React.Component {
           events={this.props.events}
           draggable={true}
           drop= {function(info) {
-            console.log(info)
               info.draggedEl.parentNode.removeChild(info.draggedEl);
               let time = info.dateStr;
               let todo_id = info.draggedEl.getAttribute('data-todoid');
-              // axios.put('/setTime', {
-              //   todo_id,
-              //   time
-              // })
+              axios.put('/setTime', {
+                todo_id,
+                time
+              })
           }}
         />
         <AddEventModal isOpen={this.state.modalOpen} onClose={this.closeModal.bind(this)} onEventAdded={e => this.onEventAdded(e)} userID={this.props.userID} />

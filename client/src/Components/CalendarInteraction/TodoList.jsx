@@ -19,7 +19,7 @@ class TodoList extends React.Component {
     return (
       <div id='taskList'>
         <Swiper slidesPerView={6} grid={{rows: 1}} spaceBetween={10} pagination={{clickable: true}} modules={[Grid, Pagination]}>
-          {this.props.todos.map((todo) => <SwiperSlide> <Todo key={todo.todo_id}
+          {this.props.todos.map((todo) => <SwiperSlide key={todo.todo_id}> <Todo
           todo={todo} color={todo.backgroundColor} textColor={todo.textColor}/> </SwiperSlide>)}
         </Swiper>
       </div>
