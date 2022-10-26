@@ -37,6 +37,16 @@ app.delete('/todos', function(req, res) {
   .then(res.send('DELETED'))
 })
 
+app.post('/complete', function(req, res) {
+  if (req.body.complete === true) {
+    db.incomplete(req.body.todoID)
+    .then(res.send('MARKED INCOMPLETE'))
+  } else {
+    db.complete(req.body.todoID)
+    .then(res.send('MARKED COMPLETE'))
+  }
+})
+
 app.post('/category', function(req, res) {
   db.createCategory(req.body)
   .then(result => res.send(result))

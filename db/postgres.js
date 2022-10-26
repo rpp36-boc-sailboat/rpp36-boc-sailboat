@@ -126,6 +126,44 @@ const deleteTodo = function(todoID) {
   })
 }
 
+const complete = function(todoID) {
+  return pool
+  .connect()
+  .then(client => {
+    return client
+      .query(`
+      UPDATE todos SET completed = true WHERE todo_id = ${todoID}
+      `)
+      .then(res => {
+        client.release();
+        return res.rows;
+      })
+      .catch(err => {
+        client.release();
+        console.log('IT COMES HERE: ', err.stack);
+      })
+  })
+}
+
+const incomplete = function(todoID) {
+  return pool
+  .connect()
+  .then(client => {
+    return client
+      .query(`
+      UPDATE todos SET completed = false WHERE todo_id = ${todoID}
+      `)
+      .then(res => {
+        client.release();
+        return res.rows;
+      })
+      .catch(err => {
+        client.release();
+        console.log(err.stack);
+      })
+  })
+}
+
 const getCategories = function(id) {
   return pool
   .connect()
@@ -261,6 +299,8 @@ module.exports = {
   createTodoEndOnly,
   createTodoStartAndEnd,
   deleteTodo,
+  complete,
+  incomplete,
   getCategories,
   createCategory,
   bookAppointment,
