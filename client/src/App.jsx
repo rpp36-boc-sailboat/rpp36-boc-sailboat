@@ -31,13 +31,11 @@ class App extends React.Component {
       categories: [],
       categoryColors: {},
       currentEvents: [],
-<<<<<<< HEAD
-      unplannedEvents: []
-=======
       unplannedEvents: [],
-      categories: []
->>>>>>> ec9900fadf5fd4655fdd6694f92c37bf9f195bdf
+      completed: [],
+      uncompleted: []
     };
+    this.updateCompleted = this.updateCompleted.bind(this);
   }
 
   componentDidMount() {
@@ -65,12 +63,45 @@ class App extends React.Component {
     });
   }
 
+  updateCompleted() {
+    console.log('start of get Route');
+    axios.get('/todos', {
+      params: {
+        id: this.state.userID
+      }
+    })
+    .then(result => {
+      var uncompleted = [];
+      var completed = [];
+      result.data.map((todo) => {
+        if (todo.completed === false) {
+          uncompleted.push(todo);
+        } else {
+          completed.push(todo);
+        }
+      })
+      console.log('end of get route');
+      this.setState({
+        todos: result.data,
+        completed,
+        uncompleted
+      })
+    })
+  }
+
   componentDidUpdate() {
     if (Object.keys(this.state.categoryColors).length !== 0 &&
     this.state.todos.length !== 0 && this.state.currentEvents.length === 0) {
       let currentEvents = [];
       let unplannedEvents = [];
+      let completed = [];
+      let uncompleted = [];
       let todos = this.state.todos.map((todo) => {
+        if (todo.completed === false) {
+          uncompleted.push(todo);
+        } else {
+          completed.push(todo);
+        }
         var {todo_id, task, start_time, end_time, category_id} = todo;
         var [color, category] = this.state.categoryColors[category_id];
         var [red, blue, green] = [parseInt(color.slice(1, 3), 16), parseInt(color.slice(3, 5), 16), parseInt(color.slice(5, 7), 16)];
@@ -84,7 +115,7 @@ class App extends React.Component {
           end: end_time, category_id, backgroundColor: color, borderColor: color, textColor: text});
         return todo;
       })
-      this.setState({currentEvents, unplannedEvents, todos});
+      this.setState({currentEvents, unplannedEvents, todos, completed, uncompleted});
     }
   }
 
@@ -104,15 +135,10 @@ class App extends React.Component {
           <Route path="/share/calendar" element={<TodoShare userID={this.state.userID} />} />
           <Route exact path ='/metrics' element={<Metrics />}></Route>
           <Route exact path ='/forms' element={<> <TodoCreate userID={this.state.userID} categories={this.state.categories}/>
-<<<<<<< HEAD
-          <CategoryCreate userID={this.state.userID}/> <DeleteButton todoID={this.state.todoID}/> <TaskHome todos={this.state.todos} /> </>}></Route>
-          <Route path ="/settings" element ={<>settings</>}></Route>
-          <Route path ="/signout"  element ={<>signout</>}></Route>
-=======
-          <CategoryCreate userID={this.state.userID}/> <DeleteButton todoID={this.state.todoID}/> <CompleteButton todoID={this.state.todoID} /> </>}></Route>
+          <CategoryCreate userID={this.state.userID}/> <DeleteButton todoID={this.state.todoID}/> <CompleteButton todoID={this.state.todoID} />
+          <TaskHome todos={this.state.todos} completed={this.state.completed} uncompleted={this.state.uncompleted} updateCompleted={this.updateCompleted}/> </>}></Route>
           <Route exact path ="/settings" element ={<>settings</>}></Route>
           <Route exact path ="/signout"  element ={<>signout</>}></Route>
->>>>>>> ec9900fadf5fd4655fdd6694f92c37bf9f195bdf
         </Routes>
       </BrowserRouter>}
       {!status && <Landing/>}
