@@ -23,6 +23,8 @@ Modal.setAppElement("#app");
 class App extends React.Component {
   constructor(props) {
     super(props);
+    this.handleAddCategoryClick = this.handleAddCategoryClick.bind(this);
+    this.handleAddCategorySubmit = this.handleAddCategorySubmit.bind(this);
     this.state = {
       userID: 1,
       todoID: 124,
@@ -31,6 +33,7 @@ class App extends React.Component {
       currentEvents: [],
       unplannedEvents: [],
       categories: [],
+      addCategory: false
     };
   }
 
@@ -107,6 +110,31 @@ class App extends React.Component {
     }
   }
 
+  handleAddCategoryClick() {
+    if (this.state.addCategory === false) {
+      this.setState({addCategory: true});
+    } else if (this.state.addCategory === true) {
+      this.setState({addCategory: false});
+    }
+  }
+
+  handleAddCategorySubmit() {
+    this.setState({addCategory: false});
+    axios.get('/categories', {
+      params: {
+        id: this.state.userID
+      }
+    })
+    .then(result => {
+      let categoryColors = {};
+      const categories = result.data.map((option, i) => {
+        categoryColors[option.category_id] = [option.color, option.category];
+        return {key: option.category, value: option.category_id, color: option.color}
+      });
+      this.setState({categories, categoryColors})
+    });
+  }
+
   render() {
     const status = this.state.userID >= 1;
     return (
@@ -145,11 +173,7 @@ class App extends React.Component {
                 element={
                   <>
                     {" "}
-                    <TodoCreate
-                      userID={this.state.userID}
-                      categories={this.state.categories}
-                    />
-                    <CategoryCreate userID={this.state.userID} />{" "}
+                    <TodoCreate userID={this.state.userID} categories={this.state.categories} handleClick={this.handleAddCategoryClick} showModal={this.state.addCategory} handleCategorySubmit={this.handleAddCategorySubmit}/>
                     <DeleteButton todoID={this.state.todoID} />{" "}
                     <CompleteButton todoID={this.state.todoID} />{" "}
                   </>
