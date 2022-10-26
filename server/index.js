@@ -18,6 +18,9 @@ app.post('/todo', function(req, res) {
   } else if (req.body.start) {
     db.createTodoStartOnly(req.body)
     .then(result => res.send(result))
+  } else if (req.body.end) {
+    db.createTodoEndOnly(req.body)
+    .then(result => res.send(result))
   } else {
     db.createTodo(req.body)
     .then(result => res.send(result))
@@ -32,6 +35,16 @@ app.get('/todos', function(req, res) {
 app.delete('/todos', function(req, res) {
   db.deleteTodo(req.query.todoID)
   .then(res.send('DELETED'))
+})
+
+app.post('/complete', function(req, res) {
+  if (req.body.complete === true) {
+    db.incomplete(req.body.todoID)
+    .then(res.send('MARKED INCOMPLETE'))
+  } else {
+    db.complete(req.body.todoID)
+    .then(res.send('MARKED COMPLETE'))
+  }
 })
 
 app.post('/category', function(req, res) {

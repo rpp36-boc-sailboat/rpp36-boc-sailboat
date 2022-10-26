@@ -9,6 +9,7 @@ import TodoCreate from './Components/Forms/TodoCreate.jsx';
 import TodoList from './Components/CalendarInteraction/TodoList.jsx';
 import CategoryCreate from './Components/Forms/CategoryCreate.jsx';
 import DeleteButton from './Components/Forms/DeleteButton.jsx';
+import CompleteButton from './Components/Forms/CompleteButton.jsx';
 import AppointmentShare from './Components/Appointments/AppointmentShare.jsx';
 import TodoShare from './Components/TodoShare/TodoShare.jsx';
 import Modal from 'react-modal';
@@ -24,12 +25,12 @@ class App extends React.Component {
     super(props);
     this.state = {
       userID: 1,
-      todoID: 104,
+      todoID: 124,
       todos: [],
       categoryColors: {},
       currentEvents: [],
       unplannedEvents: [],
-      categories: [],
+      categories: []
     };
   }
 
@@ -97,9 +98,9 @@ class App extends React.Component {
           <Route path="/share/calendar" element={<TodoShare userID={this.state.userID} />} />
           <Route exact path ='/metrics' element={<Metrics />}></Route>
           <Route exact path ='/forms' element={<> <TodoCreate userID={this.state.userID} categories={this.state.categories}/>
-          <CategoryCreate userID={this.state.userID}/> <DeleteButton todoID={this.state.todoID}/></>}></Route>
-          <Route path ="/settings" element ={<>settings</>}></Route>
-          <Route path ="/signout"  element ={<>signout</>}></Route>
+          <CategoryCreate userID={this.state.userID}/> <DeleteButton todoID={this.state.todoID}/> <CompleteButton todoID={this.state.todoID} /> </>}></Route>
+          <Route exact path ="/settings" element ={<>settings</>}></Route>
+          <Route exact path ="/signout"  element ={<>signout</>}></Route>
         </Routes>
       </BrowserRouter>}
       {!status && <Landing/>}

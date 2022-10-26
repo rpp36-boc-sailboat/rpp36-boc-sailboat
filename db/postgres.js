@@ -67,6 +67,26 @@ const createTodoStartOnly = function(todo) {
   })
 }
 
+const createTodoEndOnly = function(todo) {
+  return pool
+  .connect()
+  .then(client => {
+    return client
+      .query(`
+      INSERT INTO todos (user_id, task, description, category_id, end_time, completed, appointment)
+      VALUES ('${todo.userID}', '${todo.taskName}', '${todo.description}', '${todo.category}', '${todo.end}', '${todo.completed}', '${todo.appointment}')
+      returning todo_id`)
+      .then(res => {
+        client.release();
+        return res.rows;
+      })
+      .catch(err => {
+        client.release();
+        console.log(err.stack);
+      })
+  })
+}
+
 const createTodoStartAndEnd = function(todo) {
   return pool
   .connect()
@@ -94,6 +114,44 @@ const deleteTodo = function(todoID) {
     return client
       .query(`
       DELETE FROM todos WHERE todo_id = ${todoID}
+      `)
+      .then(res => {
+        client.release();
+        return res.rows;
+      })
+      .catch(err => {
+        client.release();
+        console.log(err.stack);
+      })
+  })
+}
+
+const complete = function(todoID) {
+  return pool
+  .connect()
+  .then(client => {
+    return client
+      .query(`
+      UPDATE todos SET completed = true WHERE todo_id = ${todoID}
+      `)
+      .then(res => {
+        client.release();
+        return res.rows;
+      })
+      .catch(err => {
+        client.release();
+        console.log('IT COMES HERE: ', err.stack);
+      })
+  })
+}
+
+const incomplete = function(todoID) {
+  return pool
+  .connect()
+  .then(client => {
+    return client
+      .query(`
+      UPDATE todos SET completed = false WHERE todo_id = ${todoID}
       `)
       .then(res => {
         client.release();
@@ -238,8 +296,11 @@ module.exports = {
   getTodos,
   createTodo,
   createTodoStartOnly,
+  createTodoEndOnly,
   createTodoStartAndEnd,
   deleteTodo,
+  complete,
+  incomplete,
   getCategories,
   createCategory,
   bookAppointment,
