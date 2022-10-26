@@ -3,6 +3,7 @@ Execute this file from the command line by typing:
   psql postgres < db/schema/schema.session.sql
 */
 
+
 \c encompass;
 
 CREATE TABLE session (
