@@ -19,6 +19,7 @@ const CategoryCreate = (props) => {
     }),
     onSubmit: values => {
       axios.post('/category', values)
+      .then(props.handleClick)
     },
   });
 

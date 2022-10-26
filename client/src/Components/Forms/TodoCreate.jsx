@@ -30,7 +30,7 @@ const TodoCreate = (props) => {
 
   let categoryModal
   if (props.showModal) {
-    categoryModal = <CategoryCreate userID={props.userID}/>
+    categoryModal = <CategoryCreate userID={props.userID} handleClick={props.handleCategorySubmit}/>
   }
 
   return(
