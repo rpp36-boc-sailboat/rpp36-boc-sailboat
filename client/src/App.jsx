@@ -5,81 +5,187 @@ import SignIn from "./Components/Accounts/SignIn.jsx";
 import SignUp from "./Components/Accounts/SignUp.jsx";
 import Metrics from "./Components/Metrics/index.jsx";
 import CalendarClass from "./Components/Calendar.jsx";
-import TodoCreate from './Components/Forms/TodoCreate.jsx';
-import TodoList from './Components/CalendarInteraction/TodoList.jsx';
-import CategoryCreate from './Components/Forms/CategoryCreate.jsx';
-import DeleteButton from './Components/Forms/DeleteButton.jsx';
-import AppointmentShare from './Components/Appointments/AppointmentShare.jsx';
-import Modal from 'react-modal';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import TodoCreate from "./Components/Forms/TodoCreate.jsx";
+import TodoList from "./Components/CalendarInteraction/TodoList.jsx";
+import CategoryCreate from "./Components/Forms/CategoryCreate.jsx";
+import DeleteButton from "./Components/Forms/DeleteButton.jsx";
+import CompleteButton from "./Components/Forms/CompleteButton.jsx";
+import AppointmentShare from "./Components/Appointments/AppointmentShare.jsx";
+import TodoShare from "./Components/TodoShare/TodoShare.jsx";
+import Modal from "react-modal";
 
-Modal.setAppElement('#app');
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Navbar from "./Components/Navbar/Nav.jsx";
+import Landing from "./Components/Landing.jsx";
 
+Modal.setAppElement("#app");
 
 class App extends React.Component {
   constructor(props) {
     super(props);
+    this.handleAddCategoryClick = this.handleAddCategoryClick.bind(this);
+    this.handleAddCategorySubmit = this.handleAddCategorySubmit.bind(this);
     this.state = {
       userID: 1,
-      todoID: 104,
+      todoID: 124,
       todos: [],
-      categories: [
-        {key: 'None', value: 0},
-        {key: 'Option 1', value: 1},
-        {key: 'Option 2', value: 2},
-        {key: 'Option 3', value: 3},
-        {key: 'Option 4', value: 4},
-        {key: 'Option 5', value: 5},
-        {key: 'Other', value: 6}
-      ],
-      currentEvents: [{id: 4, title: 'newEvent', date: '2022-10-17'}]
+      categoryColors: {},
+      currentEvents: [],
+      unplannedEvents: [],
+      categories: [],
+      addCategory: false
     };
   }
 
   componentDidMount() {
-    axios.get('/todos', {
-      params: {
-        id: this.state.userID
-      }
-    })
-    .then(result => {
-      this.setState({...this.state, todos: result.data});
-    })
+    axios
+      .get("/todos", {
+        params: {
+          id: this.state.userID,
+        },
+      })
+      .then((result) => {
+        this.setState({ todos: result.data });
+      });
 
+    axios
+      .get("/categories", {
+        params: {
+          id: this.state.userID,
+        },
+      })
+      .then((result) => {
+        let categoryColors = {};
+        const categories = result.data.map((option, i) => {
+          categoryColors[option.category_id] = [option.color, option.category];
+          return {
+            key: option.category,
+            value: option.category_id,
+            color: option.color,
+          };
+        });
+        this.setState({ categories, categoryColors });
+      });
+  }
+
+  componentDidUpdate() {
+    if (
+      Object.keys(this.state.categoryColors).length !== 0 &&
+      this.state.todos.length !== 0 &&
+      this.state.currentEvents.length === 0
+    ) {
+      let currentEvents = [];
+      let unplannedEvents = [];
+      let todos = this.state.todos.map((todo) => {
+        var { todo_id, task, start_time, end_time, category_id } = todo;
+        var [color, category] = this.state.categoryColors[category_id];
+        var [red, blue, green] = [
+          parseInt(color.slice(1, 3), 16),
+          parseInt(color.slice(3, 5), 16),
+          parseInt(color.slice(5, 7), 16),
+        ];
+        var text =
+          red * 0.299 + green * 0.587 + blue * 0.114 > 186
+            ? "#000000"
+            : "#ffffff";
+        todo["backgroundColor"] = color;
+        todo["borderColor"] = color;
+        todo["category"] = category;
+        todo["textColor"] = text;
+        if (!start_time) unplannedEvents.push(todo);
+        else
+          currentEvents.push({
+            todo_id,
+            title: task,
+            start: start_time,
+            end: end_time,
+            category_id,
+            backgroundColor: color,
+            borderColor: color,
+            textColor: text,
+          });
+        return todo;
+      });
+      this.setState({ currentEvents, unplannedEvents, todos });
+    }
+  }
+
+  handleAddCategoryClick() {
+    if (this.state.addCategory === false) {
+      this.setState({addCategory: true});
+    } else if (this.state.addCategory === true) {
+      this.setState({addCategory: false});
+    }
+  }
+
+  handleAddCategorySubmit() {
+    this.setState({addCategory: false});
     axios.get('/categories', {
       params: {
         id: this.state.userID
       }
     })
     .then(result => {
+      let categoryColors = {};
       const categories = result.data.map((option, i) => {
-        return {key: option.category, value: option.category_id}
+        categoryColors[option.category_id] = [option.color, option.category];
+        return {key: option.category, value: option.category_id, color: option.color}
       });
-      this.setState({...this.state, categories})
+      this.setState({categories, categoryColors})
     });
   }
 
   render() {
+    const status = this.state.userID >= 1;
     return (
-      <Router>
-        <div>
-          <div>Encompass</div>
-          <SignIn />
-          <SignUp />
-          <Metrics />
-          <Routes>
-            <Route exact path="/" element={<CalendarClass events={this.state.currentEvents} userID={this.state.userID} />} />
-            <Route path="/share/appointment" element={<AppointmentShare userID={this.state.userID} />} />
-          </Routes>
-          <h1>THIS CREATES A TODO ENTRY</h1>
-          <TodoCreate userID={this.state.userID} categories={this.state.categories}/>
-          <h1>THIS CREATES A CATEGORY</h1>
-          <CategoryCreate userID={this.state.userID}/>
-          <h1>THIS DELETES SOMETHING</h1>
-          <DeleteButton todoID={this.state.todoID}/>
-          <TodoList todos={this.state.todos} />
-        </div>
-      </Router>
+      <>
+        {status && (
+          <BrowserRouter>
+            {/* <SignUp />
+          <SignIn/> */}
+            <Navbar />
+            <Routes>
+              <Route
+                exact
+                path="/"
+                element={
+                  <>
+                    <TodoList todos={this.state.unplannedEvents} />
+                    <CalendarClass
+                      events={this.state.currentEvents}
+                      userID={this.state.userID}
+                    />
+                  </>
+                }
+              />
+              <Route
+                path="/share/appointment"
+                element={<AppointmentShare userID={this.state.userID} />}
+              />
+              <Route
+                path="/share/calendar"
+                element={<TodoShare userID={this.state.userID} />}
+              />
+              <Route exact path="/metrics" element={<Metrics />}></Route>
+              <Route
+                exact
+                path="/forms"
+                element={
+                  <>
+                    {" "}
+                    <TodoCreate userID={this.state.userID} categories={this.state.categories} handleClick={this.handleAddCategoryClick} showModal={this.state.addCategory} handleCategorySubmit={this.handleAddCategorySubmit}/>
+                    <DeleteButton todoID={this.state.todoID} />{" "}
+                    <CompleteButton todoID={this.state.todoID} />{" "}
+                  </>
+                }
+              ></Route>
+              <Route exact path="/settings" element={<>settings</>}></Route>
+              <Route exact path="/signout" element={<>signout</>}></Route>
+            </Routes>
+          </BrowserRouter>
+        )}
+        {!status && <Landing />}
+      </>
     );
   }
 }
