@@ -46,9 +46,10 @@ app.get("/appointments", function (req, res) {
 // });
 
 app.get("/completedTasks", (req, res) => {
-  // console.log("ggg", req.query.timeRange);
+  // console.log("ggg", req.query); // inoked 3 ??
   dbMetrics.findAllToDos_TR(
     req.query.timeRange,
+    req.query.customRange,
     req.query.catg,
     (err, result) => {
       if (err) {
