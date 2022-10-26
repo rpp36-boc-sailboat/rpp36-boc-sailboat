@@ -14,17 +14,7 @@ class TodoList extends React.Component {
     super(props);
   }
 
-  componentDidMount() {
-    this.setState({ todos: [...this.props.todos] });
-  }
-  componentDidUpdate() {
-    if (this.state.todos !== this.props.todos) {
-      this.setState({ todos: this.props.todos });
-    }
-  }
-
   render() {
-    // console.log(Array.isArray(this.props.todos));
     return (
       <div id="taskList">
         <Swiper
@@ -35,12 +25,12 @@ class TodoList extends React.Component {
           modules={[Grid, Pagination]}
         >
           {this.props.todos.map((todo) => (
-            <SwiperSlide>
+            <SwiperSlide key={todo.todo_id}>
               {" "}
               <Todo
-                key={todo.todo_id}
                 todo={todo}
-                categories={this.props.categories}
+                color={todo.backgroundColor}
+                textColor={todo.textColor}
               />{" "}
             </SwiperSlide>
           ))}

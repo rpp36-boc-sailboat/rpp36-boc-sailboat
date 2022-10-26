@@ -13,7 +13,15 @@ app.use("/share/*", express.static("client/public"));
 app.use("/metrics/", express.static("client/public"));
 
 app.post("/todo", function (req, res) {
-  db.createTodo(req.body).then((result) => res.send(result));
+  if (req.body.start && req.body.end) {
+    db.createTodoStartAndEnd(req.body).then((result) => res.send(result));
+  } else if (req.body.start) {
+    db.createTodoStartOnly(req.body).then((result) => res.send(result));
+  } else if (req.body.end) {
+    db.createTodoEndOnly(req.body).then((result) => res.send(result));
+  } else {
+    db.createTodo(req.body).then((result) => res.send(result));
+  }
 });
 
 app.get("/todos", function (req, res) {
@@ -21,8 +29,15 @@ app.get("/todos", function (req, res) {
 });
 
 app.delete("/todos", function (req, res) {
-  console.log(req);
   db.deleteTodo(req.query.todoID).then(res.send("DELETED"));
+});
+
+app.post("/complete", function (req, res) {
+  if (req.body.complete === true) {
+    db.incomplete(req.body.todoID).then(res.send("MARKED INCOMPLETE"));
+  } else {
+    db.complete(req.body.todoID).then(res.send("MARKED COMPLETE"));
+  }
 });
 
 app.post("/category", function (req, res) {
@@ -41,6 +56,9 @@ app.get("/appointments", function (req, res) {
   db.getAppointments(req.query.id).then((result) => res.send(result));
 });
 
+app.put("/todo", function (req, res) {
+  db.editTodo(req.body).then((result) => res.send(result));
+});
 // app.get('*', (req,res) =>{
 //   res.sendFile//(path.join(__dirname, '..', 'client', 'public', 'index.html'))/;
 // });

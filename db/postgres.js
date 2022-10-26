@@ -30,6 +30,66 @@ const createTodo = function (todo) {
     return client
       .query(
         `
+      INSERT INTO todos (user_id, task, description, category_id, completed, appointment)
+      VALUES ('${todo.userID}', '${todo.taskName}', '${todo.description}', '${todo.category}', '${todo.completed}', '${todo.appointment}')
+      returning todo_id`
+      )
+      .then((res) => {
+        client.release();
+        return res.rows;
+      })
+      .catch((err) => {
+        client.release();
+        console.log(err.stack);
+      });
+  });
+};
+
+const createTodoStartOnly = function (todo) {
+  return pool.connect().then((client) => {
+    return client
+      .query(
+        `
+      INSERT INTO todos (user_id, task, description, category_id, start_time, completed, appointment)
+      VALUES ('${todo.userID}', '${todo.taskName}', '${todo.description}', '${todo.category}', '${todo.start}', '${todo.completed}', '${todo.appointment}')
+      returning todo_id`
+      )
+      .then((res) => {
+        client.release();
+        return res.rows;
+      })
+      .catch((err) => {
+        client.release();
+        console.log(err.stack);
+      });
+  });
+};
+
+const createTodoEndOnly = function (todo) {
+  return pool.connect().then((client) => {
+    return client
+      .query(
+        `
+      INSERT INTO todos (user_id, task, description, category_id, end_time, completed, appointment)
+      VALUES ('${todo.userID}', '${todo.taskName}', '${todo.description}', '${todo.category}', '${todo.end}', '${todo.completed}', '${todo.appointment}')
+      returning todo_id`
+      )
+      .then((res) => {
+        client.release();
+        return res.rows;
+      })
+      .catch((err) => {
+        client.release();
+        console.log(err.stack);
+      });
+  });
+};
+
+const createTodoStartAndEnd = function (todo) {
+  return pool.connect().then((client) => {
+    return client
+      .query(
+        `
       INSERT INTO todos (user_id, task, description, category_id, start_time, end_time, completed, appointment)
       VALUES ('${todo.userID}', '${todo.taskName}', '${todo.description}', '${todo.category}', '${todo.start}', '${todo.end}', '${todo.completed}', '${todo.appointment}')
       returning todo_id`
@@ -51,6 +111,44 @@ const deleteTodo = function (todoID) {
       .query(
         `
       DELETE FROM todos WHERE todo_id = ${todoID}
+      `
+      )
+      .then((res) => {
+        client.release();
+        return res.rows;
+      })
+      .catch((err) => {
+        client.release();
+        console.log(err.stack);
+      });
+  });
+};
+
+const complete = function (todoID) {
+  return pool.connect().then((client) => {
+    return client
+      .query(
+        `
+      UPDATE todos SET completed = true WHERE todo_id = ${todoID}
+      `
+      )
+      .then((res) => {
+        client.release();
+        return res.rows;
+      })
+      .catch((err) => {
+        client.release();
+        console.log("IT COMES HERE: ", err.stack);
+      });
+  });
+};
+
+const incomplete = function (todoID) {
+  return pool.connect().then((client) => {
+    return client
+      .query(
+        `
+      UPDATE todos SET completed = false WHERE todo_id = ${todoID}
       `
       )
       .then((res) => {
@@ -131,6 +229,40 @@ const getAppointments = function (id) {
   });
 };
 
+const editTodo = function (todo) {
+  if (!todo.end) {
+    return pool.connect().then((client) => {
+      return client
+        .query(
+          `UPDATE todos SET start_time='${todo.start}', end_time=null WHERE todo_id=${todo.id}`
+        )
+        .then((res) => {
+          client.release();
+          return res.rows;
+        })
+        .catch((err) => {
+          client.release();
+          console.log(err.stack);
+        });
+    });
+  } else {
+    return pool.connect().then((client) => {
+      return client
+        .query(
+          `UPDATE todos SET start_time='${todo.start}', end_time='${todo.end}' WHERE todo_id=${todo.id}`
+        )
+        .then((res) => {
+          client.release();
+          return res.rows;
+        })
+        .catch((err) => {
+          client.release();
+          console.log(err.stack);
+        });
+    });
+  }
+};
+
 const setStartTime = function (todo_id, startTime) {
   return pool.connect().then((client) => {
     let time = startTime.includes("T")
@@ -143,7 +275,7 @@ const setStartTime = function (todo_id, startTime) {
     return client
       .query(
         `
-      UPDATE todos SET start_time=TO_TIMESTAMP(${timestamp})
+      UPDATE todos SET start_time=TO_TIMESTAMP(${timestamp}), end_time=TO_TIMESTAMP(${timestamp})+(30 * interval '1 minute')
       WHERE todo_id=${todo_id}
       `
       )
@@ -162,12 +294,16 @@ module.exports = {
   pool,
   getTodos,
   createTodo,
+  createTodoStartOnly,
+  createTodoEndOnly,
+  createTodoStartAndEnd,
   deleteTodo,
+  complete,
+  incomplete,
   getCategories,
   createCategory,
   bookAppointment,
   getAppointments,
+  editTodo,
   setStartTime,
 };
-
-// module.exports = pool;
