@@ -35,7 +35,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("client/public"));
 app.use("/share/*", express.static("client/public"));
-app.use("/metrics/", express.static("client/public"));
+// app.use("/metrics/", express.static("client/public"));
 app.use(cookieParser(secret));
 app.use(session(sessionConfig));
 passport.initialize();

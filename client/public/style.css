@@ -150,3 +150,29 @@ li {
   display: inline-block;
   margin:0.25em
 }
+
+
+/* React Modals */
+
+.Modal {
+  background-color: lightblue;
+  width: 250px;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid black;
+  border-radius: 5%;
+}
+
+.Overlay {
+  color: black;
+  z-index: 99999;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+}
+
+/* React Modals End */

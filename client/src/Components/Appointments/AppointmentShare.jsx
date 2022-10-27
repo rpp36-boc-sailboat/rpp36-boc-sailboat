@@ -94,7 +94,7 @@ class AppointmentShare extends React.Component {
           events={this.state.appointments}
           eventClick={this.handleEventClick.bind(this)}
         />
-        <BookAptModal isOpen={this.state.bookOpen} onClose={this.closeModal.bind(this)} onEventBooked={e => this.onEventBooked(e)} selectedEventID={this.state.selectedEventID} />
+        <BookAptModal isOpen={this.state.bookOpen} onClose={this.closeModal.bind(this)} onEventBooked={e => this.onEventBooked(e)} selectedEventID={this.state.selectedEventID} selectedEvent={this.state.selectedEvent}/>
       </React.Fragment>
     );
   }

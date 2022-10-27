@@ -1,5 +1,7 @@
 import React, {useState} from 'react';
 import Modal from 'react-modal';
+import Button from '@mui/material/Button';
+import CloseIcon from '@mui/icons-material/Close';
 import axios from 'axios';
 
 export default function ({isOpen, onClose, onEventAdded, userID}) {
@@ -33,19 +35,24 @@ export default function ({isOpen, onClose, onEventAdded, userID}) {
     })
     onClose();
   }
+
   return (
-    <Modal style={{content: {width: '250px', height: '200px'}, overlay: {color: 'grey', zIndex: 1}}} isOpen={isOpen} onRequestClose={onClose}>
+    <Modal overlayClassName='Overlay' className='Modal' isOpen={isOpen} onRequestClose={onClose}>
       <form onSubmit={onSubmit}>
-        <input placeholder='Title' value={title} onChange={e => setTitle(e.target.value)} />
+        <div>
+          <CloseIcon fontSize='small' style={{float: 'right'}} onClick={() => onClose()}/>
+          <label>Task Name</label>
+          <input placeholder='Title' value={title} onChange={e => setTitle(e.target.value)} />
+        </div>
         <div>
           <label>Start</label>
           <input type="datetime-local" onChange={e => setStart(e.target.value)} />
         </div>
         <div>
           <label>End</label>
-        <input type="datetime-local" onChange={e => setEnd(e.target.value)} />
+          <input type="datetime-local" onChange={e => setEnd(e.target.value)} />
         </div>
-        <button>Create Appointment</button>
+        <Button variant="contained" style={{marginTop: '15px'}}>Create Appointment</Button>
       </form>
     </Modal>
   )
