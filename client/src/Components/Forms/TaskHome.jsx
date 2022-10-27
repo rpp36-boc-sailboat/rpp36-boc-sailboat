@@ -14,6 +14,8 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import DeleteIcon from '@mui/icons-material/Delete';
+import CloseIcon from '@mui/icons-material/Close';
+import Tooltip from '@mui/material/Tooltip';
 import axios from 'axios';
 
 export default function TaskHome({todos, updateCompleted}) {
@@ -22,7 +24,7 @@ export default function TaskHome({todos, updateCompleted}) {
   const [currentTask, setCurrentTask] = React.useState(todos[0]);
 
 
-  console.log(todos);
+  // console.log(todos);
   const handleToggle = (value) => () => {
     axios.put('/complete', {
       todoID: value.todo_id,
@@ -40,13 +42,12 @@ export default function TaskHome({todos, updateCompleted}) {
 
 
   const isOpen = (e, value) => {
-    setModalCheck(current => !current);
+    setModalCheck(true);
     setCurrentTask(value);
-    console.log('in isOpen');
   }
 
   const isClose = () => {
-    setModalCheck(current => !current);
+    setModalCheck(false);
   }
 
   const handleChange = (event) => {
@@ -54,7 +55,6 @@ export default function TaskHome({todos, updateCompleted}) {
   };
 
   const deleteTask = (value) => {
-    console.log(value);
     axios.delete('/todos', {
       params: {
         todoID: value.todo_id
@@ -78,8 +78,8 @@ export default function TaskHome({todos, updateCompleted}) {
 
   return (
     <>
-    <Box sx={{ minWidth: 120 }}>
-      <FormControl fullWidth>
+    <Box sx={{width: 360, marginTop: '20px'}}>
+      <FormControl sx={{width: 360}}>
         <InputLabel id="demo-simple-select-label">Tasks</InputLabel>
         <Select
           value={selectedFilter}
@@ -93,12 +93,18 @@ export default function TaskHome({todos, updateCompleted}) {
       </FormControl>
     </Box>
     <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
-      {filteredTodos.map((value) => {
+      {filteredTodos.map((value, i) => {
         const labelId = `checkbox-list-label-${value}`;
-        console.log('Current Value', value);
+        // console.log('Current Value', value);
+        if (i % 2 === 0) {
+          var listColor = 'rgba(146, 192, 255, 0.6)';
+        } else {
+          var listColor = 'rgba(146, 192, 255, 0.3)';
+        }
         return (
           <>
           <ListItem
+            sx={{backgroundColor: listColor}}
             key={value.todo_id}
             secondaryAction={
               <IconButton edge="end" aria-label="comments" onClick={(e) => isOpen(e, value)}>
@@ -120,13 +126,16 @@ export default function TaskHome({todos, updateCompleted}) {
               <ListItemText id={labelId} primary={value.task} />
             </ListItemButton>
           </ListItem>
-          <Modal value={currentTask} style={{content: {width: '250px', height: '200px'}, overlay: {color: 'black'}}} isOpen={modalCheck} onRequestClose={isClose}>
+          <Modal overlayClassName='Overlay' className='Modal' value={currentTask} isOpen={modalCheck} onRequestClose={isClose}>
             <div id='detailedTask'>
+              <CloseIcon fontSize='small' style={{float: 'right', top: '5px', right: '5px', cursor: 'pointer'}} onClick={() => isClose()}/>
               <h3>{currentTask.task}</h3>
               <p>Date: {(new Date(currentTask.start_time).toLocaleDateString())} - {(new Date(currentTask.end_time).toLocaleDateString())}<br/>
               Time: {(new Date(currentTask.start_time).toLocaleTimeString())} - {(new Date(currentTask.end_time).toLocaleTimeString())}</p>
               <p>Description: {currentTask.description}</p>
-              <DeleteIcon style={{cursor: 'pointer'}} onClick={() => deleteTask(currentTask)}/>
+              <Tooltip title="Delete Task" placement="bottom-end" arrow>
+                <DeleteIcon style={{cursor: 'pointer'}} onClick={() => deleteTask(currentTask)}/>
+              </Tooltip>
             </div>
           </Modal>
           </>

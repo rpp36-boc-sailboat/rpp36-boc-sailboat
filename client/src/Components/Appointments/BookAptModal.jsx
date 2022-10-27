@@ -1,8 +1,10 @@
 import React, {useState} from 'react';
 import Modal from 'react-modal';
+import Button from '@mui/material/Button';
+import CloseIcon from '@mui/icons-material/Close';
 import axios from 'axios';
 
-export default function ({isOpen, onClose, onEventBooked, selectedEventID}) {
+export default function ({isOpen, onClose, onEventBooked, selectedEventID, selectedEvent}) {
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -15,11 +17,16 @@ export default function ({isOpen, onClose, onEventBooked, selectedEventID}) {
     onClose();
   }
   return (
-    <Modal style={{content: {width: '250px', height: '200px'}, overlay: {color: 'grey', zIndex: 99999}}} isOpen={isOpen} onRequestClose={onClose}>
-      <form onSubmit={onSubmit}>Would you Like to book this appointment?
+    <Modal overlayClassName='Overlay' className='Modal' isOpen={isOpen} onRequestClose={onClose}>
+      <form onSubmit={onSubmit}>
+          <CloseIcon fontSize='small' style={{float: 'right', top: '5px', right: '5px'}} onClick={() => onClose()}/>
         <div>
-          <button>Book Appointment</button>
+          <label>Appointment Booking</label>
         </div>
+        <div>
+          <p>Would you like to <br/>book this appointment?</p>
+        </div>
+      <Button variant="contained" style={{marginTop: '15px'}}>Book Appointment</Button>
       </form>
     </Modal>
   )

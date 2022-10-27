@@ -2,6 +2,8 @@ import React from 'react';
 import axios from 'axios';
 import Modal from 'react-modal';
 import DeleteIcon from '@mui/icons-material/Delete';
+import CloseIcon from '@mui/icons-material/Close';
+import Tooltip from '@mui/material/Tooltip';
 
 class ClickTask extends React.Component {
   constructor(props) {
@@ -40,13 +42,16 @@ class ClickTask extends React.Component {
   render() {
     if (this.state.currentTask) {
       return (
-        <Modal style={{content: {width: '250px', height: '200px'}, overlay: {color: 'black', zIndex: 99999}}} isOpen={this.props.isOpen} onRequestClose={this.props.onClose}>
+        <Modal overlayClassName='Overlay' className='Modal' isOpen={this.props.isOpen} onRequestClose={this.props.onClose}>
           <div id='detailedTask'>
+          <CloseIcon fontSize='small' style={{float: 'right', top: '5px', right: '5px', cursor: 'pointer'}} onClick={() => this.props.onClose()}/>
             <h3>{this.state.currentTask.task}</h3>
-            <p>{(new Date(this.state.currentTask.start_time).toLocaleDateString())} - {(new Date(this.state.currentTask.end_time).toLocaleDateString())}<br/>
-            {(new Date(this.state.currentTask.start_time).toLocaleTimeString())} - {(new Date(this.state.currentTask.end_time).toLocaleTimeString())}</p>
-            <p>{this.state.currentTask.description}</p>
-            <DeleteIcon style={{cursor: 'pointer'}} onClick={() => this.deleteTask()}/>
+            <p>Date: {(new Date(this.state.currentTask.start_time).toLocaleDateString())} - {(new Date(this.state.currentTask.end_time).toLocaleDateString())}<br/>
+            Time: {(new Date(this.state.currentTask.start_time).toLocaleTimeString())} - {(new Date(this.state.currentTask.end_time).toLocaleTimeString())}</p>
+            <p>Description: {this.state.currentTask.description}</p>
+            <Tooltip title="Delete Task" placement="bottom-end" arrow>
+              <DeleteIcon style={{cursor: 'pointer'}} onClick={() => this.deleteTask()}/>
+            </Tooltip>
           </div>
         </Modal>
       )
