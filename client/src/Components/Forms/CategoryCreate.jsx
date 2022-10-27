@@ -30,25 +30,31 @@ const CategoryCreate = (props) => {
   <form onSubmit={formik.handleSubmit} class="category-modal">
     <div class="modal-content">
       <span class="close" onClick={props.close}>&times;</span>
-      <label htmlFor="category">Category </label>
-      <input
-      id="category"
-      name="category"
-      type="text"
-      onChange={formik.handleChange}
-      value={formik.values.category}
-      />
+      <div>
+        <label htmlFor="category">Category </label>
+        <input
+        id="category"
+        name="category"
+        type="text"
+        onChange={formik.handleChange}
+        value={formik.values.category}
+        />
+      </div>
 
-      <label htmlFor="color">Color </label>
-      <input
-      id="color"
-      name="color"
-      type="color"
-      onChange={formik.handleChange}
-      value={formik.values.color}
-      />
+      <div>
+        <label htmlFor="color">Color </label>
+        <input
+        id="color"
+        name="color"
+        type="color"
+        onChange={formik.handleChange}
+        value={formik.values.color}
+        />
+      </div>
 
-      <button type="submit">Submit</button>
+      <div>
+        <button type="submit">Submit</button>
+      </div>
     </div>
   </form>
   )
