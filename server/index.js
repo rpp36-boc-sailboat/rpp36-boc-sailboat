@@ -10,7 +10,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("client/public"));
 app.use("/share/*", express.static("client/public"));
-app.use("/metrics/", express.static("client/public"));
+// app.use("/metrics/", express.static("client/public"));
 
 app.post("/todo", function (req, res) {
   if (req.body.start && req.body.end) {
