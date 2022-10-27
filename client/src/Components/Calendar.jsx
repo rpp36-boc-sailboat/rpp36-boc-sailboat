@@ -10,6 +10,7 @@ import axios from 'axios'
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import EventAvailableIcon from '@mui/icons-material/EventAvailable';
 import InsertInvitationIcon from '@mui/icons-material/InsertInvitation';
+import ShareIcon from '@mui/icons-material/Share';
 
 class CalendarClass extends React.Component {
   constructor(props) {
@@ -101,7 +102,7 @@ class CalendarClass extends React.Component {
             <InsertInvitationIcon onClick={() => this.setState({modalOpen: true})} />
           </li>
           <li>
-            <CalendarMonthIcon value={'calendar'} onClick={this.shareClick.bind(this)}>calendar</CalendarMonthIcon>
+            <CalendarMonthIcon sx={{my: 0.1}} value={'calendar'} onClick={this.shareClick.bind(this)}>calendar</CalendarMonthIcon>
           </li>
           <li>
             <EventAvailableIcon value={'appointment'} onClick={this.shareClick.bind(this)}>appointment</EventAvailableIcon>
