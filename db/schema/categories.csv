@@ -1,12 +1,4 @@
 category_id,category,user_id,color
-1,Miscellaneous,1,#d6e9f2
-2,Miscellaneous,2,#d6e9f2
-3,Miscellaneous,3,#d6e9f2
-4,Miscellaneous,4,#d6e9f2
-5,Miscellaneous,5,#d6e9f2
-6,Miscellaneous,6,#d6e9f2
-7,Miscellaneous,7,#d6e9f2
-8,Chores,6,#c9f805
-9,Learning,6,#96e50e
-10,Health & Wellness,6,#7ee9cc
-11,Friends & Family,6,#86dff2
+1,Meeting,1,#d6e9f2
+2,Shop,1,#86dff2
+3,Misc,1,#7ee9cc

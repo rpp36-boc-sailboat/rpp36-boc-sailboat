@@ -74,7 +74,7 @@ export default function TaskHome({todos, updateCompleted}) {
     } else {
       return todo.completed === false;
     }
-  }).sort();
+  });
 
   return (
     <>

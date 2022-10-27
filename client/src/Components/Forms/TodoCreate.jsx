@@ -2,6 +2,7 @@ import React from 'react';
 import { useFormik, useField } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
+import CategoryCreate from './CategoryCreate.jsx';
 
 const TodoCreate = (props) => {
 
@@ -27,7 +28,13 @@ const TodoCreate = (props) => {
     },
   });
 
+  let categoryModal
+  if (props.showModal) {
+    categoryModal = <CategoryCreate userID={props.userID} handleClick={props.handleCategorySubmit}/>
+  }
+
   return(
+    <>
   <form onSubmit={formik.handleSubmit}>
     <label htmlFor="taskName">Task Name </label>
     <input
@@ -73,7 +80,7 @@ const TodoCreate = (props) => {
           )
         })}
     </select>
-    <button>Add Category</button>
+    <button type="button" onClick={props.handleClick}>Add Category</button>
 
     <label htmlFor="description">Description </label>
     <input
@@ -85,7 +92,10 @@ const TodoCreate = (props) => {
     />
 
     <button type="submit">Submit</button>
-  </form>)
+  </form>
+  {categoryModal}
+  </>
+  )
 }
 
 export default TodoCreate;
