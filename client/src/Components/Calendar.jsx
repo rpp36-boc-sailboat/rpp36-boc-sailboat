@@ -11,6 +11,7 @@ import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import EventAvailableIcon from '@mui/icons-material/EventAvailable';
 import InsertInvitationIcon from '@mui/icons-material/InsertInvitation';
 import ShareIcon from '@mui/icons-material/Share';
+import Tooltip from '@mui/material/Tooltip';
 
 class CalendarClass extends React.Component {
   constructor(props) {
@@ -99,13 +100,19 @@ class CalendarClass extends React.Component {
       <React.Fragment>
         <ul style={{marginTop: '5px', padding: 'unset'}}>
           <li>
-            <InsertInvitationIcon onClick={() => this.setState({modalOpen: true})} />
+            <Tooltip title="Create Appointment" placement="bottom-end" arrow>
+              <InsertInvitationIcon onClick={() => this.setState({modalOpen: true})} />
+            </Tooltip>
           </li>
           <li>
-            <CalendarMonthIcon sx={{my: 0.1}} value={'calendar'} onClick={this.shareClick.bind(this)}>calendar</CalendarMonthIcon>
+            <Tooltip title="Share To-dos" placement="bottom-end" arrow>
+              <CalendarMonthIcon sx={{my: 0.1}} value={'calendar'} onClick={this.shareClick.bind(this)}>calendar</CalendarMonthIcon>
+            </Tooltip>
           </li>
           <li>
-            <EventAvailableIcon value={'appointment'} onClick={this.shareClick.bind(this)}>appointment</EventAvailableIcon>
+            <Tooltip title="Share Appointments" placement="bottom-end" arrow>
+              <EventAvailableIcon value={'appointment'} onClick={this.shareClick.bind(this)}>appointment</EventAvailableIcon>
+            </Tooltip>
           </li>
         </ul >
         <FullCalendar
