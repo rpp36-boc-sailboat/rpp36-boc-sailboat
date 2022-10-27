@@ -96,11 +96,17 @@ class CalendarClass extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <div style={{marginTop: '5px'}}>
-          <InsertInvitationIcon onClick={() => this.setState({modalOpen: true})} />
-          <CalendarMonthIcon value={'calendar'} onClick={this.shareClick.bind(this)}>calendar</CalendarMonthIcon>
-          <EventAvailableIcon value={'appointment'} onClick={this.shareClick.bind(this)}>appointment</EventAvailableIcon>
-        </div >
+        <ul style={{marginTop: '5px', padding: 'unset'}}>
+          <li>
+            <InsertInvitationIcon onClick={() => this.setState({modalOpen: true})} />
+          </li>
+          <li>
+            <CalendarMonthIcon value={'calendar'} onClick={this.shareClick.bind(this)}>calendar</CalendarMonthIcon>
+          </li>
+          <li>
+            <EventAvailableIcon value={'appointment'} onClick={this.shareClick.bind(this)}>appointment</EventAvailableIcon>
+          </li>
+        </ul >
         <FullCalendar
           ref={this.calendarRef}
           plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
