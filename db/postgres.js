@@ -25,6 +25,23 @@ const getTodos = function (id) {
   });
 };
 
+const getOneTodo = function(id) {
+  return pool
+  .connect()
+  .then(client => {
+    return client
+      .query(`SELECT * FROM todos WHERE todo_id=${id}`)
+      .then(res => {
+        client.release();
+        return res.rows;
+      })
+      .catch(err => {
+        client.release();
+        console.log(err.stack);
+      })
+  })
+}
+
 const createTodo = function (todo) {
   return pool.connect().then((client) => {
     return client
@@ -381,6 +398,7 @@ module.exports = {
   getUserByEmail,
   getUserById,
   verifyPassword,
-  editTodo,
   setStartTime,
+  getOneTodo,
+  editTodo
 };

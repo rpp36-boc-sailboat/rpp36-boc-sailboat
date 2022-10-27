@@ -1,48 +1,62 @@
 import React from 'react';
 import axios from 'axios';
+import Modal from 'react-modal';
+import DeleteIcon from '@mui/icons-material/Delete';
+import CloseIcon from '@mui/icons-material/Close';
+import Tooltip from '@mui/material/Tooltip';
 
 class ClickTask extends React.Component {
-  constructor(props); {
+  constructor(props) {
     super(props);
+    this.state = {
+      currentTask: null
+    }
+    this.deleteTask = this.deleteTask.bind(this);
   }
 
-  // increase z-index
-
-  handleEdit() {
-    // click initilizes the view and ability to edit the todo, after edit is done send put request to server to update the database
-  }
-
-  handleSharing() {
-    //handle sharing, other component
-  }
+  componentDidMount() {
+    axios.get('/todo', {
+      params: {
+        id: this.props.taskID
+      }
+    })
+    .then(result => {
+      this.setState({currentTask: result.data[0]})
+    })
+}
 
   deleteTask() {
     // current axios delete should be server? this one should just carry the todo_id and send it to an endpoint
-    axios.delete(`/tasks`)
-    .then(res => {
-      console.log(res.data);
+    axios.delete('/todos', {
+      params: {
+        todoID: this.props.taskID
+      }
     })
-    .catch((error) => {
-      console.log(error);
+    .then(() => {
+      this.props.taskEvent.event.remove();
+      console.log('TODO SUCCESSFULLY DELETED');
     })
-  }
-
-  backToMain() {
-    //have a modal or some sort of different render based on boolean and just switch it back to original view
-  }
+    this.props.onClose();
+}
 
   render() {
-    return (
-      <div id='detailedTask'>
-        <h3>Details here</h3>
-        <h5>Date of Task</h5>
-        <p>Extra details:</p>
-        <p>Cateogry here</p>
-        {/* <i /> icon for editing*/}
-        {/* <i /> icon for sharing*/}
-        {/* <i /> icon for deleting*/}
-        {/* <i /> icon for closing out of detailedTask*/}
-      </div>
-    )
+    if (this.state.currentTask) {
+      return (
+        <Modal overlayClassName='Overlay' className='Modal' isOpen={this.props.isOpen} onRequestClose={this.props.onClose}>
+          <div id='detailedTask'>
+          <CloseIcon fontSize='small' style={{float: 'right', top: '5px', right: '5px', cursor: 'pointer'}} onClick={() => this.props.onClose()}/>
+            <h3>{this.state.currentTask.task}</h3>
+            <p>Date: {(new Date(this.state.currentTask.start_time).toLocaleDateString())} - {(new Date(this.state.currentTask.end_time).toLocaleDateString())}<br/>
+            Time: {(new Date(this.state.currentTask.start_time).toLocaleTimeString())} - {(new Date(this.state.currentTask.end_time).toLocaleTimeString())}</p>
+            <p>Description: {this.state.currentTask.description}</p>
+            <Tooltip title="Delete Task" placement="bottom-end" arrow>
+              <DeleteIcon style={{cursor: 'pointer'}} onClick={() => this.deleteTask()}/>
+            </Tooltip>
+          </div>
+        </Modal>
+      )
+    }
   }
 }
+
+export default ClickTask;
