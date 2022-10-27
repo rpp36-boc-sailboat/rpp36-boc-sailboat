@@ -25,6 +25,7 @@ class App extends React.Component {
     super(props);
     this.handleAddCategoryClick = this.handleAddCategoryClick.bind(this);
     this.handleAddCategorySubmit = this.handleAddCategorySubmit.bind(this);
+    this.loginToggel = this.loginToggel.bind(this);
     this.state = {
       userID: 1,
       todoID: 124,
@@ -67,6 +68,7 @@ class App extends React.Component {
         this.setState({ categories, categoryColors });
       });
   }
+
 
   componentDidUpdate() {
     if (
@@ -134,6 +136,20 @@ class App extends React.Component {
       this.setState({categories, categoryColors})
     });
   }
+  loginToggel(event){
+    console.log('debug')
+
+
+    this.setState({userID:0,
+      todoID: 124,
+      todos: [],
+      categoryColors: {},
+      currentEvents: [],
+      unplannedEvents: [],
+      categories: [],
+      addCategory: false})
+
+  }
 
   render() {
     const status = this.state.userID >= 1;
@@ -141,9 +157,7 @@ class App extends React.Component {
       <>
         {status && (
           <BrowserRouter>
-            {/* <SignUp />
-          <SignIn/> */}
-            <Navbar />
+            <Navbar loginToggel ={this.loginToggel}/>
             <Routes>
               <Route
                 exact
@@ -166,7 +180,7 @@ class App extends React.Component {
                 path="/share/calendar"
                 element={<TodoShare userID={this.state.userID} />}
               />
-              <Route exact path="/metrics" element={<Metrics />}></Route>
+              <Route exact path="/metrics" element={<><Metrics /></>}></Route>
               <Route
                 exact
                 path="/forms"
@@ -179,8 +193,8 @@ class App extends React.Component {
                   </>
                 }
               ></Route>
-              <Route exact path="/settings" element={<>settings</>}></Route>
-              <Route exact path="/signout" element={<>signout</>}></Route>
+              <Route exact path="/settings" element={<><p>settings</p></>}></Route>
+              <Route exact path="/signout" element={<></>}></Route>
             </Routes>
           </BrowserRouter>
         )}

@@ -6,7 +6,7 @@ const LandingNav= () =>{
   <div className ="header">
     <ul>
       <li>
-        <Link to="/"></Link>
+        <Link to="/*"></Link>
       </li>
       <li>
         <Link to="/signin">
@@ -16,9 +16,10 @@ const LandingNav= () =>{
         <Link to="/signup">
           <button>Sign up</button></Link>
       </li>
+      <Outlet />
 
 
-    <Outlet />
+
     </ul>
   </div>
   );

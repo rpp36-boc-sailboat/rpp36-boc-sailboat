@@ -4,34 +4,42 @@ import BarChartIcon from '@mui/icons-material/BarChart';
 import AddTaskIcon from '@mui/icons-material/AddTask';
 import SettingsApplicationsIcon from '@mui/icons-material/SettingsApplications';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
-const Navbar= () =>{
+const Navbar= (props) =>{
   return (
-  <div className ="header">
-    <ul>
-      <li>
+  <div >
+
+    <ul className ="header">
+      <li >
         <Link to="/">
-          <button>Today</button>
+        <BarChartIcon/>
         </Link>
       </li>
-      <li>
+      <li >
         <Link to="/metrics">
         <BarChartIcon/></Link>
       </li>
-      <li>
+      <li >
         <Link to="/forms">
         <AddTaskIcon/>
         </Link>
       </li>
-      <li>
+
+
+      <li className="titleText">
+        ENCOMPASS APP
+      </li>
+
+
+      <li >
         <Link to="/settings">
         <SettingsApplicationsIcon/></Link>
       </li>
-      <li>
-        <Link to="/signout"><ExitToAppIcon/>
+      <li >
+        <Link to="/signout"><ExitToAppIcon onClick ={props.loginToggel}/>
         </Link>
       </li>
-      <Outlet />
     </ul>
+    <Outlet />
   </div>
   );
 }

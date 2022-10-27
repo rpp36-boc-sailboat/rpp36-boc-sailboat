@@ -12,13 +12,14 @@ const Landing =()=>{
       <LandingNav/>
 
         <Routes>
-          <Route exact path ="/" element ={<>
+          <Route exact path ="/*" element ={<>
           <h1>  Welcome to Landing page</h1>
             <p>info</p>
-          </>}>
-          </Route>
-          <Route exact path ='/signin' element={<SignIn />}></Route>
-          <Route exact path ='/signup' element={<SignUp />}></Route>
+          </>}/>
+
+          <Route path ='/signin' element={<SignIn />}/>
+          <Route path ='/signup' element={<SignUp />}/>
+
         </Routes>
 
 
