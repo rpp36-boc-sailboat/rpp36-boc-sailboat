@@ -71,20 +71,9 @@ class App extends React.Component {
       }
     })
     .then(result => {
-      var uncompleted = [];
-      var completed = [];
-      result.data.map((todo) => {
-        if (todo.completed === false) {
-          uncompleted.push(todo);
-        } else {
-          completed.push(todo);
-        }
-      })
       console.log('end of get route');
       this.setState({
         todos: result.data,
-        completed,
-        uncompleted
       })
     })
   }
@@ -94,14 +83,7 @@ class App extends React.Component {
     this.state.todos.length !== 0 && this.state.currentEvents.length === 0) {
       let currentEvents = [];
       let unplannedEvents = [];
-      let completed = [];
-      let uncompleted = [];
       let todos = this.state.todos.map((todo) => {
-        if (todo.completed === false) {
-          uncompleted.push(todo);
-        } else {
-          completed.push(todo);
-        }
         var {todo_id, task, start_time, end_time, category_id} = todo;
         var [color, category] = this.state.categoryColors[category_id];
         var [red, blue, green] = [parseInt(color.slice(1, 3), 16), parseInt(color.slice(3, 5), 16), parseInt(color.slice(5, 7), 16)];
@@ -115,7 +97,7 @@ class App extends React.Component {
           end: end_time, category_id, backgroundColor: color, borderColor: color, textColor: text});
         return todo;
       })
-      this.setState({currentEvents, unplannedEvents, todos, completed, uncompleted});
+      this.setState({currentEvents, unplannedEvents, todos});
     }
   }
 
@@ -136,7 +118,7 @@ class App extends React.Component {
           <Route exact path ='/metrics' element={<Metrics />}></Route>
           <Route exact path ='/forms' element={<> <TodoCreate userID={this.state.userID} categories={this.state.categories}/>
           <CategoryCreate userID={this.state.userID}/> <DeleteButton todoID={this.state.todoID}/> <CompleteButton todoID={this.state.todoID} />
-          <TaskHome todos={this.state.todos} completed={this.state.completed} uncompleted={this.state.uncompleted} updateCompleted={this.updateCompleted}/> </>}></Route>
+          <TaskHome todos={this.state.todos} updateCompleted={this.updateCompleted}/> </>}></Route>
           <Route exact path ="/settings" element ={<>settings</>}></Route>
           <Route exact path ="/signout"  element ={<>signout</>}></Route>
         </Routes>

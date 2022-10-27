@@ -16,32 +16,17 @@ import Select from "@mui/material/Select";
 import DeleteIcon from '@mui/icons-material/Delete';
 import axios from 'axios';
 
-export default function TaskHome({todos, completed, uncompleted, updateCompleted}) {
-  const [checked, setChecked] = React.useState(completed);
+export default function TaskHome({todos, updateCompleted}) {
   const [modalCheck, setModalCheck] = React.useState(false);
-  const [tasks, setTasks] = React.useState("All");
-  const [viewedTasks, setViewedTasks] = React.useState(todos);
+  const [selectedFilter, setSelectedFilter] = React.useState("All");
   const [currentTask, setCurrentTask] = React.useState(todos[0]);
 
+
+  console.log(todos);
   const handleToggle = (value) => () => {
-    console.log('this is the checked array ', checked);
-    const currentIndex = checked.indexOf(value);
-    const newChecked = [...checked];
-    var checkComplete = false;
-
-    if (currentIndex === -1) {
-      newChecked.push(value);
-      checkComplete = false;
-    } else {
-      newChecked.splice(currentIndex, 1);
-      checkComplete = true;
-    }
-
-    setChecked(newChecked);
-
     axios.put('/complete', {
       todoID: value.todo_id,
-      complete: checkComplete
+      complete: value.completed
     })
     .then(result => {
       console.log(result);
@@ -65,14 +50,7 @@ export default function TaskHome({todos, completed, uncompleted, updateCompleted
   }
 
   const handleChange = (event) => {
-    setTasks(event.target.value);
-    if (event.target.value === 'All') {
-      setViewedTasks(todos);
-    } else if (event.target.value === 'Completed') {
-      setViewedTasks(completed);
-    } else {
-      setViewedTasks(uncompleted);
-    }
+    setSelectedFilter(event.target.value);
   };
 
   const deleteTask = (value) => {
@@ -88,13 +66,23 @@ export default function TaskHome({todos, completed, uncompleted, updateCompleted
     })
 }
 
+  const filteredTodos = todos.filter(todo => {
+    if (selectedFilter === 'All') {
+      return true;
+    } else if (selectedFilter === 'Completed') {
+      return todo.completed === true;
+    } else {
+      return todo.completed === false;
+    }
+  }).sort();
+
   return (
     <>
     <Box sx={{ minWidth: 120 }}>
       <FormControl fullWidth>
         <InputLabel id="demo-simple-select-label">Tasks</InputLabel>
         <Select
-          value={tasks}
+          value={selectedFilter}
           label="Tasks"
           onChange={(e) => handleChange(e)}
         >
@@ -105,11 +93,9 @@ export default function TaskHome({todos, completed, uncompleted, updateCompleted
       </FormControl>
     </Box>
     <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
-      {viewedTasks.map((value) => {
+      {filteredTodos.map((value) => {
         const labelId = `checkbox-list-label-${value}`;
-        console.log('our Completed array', checked);
         console.log('Current Value', value);
-        console.log('checked index', checked.indexOf(value) !== -1);
         return (
           <>
           <ListItem
@@ -125,7 +111,7 @@ export default function TaskHome({todos, completed, uncompleted, updateCompleted
               <ListItemIcon>
                 <Checkbox
                   edge="start"
-                  checked={checked.indexOf(value) !== -1}
+                  checked={value.completed}
                   tabIndex={-1}
                   disableRipple
                   inputProps={{ 'aria-labelledby': labelId }}
