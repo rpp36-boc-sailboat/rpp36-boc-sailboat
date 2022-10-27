@@ -290,6 +290,79 @@ const setStartTime = function (todo_id, startTime) {
   });
 };
 
+// Authorization Queries
+const addUser = function(firstname, lastname, email, password, cb) {
+  return pool
+  .connect()
+  .then(client => {
+    return client
+      .query(`INSERT INTO users (firstname, lastname, email, password) VALUES ('${firstname}', '${lastname}', '${email}', crypt('${password}', gen_salt('bf', 8))) RETURNING *;`)
+      .then(res => {
+        cb(null, res.rows);
+      })
+      .catch(err => {
+        cb(err);
+      })
+      .then(() => {
+        client.release()
+      });
+  })
+}
+
+const getUserByEmail = function(email, cb) {
+  return pool
+  .connect()
+  .then(client => {
+    return client
+      .query(`SELECT * FROM users WHERE email='${email}'`)
+      .then(res => {
+        res.rowCount > 0 ? cb(null, res.rows[0]) : cb(null, false);
+      })
+      .catch(err => {
+        cb(err);
+      })
+      .then(() => {
+        client.release()
+      });
+  })
+}
+
+const getUserById = function(id, cb) {
+  return pool
+  .connect()
+  .then(client => {
+    return client
+      .query(`SELECT * FROM users WHERE user_id='${id}'`)
+      .then(res => {
+        cb(null, res.rows[0]);
+      })
+      .catch(err => {
+        cb(err);
+      })
+      .then(() => {
+        client.release()
+      });
+  })
+}
+
+const verifyPassword = function(email, password, cb) {
+  return pool
+  .connect()
+  .then(client => {
+    return client
+      .query(`SELECT user_id FROM users WHERE email='${email}' AND password=crypt('${password}', password);`)
+      .then(res => {
+        res.rowCount > 0 ? cb(null, true) : cb(null, false);
+      })
+      .catch(err => {
+        cb(err);
+      })
+      .then(() => {
+        client.release()
+      });
+  })
+}
+
 module.exports = {
   pool,
   getTodos,
@@ -304,6 +377,10 @@ module.exports = {
   createCategory,
   bookAppointment,
   getAppointments,
+  addUser,
+  getUserByEmail,
+  getUserById,
+  verifyPassword,
   editTodo,
   setStartTime,
 };
