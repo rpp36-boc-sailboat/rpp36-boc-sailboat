@@ -98,20 +98,20 @@ class CalendarClass extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <ul style={{marginTop: '5px', padding: 'unset'}}>
+        <ul style={{marginTop: '5px', padding: 'unset', textAlign: 'right'}}>
           <li>
             <Tooltip title="Create Appointment" placement="bottom-end" arrow>
-              <InsertInvitationIcon onClick={() => this.setState({modalOpen: true})} />
+              <InsertInvitationIcon sx={{cursor: 'pointer'}} onClick={() => this.setState({modalOpen: true})} />
             </Tooltip>
           </li>
           <li>
             <Tooltip title="Share To-dos" placement="bottom-end" arrow>
-              <CalendarMonthIcon sx={{my: 0.1}} value={'calendar'} onClick={this.shareClick.bind(this)}>calendar</CalendarMonthIcon>
+              <CalendarMonthIcon sx={{my: 0.1, cursor: 'pointer'}} value={'calendar'} onClick={this.shareClick.bind(this)}>calendar</CalendarMonthIcon>
             </Tooltip>
           </li>
           <li>
             <Tooltip title="Share Appointments" placement="bottom-end" arrow>
-              <EventAvailableIcon value={'appointment'} onClick={this.shareClick.bind(this)}>appointment</EventAvailableIcon>
+              <EventAvailableIcon sx={{cursor: 'pointer'}} value={'appointment'} onClick={this.shareClick.bind(this)}>appointment</EventAvailableIcon>
             </Tooltip>
           </li>
         </ul >
