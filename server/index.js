@@ -1,16 +1,47 @@
 const express = require("express");
 const axios = require("axios");
+const cors = require("cors");
+const cookieParser = require("cookie-parser");
+const session = require("express-session");
+const sessionPool = require("pg").Pool;
+const pgSession = require("connect-pg-simple")(session);
+const passport = require("passport");
+const authRouter = require("../routes/auth.js");
 const db = require("../db/postgres.js");
 const path = require("path");
 const app = express();
 const port = 3000;
 const dbMetrics = require("./report.js");
 
+const pgPool = db.pool;
+const secret = 'team sailboat';
+const sessionConfig = {
+  store: new pgSession({
+    pool: pgPool,
+    tableName: 'session',
+  }),
+  name: 'SID',
+  secret: secret,
+  resave: false, // don't save session if unmodified
+  saveUninitialized: false, // don't save session if unmodified
+  cookie: {
+    maxAge: 1000 * 60 * 60 * 24 * 30,
+    aameSite: true,
+    secure: false // enable only on https
+  }
+};
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("client/public"));
 app.use("/share/*", express.static("client/public"));
-app.use("/metrics/", express.static("client/public"));
+// app.use("/metrics/", express.static("client/public"));
+app.use(cookieParser(secret));
+app.use(session(sessionConfig));
+passport.initialize();
+passport.session();
+app.use(passport.authenticate('session'));
+app.use('/auth', authRouter);
 
 app.post("/todo", function (req, res) {
   if (req.body.start && req.body.end) {
@@ -24,15 +55,21 @@ app.post("/todo", function (req, res) {
   }
 });
 
-app.get("/todos", function (req, res) {
-  db.getTodos(req.query.id).then((result) => res.send(result));
-});
+app.get('/todo', function(req, res) {
+  db.getOneTodo(req.query.id)
+  .then(result => res.send(result))
+})
+
+app.get('/todos', function(req, res) {
+  db.getTodos(req.query.id)
+  .then(result => res.send(result))
+})
 
 app.delete("/todos", function (req, res) {
   db.deleteTodo(req.query.todoID).then(res.send("DELETED"));
 });
 
-app.post("/complete", function (req, res) {
+app.put('/complete', function(req, res) {
   if (req.body.complete === true) {
     db.incomplete(req.body.todoID).then(res.send("MARKED INCOMPLETE"));
   } else {
