@@ -7,9 +7,6 @@ import Button from '@mui/material/Button';
 import CloseIcon from '@mui/icons-material/Close';
 
 const CategoryCreate = (props) => {
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
 
   const formik = useFormik({
     initialValues: {
@@ -32,6 +29,7 @@ const CategoryCreate = (props) => {
   return(
   <form onSubmit={formik.handleSubmit} class="category-modal">
     <div class="modal-content">
+      <span class="close" onClick={props.close}>&times;</span>
       <label htmlFor="category">Category </label>
       <input
       id="category"
