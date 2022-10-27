@@ -166,7 +166,7 @@ class App extends React.Component {
                 path="/share/calendar"
                 element={<TodoShare userID={this.state.userID} />}
               />
-//               <Route exact path="/metrics" element={<Metrics />}></Route>
+              {/* <Route exact path="/metrics" element={<Metrics />}></Route> */}
               <Route
                 exact
                 path="/forms"
