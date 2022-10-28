@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import axios from "axios";
 import SignIn from "./Components/Accounts/SignIn.jsx";
 import SignUp from "./Components/Accounts/SignUp.jsx";
-import Metrics from "./Components/Metrics/index.jsx"; //POTENTIALLY CRASHING APP (under investigation - fkiros)
+import Metrics from "./Components/Metrics/index.jsx";
 import CalendarClass from "./Components/Calendar.jsx";
 import TodoCreate from './Components/Forms/TodoCreate.jsx';
 import TodoList from './Components/CalendarInteraction/TodoList.jsx';
@@ -23,6 +23,7 @@ Modal.setAppElement("#app");
 class App extends React.Component {
   constructor(props) {
     super(props);
+    this.handleTodoSubmit = this.handleTodoSubmit.bind(this);
     this.handleAddCategoryClick = this.handleAddCategoryClick.bind(this);
     this.handleAddCategorySubmit = this.handleAddCategorySubmit.bind(this);
     this.state = {
@@ -113,6 +114,18 @@ class App extends React.Component {
     }
   }
 
+  handleTodoSubmit() {
+    axios
+    .get("/todos", {
+      params: {
+        id: this.state.userID,
+      },
+    })
+    .then((result) => {
+      this.setState({ todos: result.data });
+    });
+  }
+
   handleAddCategoryClick() {
     if (this.state.addCategory === false) {
       this.setState({addCategory: true});
@@ -194,17 +207,19 @@ class App extends React.Component {
                 path="/share/calendar"
                 element={<TodoShare userID={this.state.userID} />}
               />
-              {/* <Route exact path="/metrics" element={<Metrics />}></Route> */}
+              <Route exact path="/metrics" element={<Metrics />}></Route>
               <Route
                 exact
                 path="/forms"
                 element={
                   <>
-                    {" "}
-                    <TodoCreate userID={this.state.userID} categories={this.state.categories} handleClick={this.handleAddCategoryClick} showModal={this.state.addCategory} handleCategorySubmit={this.handleAddCategorySubmit}/>
+                    <TodoCreate userID={this.state.userID}
+                    categories={this.state.categories}
+                    handleTodo={this.handleTodoSubmit}
+                    handleClick={this.handleAddCategoryClick}
+                    showModal={this.state.addCategory}
+                    handleCategorySubmit={this.handleAddCategorySubmit}/>
                     <TaskHome todos={this.state.todos} updateCompleted={this.updateCompleted}/>
-                    <DeleteButton todoID={this.state.todoID} />{" "}
-                    <CompleteButton todoID={this.state.todoID} />{" "}
                   </>
                 }
               ></Route>

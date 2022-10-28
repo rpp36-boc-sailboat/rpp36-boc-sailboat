@@ -40,7 +40,7 @@ export default function ({isOpen, onClose, onEventAdded, userID}) {
     <Modal overlayClassName='Overlay' className='Modal' isOpen={isOpen} onRequestClose={onClose}>
       <form onSubmit={onSubmit}>
         <div>
-          <CloseIcon fontSize='small' style={{float: 'right'}} onClick={() => onClose()}/>
+          <CloseIcon fontSize='small' style={{float: 'right', cursor: 'pointer'}} onClick={() => onClose()}/>
           <label>Task Name</label>
           <input placeholder='Title' value={title} onChange={e => setTitle(e.target.value)} />
         </div>

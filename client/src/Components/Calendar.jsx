@@ -12,7 +12,7 @@ import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import EventAvailableIcon from '@mui/icons-material/EventAvailable';
 import InsertInvitationIcon from '@mui/icons-material/InsertInvitation';
 import ShareIcon from '@mui/icons-material/Share';
-import Tooltip from '@mui/material/Tooltip';
+import { Tooltip, IconButton } from '@mui/material';
 
 class CalendarClass extends React.Component {
   constructor(props) {
@@ -27,7 +27,7 @@ class CalendarClass extends React.Component {
     }
     this.onEventAdded.bind(this);
     this.closeModal.bind(this);
-    this.shareClick.bind(this);
+    this.shareClick = this.shareClick.bind(this);
     this.eventDropped.bind(this);
     this.eventEditTime.bind(this);
     this.toDoDropped.bind(this);
@@ -67,9 +67,9 @@ class CalendarClass extends React.Component {
     this.setState({modalTask: true, selectedTaskID: e.event.toPlainObject().extendedProps.todo_id, selectedTask: e});
   }
 
-  shareClick(e) {
+  shareClick = name => () => {
     var link;
-    if (e.target.attributes[5].value === 'calendar') {
+    if (name === 'calendar') {
       link = window.location.href + `share/calendar/?user_id=${this.props.userID}`;
     } else {
       link = window.location.href + `share/appointment/?user_id=${this.props.userID}`;
@@ -80,7 +80,7 @@ class CalendarClass extends React.Component {
     aux.select();
     document.execCommand('copy');
     document.body.removeChild(aux);
-    alert(`Share link copied to clipboard.`);
+    alert(`Share link for ${name} has been copied to the clipboard.`);
   }
 
   eventDropped(e) {
@@ -121,20 +121,20 @@ class CalendarClass extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <ul style={{marginTop: '5px', padding: 'unset'}}>
+        <ul style={{marginTop: '5px', padding: 'unset', textAlign: 'right'}}>
           <li>
             <Tooltip title="Create Appointment" placement="bottom-end" arrow>
-              <InsertInvitationIcon onClick={() => this.setState({modalOpen: true})} />
+              <InsertInvitationIcon sx={{cursor: 'pointer'}} onClick={() => this.setState({modalOpen: true})} />
             </Tooltip>
           </li>
           <li>
             <Tooltip title="Share To-dos" placement="bottom-end" arrow>
-              <CalendarMonthIcon sx={{my: 0.1}} value={'calendar'} onClick={this.shareClick.bind(this)}>calendar</CalendarMonthIcon>
+              <CalendarMonthIcon sx={{my: 0.1, cursor: 'pointer'}} name='calendar' onClick={this.shareClick('calendar')} />
             </Tooltip>
           </li>
           <li>
             <Tooltip title="Share Appointments" placement="bottom-end" arrow>
-              <EventAvailableIcon value={'appointment'} onClick={this.shareClick.bind(this)}>appointment</EventAvailableIcon>
+              <EventAvailableIcon sx={{cursor: 'pointer'}} name='appointments' onClick={this.shareClick('appointments')} />
             </Tooltip>
           </li>
         </ul >
