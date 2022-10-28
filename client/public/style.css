@@ -131,7 +131,7 @@ label {
 .category-modal {
   display: flex;
   position: fixed;
-  z-index: 1;
+  z-index: 2;
   align-self: flex-start;
   flex-direction: column;
   justify-content: flex-start;
@@ -145,11 +145,13 @@ label {
 }
 
 .modal-content {
-  background-color: #fefefe;
+  background-color: rgb(200, 244, 249);
   margin: auto;
   padding: 20px;
-  border: 1px solid #888;
-  width: 80%;
+  border: 2px solid black;
+  border-radius: 5%;
+  width: 150px;
+  height: 150px;
   align-content: center
 }
 
