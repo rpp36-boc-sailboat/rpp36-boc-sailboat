@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import axios from "axios";
 import SignIn from "./Components/Accounts/SignIn.jsx";
 import SignUp from "./Components/Accounts/SignUp.jsx";
-// import Metrics from "./Components/Metrics/index.jsx"; POTENTIALLY CRASHING APP (under investigation - fkiros)
+import Metrics from "./Components/Metrics/index.jsx"; //POTENTIALLY CRASHING APP (under investigation - fkiros)
 import CalendarClass from "./Components/Calendar.jsx";
 import TodoCreate from './Components/Forms/TodoCreate.jsx';
 import TodoList from './Components/CalendarInteraction/TodoList.jsx';
@@ -32,14 +32,7 @@ class App extends React.Component {
       categories: [],
       categoryColors: {},
       currentEvents: [],
-      unplannedEvents: [{task:'task1', backgroundColor:'blue'},
-      {task:'task2', backgroundColor:'blue'},
-      {task:'task3', backgroundColor:'blue'},
-      {task:'task4', backgroundColor:'blue'},
-      {task:'task5', backgroundColor:'blue'},
-      {task:'task6', backgroundColor:'blue'},
-      {task:'task7', backgroundColor:'blue'},
-      {task:'task8', backgroundColor:'blue'}],
+      unplannedEvents: [],
       addCategory: false
     };
     this.updateCompleted = this.updateCompleted.bind(this);
@@ -102,7 +95,7 @@ class App extends React.Component {
         todo["category"] = category;
         todo["textColor"] = text;
         if (!start_time) unplannedEvents.push(todo);
-        else
+        else{
           currentEvents.push({
             todo_id,
             title: task,
@@ -111,8 +104,9 @@ class App extends React.Component {
             category_id,
             backgroundColor: color,
             borderColor: color,
-            textColor: text,
+            textColor: text
           });
+        }
         return todo;
       });
       this.setState({ currentEvents, unplannedEvents, todos });
@@ -166,29 +160,6 @@ class App extends React.Component {
         todos: result.data,
       })
     })
-  }
-
-  componentDidUpdate() {
-    if (Object.keys(this.state.categoryColors).length !== 0 &&
-    this.state.todos.length !== 0 && this.state.currentEvents.length === 0) {
-      let currentEvents = [];
-      let unplannedEvents = [];
-      let todos = this.state.todos.map((todo) => {
-        var {todo_id, task, start_time, end_time, category_id} = todo;
-        var [color, category] = this.state.categoryColors[category_id];
-        var [red, blue, green] = [parseInt(color.slice(1, 3), 16), parseInt(color.slice(3, 5), 16), parseInt(color.slice(5, 7), 16)];
-        var text = (red*0.299 + green*0.587 + blue*0.114) > 186 ? '#000000' : '#ffffff';
-        todo['backgroundColor'] = color;
-        todo['borderColor'] = color;
-        todo['category'] = category;
-        todo['textColor'] = text;
-        if (!start_time) unplannedEvents.push(todo);
-        else currentEvents.push({todo_id, title: task, start: start_time,
-          end: end_time, category_id, backgroundColor: color, borderColor: color, textColor: text});
-        return todo;
-      })
-      this.setState({currentEvents, unplannedEvents, todos});
-    }
   }
 
   render() {

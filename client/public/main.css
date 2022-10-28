@@ -9,12 +9,6 @@
   cursor: not-allowed;
 }
 
-.swiper-pagination.swiper-pagination-clickable.swiper-pagination-bullets.swiper-pagination-horizontal {
-  bottom: -4px !important;
-}
-.swiper.swiper-initialized.swiper-horizontal.swiper-android {
-  padding-bottom: 10px !important;
-}
 /* TODO: not attached to body. attached to specific els. move */
 .fc-unselectable {
   -webkit-user-select: none;
@@ -1473,6 +1467,14 @@ label {
   height: 100%;
   margin-left: auto;
   margin-right: auto;
+}
+
+.swiper-wrapper {
+  margin-bottom: 20px;
+}
+
+.swiper-pagination.swiper-pagination-clickable.swiper-pagination-bullets.swiper-pagination-horizontal {
+  bottom: -4px !important;
 }
 
 .swiper-slide {

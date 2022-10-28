@@ -16,7 +16,6 @@ class TodoList extends React.Component {
   render() {
     return (
       <div id="taskList">
-        {/* <div class="swiper-wrapper" style={{'padding-bottom': '-'}}></div> */}
         <Swiper
           slidesPerView={6}
           grid={{ rows: 1 }}

@@ -111,10 +111,10 @@ class CalendarClass extends React.Component {
     let time = info.dateStr;
     let todo_id = info.draggedEl.getAttribute('data-todoid');
     let index = info.draggedEl.getAttribute('data-index');
-    // axios.put('/setTime', {
-    //   todo_id,
-    //   time
-    // })
+    axios.put('/setTime', {
+      todo_id,
+      time
+    })
     this.props.plannedToDo(index);
   }
 
