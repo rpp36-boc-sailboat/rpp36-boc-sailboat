@@ -23,6 +23,7 @@ Modal.setAppElement("#app");
 class App extends React.Component {
   constructor(props) {
     super(props);
+    this.handleTodoSubmit = this.handleTodoSubmit.bind(this);
     this.handleAddCategoryClick = this.handleAddCategoryClick.bind(this);
     this.handleAddCategorySubmit = this.handleAddCategorySubmit.bind(this);
     this.state = {
@@ -109,6 +110,18 @@ class App extends React.Component {
       });
       this.setState({ currentEvents, unplannedEvents, todos });
     }
+  }
+
+  handleTodoSubmit() {
+    axios
+    .get("/todos", {
+      params: {
+        id: this.state.userID,
+      },
+    })
+    .then((result) => {
+      this.setState({ todos: result.data });
+    });
   }
 
   handleAddCategoryClick() {
@@ -211,11 +224,13 @@ class App extends React.Component {
                 path="/forms"
                 element={
                   <>
-                    {" "}
-                    <TodoCreate userID={this.state.userID} categories={this.state.categories} handleClick={this.handleAddCategoryClick} showModal={this.state.addCategory} handleCategorySubmit={this.handleAddCategorySubmit}/>
+                    <TodoCreate userID={this.state.userID}
+                    categories={this.state.categories}
+                    handleTodo={this.handleTodoSubmit}
+                    handleClick={this.handleAddCategoryClick}
+                    showModal={this.state.addCategory}
+                    handleCategorySubmit={this.handleAddCategorySubmit}/>
                     <TaskHome todos={this.state.todos} updateCompleted={this.updateCompleted}/>
-                    <DeleteButton todoID={this.state.todoID} />{" "}
-                    <CompleteButton todoID={this.state.todoID} />{" "}
                   </>
                 }
               ></Route>
