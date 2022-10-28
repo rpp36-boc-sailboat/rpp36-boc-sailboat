@@ -12,11 +12,13 @@ const Landing =()=>{
       <LandingNav/>
 
         <Routes>
-          <Route exact path ="/*" element ={<>
-          <h1>  Welcome to Landing page</h1>
-            <p>info</p>
-            <ReactSlickDemo/>
-          </>}/>
+          <Route exact path ="/*" element ={
+          <div className="contain">
+            <h2 style={{textAlign:"center"}}>Welcome to ENCOMPASS</h2>
+            <p className="textp">Encompass is a daily task manager to line up your appointments or tasks with a matching calendar and offers metrics.</p>
+              <ReactSlickDemo />
+
+          </div>}/>
 
           <Route path ='/signin' element={<SignIn />}/>
           <Route path ='/signup' element={<SignUp />}/>

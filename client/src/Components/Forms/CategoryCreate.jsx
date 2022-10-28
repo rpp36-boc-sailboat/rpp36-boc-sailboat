@@ -2,6 +2,9 @@ import React from 'react';
 import { useFormik, useField } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
+import Modal from 'react-modal';
+import Button from '@mui/material/Button';
+import CloseIcon from '@mui/icons-material/Close';
 
 const CategoryCreate = (props) => {
 
@@ -24,27 +27,37 @@ const CategoryCreate = (props) => {
   });
 
   return(
-  <form onSubmit={formik.handleSubmit}>
-    <label htmlFor="category">Category </label>
-    <input
-    id="category"
-    name="category"
-    type="text"
-    onChange={formik.handleChange}
-    value={formik.values.category}
-    />
+  <form onSubmit={formik.handleSubmit} class="category-modal">
+    <div class="modal-content">
+      <span class="close" onClick={props.close}>&times;</span>
+      <div>
+        <label htmlFor="category">Category </label>
+        <input
+        id="category"
+        name="category"
+        type="text"
+        onChange={formik.handleChange}
+        value={formik.values.category}
+        />
+      </div>
 
-    <label htmlFor="color">Color </label>
-    <input
-    id="color"
-    name="color"
-    type="color"
-    onChange={formik.handleChange}
-    value={formik.values.color}
-    />
+      <div>
+        <label htmlFor="color">Color </label>
+        <input
+        id="color"
+        name="color"
+        type="color"
+        onChange={formik.handleChange}
+        value={formik.values.color}
+        />
+      </div>
 
-    <button type="submit">Submit</button>
-  </form>)
+      <div>
+        <button type="submit">Submit</button>
+      </div>
+    </div>
+  </form>
+  )
 }
 
 export default CategoryCreate;

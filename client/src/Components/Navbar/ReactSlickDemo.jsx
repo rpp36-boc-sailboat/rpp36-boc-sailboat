@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import Slider from "react-slick";
-// import "./index.css";
+import "./index.css";
 
 export default class ReactSlickDemo extends React.Component {
   render() {
@@ -15,19 +15,30 @@ export default class ReactSlickDemo extends React.Component {
 
 
     return (
-      <div >
+      <div className ="container">
         <Slider {...settings}>
-          <div>
-           Feature 1 img
+          <div >
+           <h3>Daily Calendar Views</h3>
+           <img src="https://i.postimg.cc/MHCPmQyM/Screen-Shot-2022-10-28-at-4-01-52-PM.png"
+           alt="daycalendar" />
           </div>
           <div>
-            Feature 2 img
+            <h3>Monthly Calendar Views</h3>
+            <img src="https://i.postimg.cc/KvnVZ0Pd/Screen-Shot-2022-10-28-at-4-22-40-PM.png"
+           alt="monthcalendar" />
           </div>
           <div>
-            Feature 3 img
+            <h3>Metrics Feature</h3>
+            <img src="https://i.postimg.cc/wBP9YWzS/Screen-Shot-2022-10-28-at-4-04-04-PM.png"
+           alt="metrics" />
           </div>
           <div>
-           Feature 4 img
+            <h3>Custom your tasks Feature</h3>
+            <img src="https://i.postimg.cc/hPSW6FxX/Screen-Shot-2022-10-28-at-4-04-24-PM.png"
+           alt="custom tasks" />
+          </div>
+          <div>
+            <h3>Additonal features comming soon</h3>
           </div>
         </Slider>
       </div>

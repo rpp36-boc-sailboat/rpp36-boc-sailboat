@@ -6,9 +6,13 @@ import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin, { Draggable } from '@fullcalendar/interaction'
 import AddEventModal from './Appointments/AppointmentModal.jsx'
 import BookAptModal from './Appointments/BookAptModal.jsx'
+import ClickTask from './CalendarInteraction/ClickTask.jsx'
 import axios from 'axios'
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import EventAvailableIcon from '@mui/icons-material/EventAvailable';
+import InsertInvitationIcon from '@mui/icons-material/InsertInvitation';
+import ShareIcon from '@mui/icons-material/Share';
+import { Tooltip, IconButton } from '@mui/material';
 
 class CalendarClass extends React.Component {
   constructor(props) {
@@ -17,12 +21,16 @@ class CalendarClass extends React.Component {
       weekendsVisible: true,
       currentEvents: [],
       modalOpen: false,
+      modalTask: false,
+      selectedTaskID: null,
+      selectedTask: null
     }
     this.onEventAdded.bind(this);
     this.closeModal.bind(this);
-    this.shareClick.bind(this);
+    this.shareClick = this.shareClick.bind(this);
     this.eventDropped.bind(this);
     this.eventEditTime.bind(this);
+    this.toDoDropped.bind(this);
     this.calendarRef = React.createRef(null);
   }
 
@@ -33,6 +41,10 @@ class CalendarClass extends React.Component {
 
   closeModal() {
     this.setState({modalOpen: false});
+  }
+
+  closeTask() {
+    this.setState({modalTask: false});
   }
 
   componentDidMount() {
@@ -51,10 +63,13 @@ class CalendarClass extends React.Component {
     })
   }
 
-  shareClick(e) {
+  handleEventClick(e) {
+    this.setState({modalTask: true, selectedTaskID: e.event.toPlainObject().extendedProps.todo_id, selectedTask: e});
+  }
+
+  shareClick = name => () => {
     var link;
-    console.log(e.target.value);
-    if (e.target.attributes[5].value === 'calendar') {
+    if (name === 'calendar') {
       link = window.location.href + `share/calendar/?user_id=${this.props.userID}`;
     } else {
       link = window.location.href + `share/appointment/?user_id=${this.props.userID}`;
@@ -65,7 +80,7 @@ class CalendarClass extends React.Component {
     aux.select();
     document.execCommand('copy');
     document.body.removeChild(aux);
-    alert(`Share link copied to clipboard.`);
+    alert(`Share link for ${name} has been copied to the clipboard.`);
   }
 
   eventDropped(e) {
@@ -92,12 +107,37 @@ class CalendarClass extends React.Component {
     });
   }
 
+  toDoDropped (info) {
+    let time = info.dateStr;
+    let todo_id = info.draggedEl.getAttribute('data-todoid');
+    let index = info.draggedEl.getAttribute('data-index');
+    axios.put('/setTime', {
+      todo_id,
+      time
+    })
+    this.props.plannedToDo(index);
+  }
+
   render() {
     return (
       <React.Fragment>
-        <button onClick={() => this.setState({modalOpen: true})}>Add Appointment</button>
-        <CalendarMonthIcon value={'calendar'} onClick={this.shareClick.bind(this)}>calendar</CalendarMonthIcon>
-        <EventAvailableIcon value={'appointment'} onClick={this.shareClick.bind(this)}>appointment</EventAvailableIcon>
+        <ul style={{marginTop: '5px', padding: 'unset', textAlign: 'right'}}>
+          <li>
+            <Tooltip title="Create Appointment" placement="bottom-end" arrow>
+              <InsertInvitationIcon sx={{cursor: 'pointer'}} onClick={() => this.setState({modalOpen: true})} />
+            </Tooltip>
+          </li>
+          <li>
+            <Tooltip title="Share To-dos" placement="bottom-end" arrow>
+              <CalendarMonthIcon sx={{my: 0.1, cursor: 'pointer'}} name='calendar' onClick={this.shareClick('calendar')} />
+            </Tooltip>
+          </li>
+          <li>
+            <Tooltip title="Share Appointments" placement="bottom-end" arrow>
+              <EventAvailableIcon sx={{cursor: 'pointer'}} name='appointments' onClick={this.shareClick('appointments')} />
+            </Tooltip>
+          </li>
+        </ul >
         <FullCalendar
           ref={this.calendarRef}
           plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
@@ -120,18 +160,12 @@ class CalendarClass extends React.Component {
           eventDrop={this.eventDropped.bind(this)}
           eventResize={this.eventEditTime.bind(this)}
           events={this.props.events}
+          eventClick={this.handleEventClick.bind(this)}
           draggable={true}
-          drop= {function(info) {
-              info.draggedEl.parentNode.removeChild(info.draggedEl);
-              let time = info.dateStr;
-              let todo_id = info.draggedEl.getAttribute('data-todoid');
-              axios.put('/setTime', {
-                todo_id,
-                time
-              })
-          }}
+          drop={(info) => {this.toDoDropped(info)}}
         />
         <AddEventModal isOpen={this.state.modalOpen} onClose={this.closeModal.bind(this)} onEventAdded={e => this.onEventAdded(e)} userID={this.props.userID} />
+        {this.state.modalTask === true ? <ClickTask isOpen={this.state.modalTask} taskID={this.state.selectedTaskID} taskEvent={this.state.selectedTask} onClose={this.closeTask.bind(this)}/> : null}
       </React.Fragment>
     );
   }

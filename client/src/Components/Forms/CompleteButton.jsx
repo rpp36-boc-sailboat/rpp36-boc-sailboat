@@ -9,7 +9,7 @@ class CompleteButton extends React.Component {
   }
 
   handleClick() {
-    axios.post('/complete', {
+    axios.put('/complete', {
       todoID: this.props.todoID,
       // complete: this.props.complete
     })

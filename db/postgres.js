@@ -1,4 +1,4 @@
-require("dotenv").config();
+require("dotenv").config({path: __dirname + '/../../../../.env'});
 const { Pool } = require("pg");
 const { PGHOST, PGUSER, PGDATABASE, PGPASSWORD, PGPORT } = process.env;
 
@@ -24,6 +24,23 @@ const getTodos = function (id) {
       });
   });
 };
+
+const getOneTodo = function(id) {
+  return pool
+  .connect()
+  .then(client => {
+    return client
+      .query(`SELECT * FROM todos WHERE todo_id=${id}`)
+      .then(res => {
+        client.release();
+        return res.rows;
+      })
+      .catch(err => {
+        client.release();
+        console.log(err.stack);
+      })
+  })
+}
 
 const createTodo = function (todo) {
   return pool.connect().then((client) => {
@@ -290,6 +307,79 @@ const setStartTime = function (todo_id, startTime) {
   });
 };
 
+// Authorization Queries
+const addUser = function(firstname, lastname, email, password, cb) {
+  return pool
+  .connect()
+  .then(client => {
+    return client
+      .query(`INSERT INTO users (firstname, lastname, email, password) VALUES ('${firstname}', '${lastname}', '${email}', crypt('${password}', gen_salt('bf', 8))) RETURNING *;`)
+      .then(res => {
+        cb(null, res.rows);
+      })
+      .catch(err => {
+        cb(err);
+      })
+      .then(() => {
+        client.release()
+      });
+  })
+}
+
+const getUserByEmail = function(email, cb) {
+  return pool
+  .connect()
+  .then(client => {
+    return client
+      .query(`SELECT * FROM users WHERE email='${email}'`)
+      .then(res => {
+        res.rowCount > 0 ? cb(null, res.rows[0]) : cb(null, false);
+      })
+      .catch(err => {
+        cb(err);
+      })
+      .then(() => {
+        client.release()
+      });
+  })
+}
+
+const getUserById = function(id, cb) {
+  return pool
+  .connect()
+  .then(client => {
+    return client
+      .query(`SELECT * FROM users WHERE user_id='${id}'`)
+      .then(res => {
+        cb(null, res.rows[0]);
+      })
+      .catch(err => {
+        cb(err);
+      })
+      .then(() => {
+        client.release()
+      });
+  })
+}
+
+const verifyPassword = function(email, password, cb) {
+  return pool
+  .connect()
+  .then(client => {
+    return client
+      .query(`SELECT user_id FROM users WHERE email='${email}' AND password=crypt('${password}', password);`)
+      .then(res => {
+        res.rowCount > 0 ? cb(null, true) : cb(null, false);
+      })
+      .catch(err => {
+        cb(err);
+      })
+      .then(() => {
+        client.release()
+      });
+  })
+}
+
 module.exports = {
   pool,
   getTodos,
@@ -304,6 +394,11 @@ module.exports = {
   createCategory,
   bookAppointment,
   getAppointments,
-  editTodo,
+  addUser,
+  getUserByEmail,
+  getUserById,
+  verifyPassword,
   setStartTime,
+  getOneTodo,
+  editTodo
 };
