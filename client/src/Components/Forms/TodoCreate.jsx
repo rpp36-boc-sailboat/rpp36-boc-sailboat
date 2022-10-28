@@ -25,6 +25,7 @@ const TodoCreate = (props) => {
     }),
     onSubmit: values => {
        axios.post('/todo', values)
+       .then(props.handleTodo)
     },
   });
 
