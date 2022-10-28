@@ -12,7 +12,7 @@ import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import EventAvailableIcon from '@mui/icons-material/EventAvailable';
 import InsertInvitationIcon from '@mui/icons-material/InsertInvitation';
 import ShareIcon from '@mui/icons-material/Share';
-import Tooltip from '@mui/material/Tooltip';
+import { Tooltip, IconButton } from '@mui/material';
 
 class CalendarClass extends React.Component {
   constructor(props) {
@@ -27,7 +27,7 @@ class CalendarClass extends React.Component {
     }
     this.onEventAdded.bind(this);
     this.closeModal.bind(this);
-    this.shareClick.bind(this);
+    this.shareClick = this.shareClick.bind(this);
     this.eventDropped.bind(this);
     this.eventEditTime.bind(this);
     this.calendarRef = React.createRef(null);
@@ -66,10 +66,9 @@ class CalendarClass extends React.Component {
     this.setState({modalTask: true, selectedTaskID: e.event.toPlainObject().extendedProps.todo_id, selectedTask: e});
   }
 
-  shareClick(e) {
+  shareClick = name => () => {
     var link;
-    console.log(e.target.value);
-    if (e.target.attributes[5].value === 'calendar') {
+    if (name === 'calendar') {
       link = window.location.href + `share/calendar/?user_id=${this.props.userID}`;
     } else {
       link = window.location.href + `share/appointment/?user_id=${this.props.userID}`;
@@ -80,7 +79,7 @@ class CalendarClass extends React.Component {
     aux.select();
     document.execCommand('copy');
     document.body.removeChild(aux);
-    alert(`Share link copied to clipboard.`);
+    alert(`Share link for ${name} has been copied to the clipboard.`);
   }
 
   eventDropped(e) {
@@ -123,12 +122,12 @@ class CalendarClass extends React.Component {
           </li>
           <li>
             <Tooltip title="Share To-dos" placement="bottom-end" arrow>
-              <CalendarMonthIcon sx={{my: 0.1, cursor: 'pointer'}} value={'calendar'} onClick={this.shareClick.bind(this)}>calendar</CalendarMonthIcon>
+              <CalendarMonthIcon sx={{my: 0.1, cursor: 'pointer'}} name='calendar' onClick={this.shareClick('calendar')} />
             </Tooltip>
           </li>
           <li>
             <Tooltip title="Share Appointments" placement="bottom-end" arrow>
-              <EventAvailableIcon sx={{cursor: 'pointer'}} value={'appointment'} onClick={this.shareClick.bind(this)}>appointment</EventAvailableIcon>
+              <EventAvailableIcon sx={{cursor: 'pointer'}} name='appointments' onClick={this.shareClick('appointments')} />
             </Tooltip>
           </li>
         </ul >
