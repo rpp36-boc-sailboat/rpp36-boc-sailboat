@@ -149,10 +149,10 @@ app.get("/updateTaskDuration", (req, res) => {
   );
 });
 
-app.put("/setTime", (req, res) => {
-  var { todo_id, time } = req.body;
-  db.setStartTime(todo_id, time).then((result) => res.status(200).send(result));
-});
+// app.put("/setTime", (req, res) => {
+//   var { todo_id, time } = req.body;
+//   db.setStartTime(todo_id, time).then((result) => res.status(200).send(result));
+// });
 
 app.listen(port, () => {
   console.log("listening on port: ", port);

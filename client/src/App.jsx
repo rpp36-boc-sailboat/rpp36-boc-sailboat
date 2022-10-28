@@ -32,10 +32,18 @@ class App extends React.Component {
       categories: [],
       categoryColors: {},
       currentEvents: [],
-      unplannedEvents: [],
+      unplannedEvents: [{task:'task1', backgroundColor:'blue'},
+      {task:'task2', backgroundColor:'blue'},
+      {task:'task3', backgroundColor:'blue'},
+      {task:'task4', backgroundColor:'blue'},
+      {task:'task5', backgroundColor:'blue'},
+      {task:'task6', backgroundColor:'blue'},
+      {task:'task7', backgroundColor:'blue'},
+      {task:'task8', backgroundColor:'blue'}],
       addCategory: false
     };
     this.updateCompleted = this.updateCompleted.bind(this);
+    this.plannedToDo = this.plannedToDo.bind(this);
   }
 
   componentDidMount() {
@@ -119,6 +127,15 @@ class App extends React.Component {
     }
   }
 
+  plannedToDo(i) {
+    let index = parseInt(i);
+    let newUnplanned = [...this.state.unplannedEvents.slice(0, index),
+       ...this.state.unplannedEvents.slice(index + 1)];
+    this.setState({
+      unplannedEvents: newUnplanned
+    });
+  }
+
   handleAddCategorySubmit() {
     this.setState({addCategory: false});
     axios.get('/categories', {
@@ -193,6 +210,7 @@ class App extends React.Component {
                     <CalendarClass
                       events={this.state.currentEvents}
                       userID={this.state.userID}
+                      plannedToDo={this.plannedToDo}
                     />
                   </>
                 }
