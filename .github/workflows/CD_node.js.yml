@@ -28,5 +28,5 @@ jobs:
         cache: 'npm'
     - run: npm install
     - run: npm run webpack_CI
-    - run: pm2 restart boc
+#     - run: pm2 restart boc
     # - run: npm test
