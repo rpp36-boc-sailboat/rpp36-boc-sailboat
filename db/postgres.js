@@ -1,5 +1,18 @@
 require("dotenv").config();
 const { Pool } = require("pg");
+
+const config = require("/home/ubuntu/dbinfo/config.js"); // path is to local dir in instance
+
+const pool = new Pool({
+  PGUSER: config.PGUSER,
+  PGHOST: config.PGHOST,
+  PGDATABASE: config.PGDATABASE,
+  PGPASSWORD: config.PGPASSWORD,
+  PGPORT: config.PGPORT,
+});
+
+
+/*
 const { PGHOST, PGUSER, PGDATABASE, PGPASSWORD, PGPORT } = process.env;
 
 const pool = new Pool({
@@ -9,6 +22,8 @@ const pool = new Pool({
   PGPASSWORD,
   PGPORT,
 });
+
+*/
 
 const getTodos = function (id) {
   return pool.connect().then((client) => {
