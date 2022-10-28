@@ -1,4 +1,4 @@
-require("dotenv").config({path: __dirname + '../../.env'});
+require("dotenv").config({path: __dirname + '../../../../.env'});
 const { Pool } = require("pg");
 
 const config = require("/home/ubuntu/dbinfo/config.js"); // path is to local dir in instance
