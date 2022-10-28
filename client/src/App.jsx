@@ -14,7 +14,7 @@ import AppointmentShare from './Components/Appointments/AppointmentShare.jsx';
 import TodoShare from './Components/TodoShare/TodoShare.jsx';
 import TaskHome from './Components/Forms/TaskHome.jsx';
 import Modal from 'react-modal';
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Navigate, Routes, Route } from "react-router-dom";
 import Navbar from "./Components/Navbar/Nav.jsx";
 import Landing from "./Components/Landing.jsx";
 
@@ -26,8 +26,22 @@ class App extends React.Component {
     this.handleTodoSubmit = this.handleTodoSubmit.bind(this);
     this.handleAddCategoryClick = this.handleAddCategoryClick.bind(this);
     this.handleAddCategorySubmit = this.handleAddCategorySubmit.bind(this);
+    this.handleSignInUser = this.handleSignInUser.bind(this);
+    this.handleSignUpUser = this.handleSignUpUser.bind(this);
+    this.getTodos = this.getTodos.bind(this);
+    this.getCategories = this.getCategories.bind(this);
     this.state = {
-      userID: 1,
+      user: JSON.parse(localStorage.getItem('user'))
+        ? {
+            id: JSON.parse(localStorage.getItem('user')).id,
+            firstname: JSON.parse(localStorage.getItem('user')).firstname,
+            isLoggedIn: JSON.parse(localStorage.getItem('user')).isLoggedIn
+          }
+        : {
+            id: 0,
+            firstname: 'Guest',
+            isLoggedIn: false
+          },
       todoID: 124,
       todos: [],
       categories: [],
@@ -40,21 +54,28 @@ class App extends React.Component {
     this.plannedToDo = this.plannedToDo.bind(this);
   }
 
-  componentDidMount() {
+  componentDidMount(id) {
+    this.getTodos(id);
+    this.getCategories(id);
+  }
+
+  getTodos(id = this.state.user.id) {
     axios
       .get("/todos", {
         params: {
-          id: this.state.userID,
+          id
         },
       })
       .then((result) => {
         this.setState({ todos: result.data });
       });
+  }
 
+  getCategories(id = this.state.user.id) {
     axios
       .get("/categories", {
         params: {
-          id: this.state.userID,
+          id
         },
       })
       .then((result) => {
@@ -118,7 +139,7 @@ class App extends React.Component {
     axios
     .get("/todos", {
       params: {
-        id: this.state.userID,
+        id: this.state.user.id,
       },
     })
     .then((result) => {
@@ -147,7 +168,7 @@ class App extends React.Component {
     this.setState({addCategory: false});
     axios.get('/categories', {
       params: {
-        id: this.state.userID
+        id: this.state.user.id
       }
     })
     .then(result => {
@@ -164,7 +185,7 @@ class App extends React.Component {
     console.log('start of get Route');
     axios.get('/todos', {
       params: {
-        id: this.state.userID
+        id: this.state.user.id
       }
     })
     .then(result => {
@@ -175,14 +196,72 @@ class App extends React.Component {
     })
   }
 
+  handleSignInUser (user) {
+    axios({
+      method: 'POST',
+      data: {
+        email: user.email,
+        password: user.password,
+      },
+      withCredentials: true,
+      url: '/auth/signin',
+    })
+    .then((res) => {
+      let user = {
+        id: res.data.user.id,
+        firstname: res.data.user.firstname,
+        isLoggedIn: true
+      };
+      localStorage.setItem('user', JSON.stringify(user));
+      this.setState({ user });
+      this.getTodos(user.id);
+      this.getCategories(user.id);
+    })
+    .catch((err) => {
+      err.response.status === 404
+        ? alert('Incorrect email or password.')
+        : alert(err.message);
+    })
+  }
+
+  handleSignUpUser (user) {
+    let email = user.email.toLowerCase();
+    let firstname = user.firstName[0].toUpperCase() + user.firstName.substring(1);
+    let lastname = user.lastName[0].toUpperCase() + user.lastName.substring(1);
+    let password = user.password;
+    axios({
+      method: 'POST',
+      data: {
+        email: email,
+        firstname: firstname,
+        lastname: lastname,
+        password: password,
+      },
+      withCredentials: true,
+      url: '/auth/signup',
+    })
+    .then((res) => {
+      let user = {
+        id: res.data[0].user_id,
+        firstname: res.data[0].firstname,
+        isLoggedIn: false
+      };
+      localStorage.setItem('user', JSON.stringify(user));
+      this.handleSignInUser({ 'email': email, 'password': password });
+    })
+    .catch((err) => {
+      err.response.status === 404
+        ? alert('A user with that email already exists.')
+        : alert(err.message);
+    })
+  }
+
   render() {
-    const status = this.state.userID >= 1;
+    const status = this.state.user.id >= 1 && this.state.user.isLoggedIn;
     return (
       <>
         {status && (
           <BrowserRouter>
-            {/* <SignUp />
-          <SignIn/> */}
             <Navbar />
             <Routes>
               <Route
@@ -193,7 +272,7 @@ class App extends React.Component {
                     <TodoList todos={this.state.unplannedEvents} />
                     <CalendarClass
                       events={this.state.currentEvents}
-                      userID={this.state.userID}
+                      userID={this.state.user.id}
                       plannedToDo={this.plannedToDo}
                     />
                   </>
@@ -201,11 +280,11 @@ class App extends React.Component {
               />
               <Route
                 path="/share/appointment"
-                element={<AppointmentShare userID={this.state.userID} />}
+                element={<AppointmentShare userID={this.state.user.id} />}
               />
               <Route
                 path="/share/calendar"
-                element={<TodoShare userID={this.state.userID} />}
+                element={<TodoShare userID={this.state.user.id} />}
               />
               <Route exact path="/metrics" element={<Metrics />}></Route>
               <Route
@@ -213,7 +292,7 @@ class App extends React.Component {
                 path="/forms"
                 element={
                   <>
-                    <TodoCreate userID={this.state.userID}
+                    <TodoCreate userID={this.state.user.id}
                     categories={this.state.categories}
                     handleTodo={this.handleTodoSubmit}
                     handleClick={this.handleAddCategoryClick}
@@ -223,12 +302,14 @@ class App extends React.Component {
                   </>
                 }
               ></Route>
+              {status && <Route exact path="/signup" element={<Navigate replace to="/" />}></Route>}
+              {status && <Route exact path="/signin" element={<Navigate replace to="/" />}></Route>}
               <Route exact path="/settings" element={<>settings</>}></Route>
               <Route exact path="/signout" element={<>signout</>}></Route>
             </Routes>
           </BrowserRouter>
         )}
-        {!status && <Landing />}
+        {!status && <Landing userId={this.state.user.id} signInClick={this.handleSignInUser} signUpClick={this.handleSignUpUser} />}
       </>
     );
   }

@@ -4,7 +4,12 @@ import SignUp from "./Accounts/SignUp.jsx";
 import LandingNav from "./Navbar/LandingNav.jsx"
 import {BrowserRouter, Routes, Route } from "react-router-dom";
 
-const Landing =()=>{
+const Landing =(props)=>{
+  const {
+    userId,
+    signInClick,
+    signUpClick
+  } = props;
 
   return (
     <>
@@ -17,8 +22,8 @@ const Landing =()=>{
             <p>info</p>
           </>}>
           </Route>
-          <Route exact path ='/signin' element={<SignIn />}></Route>
-          <Route exact path ='/signup' element={<SignUp />}></Route>
+          <Route exact path ='/signin' element={<SignIn userId={userId} signInClick={signInClick} />}></Route>
+          <Route exact path ='/signup' element={<SignUp signUpClick={signUpClick} />}></Route>
         </Routes>
 
 
