@@ -1,4 +1,4 @@
-require("dotenv").config();
+require("dotenv").config({path: __dirname + '/../../../../.env'});
 const { Pool } = require("pg");
 const { PGHOST, PGUSER, PGDATABASE, PGPASSWORD, PGPORT } = process.env;
 
@@ -24,6 +24,23 @@ const getTodos = function (id) {
       });
   });
 };
+
+const getOneTodo = function(id) {
+  return pool
+  .connect()
+  .then(client => {
+    return client
+      .query(`SELECT * FROM todos WHERE todo_id=${id}`)
+      .then(res => {
+        client.release();
+        return res.rows;
+      })
+      .catch(err => {
+        client.release();
+        console.log(err.stack);
+      })
+  })
+}
 
 const createTodo = function (todo) {
   return pool.connect().then((client) => {
@@ -381,6 +398,7 @@ module.exports = {
   getUserByEmail,
   getUserById,
   verifyPassword,
-  editTodo,
   setStartTime,
+  getOneTodo,
+  editTodo
 };

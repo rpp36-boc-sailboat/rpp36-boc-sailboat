@@ -55,15 +55,21 @@ app.post("/todo", function (req, res) {
   }
 });
 
-app.get("/todos", function (req, res) {
-  db.getTodos(req.query.id).then((result) => res.send(result));
-});
+app.get('/todo', function(req, res) {
+  db.getOneTodo(req.query.id)
+  .then(result => res.send(result))
+})
+
+app.get('/todos', function(req, res) {
+  db.getTodos(req.query.id)
+  .then(result => res.send(result))
+})
 
 app.delete("/todos", function (req, res) {
   db.deleteTodo(req.query.todoID).then(res.send("DELETED"));
 });
 
-app.post("/complete", function (req, res) {
+app.put('/complete', function(req, res) {
   if (req.body.complete === true) {
     db.incomplete(req.body.todoID).then(res.send("MARKED INCOMPLETE"));
   } else {
@@ -145,7 +151,9 @@ app.get("/updateTaskDuration", (req, res) => {
 
 app.put("/setTime", (req, res) => {
   var { todo_id, time } = req.body;
-  db.setStartTime(todo_id, time).then((result) => res.status(200).send(result));
+  db.setStartTime(todo_id, time)
+  .then((result) => res.status(200).send(result))
+  .catch((err) => res.status(500).send(err).end())
 });
 
 app.listen(port, () => {
