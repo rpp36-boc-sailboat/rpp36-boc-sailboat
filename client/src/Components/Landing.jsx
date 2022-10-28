@@ -3,7 +3,7 @@ import SignIn from "./Accounts/SignIn.jsx";
 import SignUp from "./Accounts/SignUp.jsx";
 import LandingNav from "./Navbar/LandingNav.jsx"
 import {BrowserRouter, Routes, Route } from "react-router-dom";
-
+import ReactSlickDemo from "./Navbar/ReactSlickDemo.jsx"
 const Landing =()=>{
 
   return (
@@ -15,6 +15,7 @@ const Landing =()=>{
           <Route exact path ="/*" element ={<>
           <h1>  Welcome to Landing page</h1>
             <p>info</p>
+            <ReactSlickDemo/>
           </>}/>
 
           <Route path ='/signin' element={<SignIn />}/>
