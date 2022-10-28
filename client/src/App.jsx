@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import axios from "axios";
 import SignIn from "./Components/Accounts/SignIn.jsx";
 import SignUp from "./Components/Accounts/SignUp.jsx";
-// import Metrics from "./Components/Metrics/index.jsx"; POTENTIALLY CRASHING APP (under investigation - fkiros)
+import Metrics from "./Components/Metrics/index.jsx";
 import CalendarClass from "./Components/Calendar.jsx";
 import TodoCreate from './Components/Forms/TodoCreate.jsx';
 import TodoList from './Components/CalendarInteraction/TodoList.jsx';
@@ -205,7 +205,7 @@ class App extends React.Component {
                 path="/share/calendar"
                 element={<TodoShare userID={this.state.userID} />}
               />
-              {/* <Route exact path="/metrics" element={<Metrics />}></Route> */}
+              <Route exact path="/metrics" element={<Metrics />}></Route>
               <Route
                 exact
                 path="/forms"
