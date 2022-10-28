@@ -145,7 +145,9 @@ app.get("/updateTaskDuration", (req, res) => {
 
 app.put("/setTime", (req, res) => {
   var { todo_id, time } = req.body;
-  db.setStartTime(todo_id, time).then((result) => res.status(200).send(result)).catch(err => res.status(500).send(err));
+  db.setStartTime(todo_id, time)
+  .then((result) => res.status(200).send(result))
+  .catch((err) => res.status(500).send(err).end())
 });
 
 app.listen(port, () => {

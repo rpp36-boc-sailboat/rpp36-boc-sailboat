@@ -30,6 +30,7 @@ class CalendarClass extends React.Component {
     this.shareClick = this.shareClick.bind(this);
     this.eventDropped.bind(this);
     this.eventEditTime.bind(this);
+    this.toDoDropped.bind(this);
     this.calendarRef = React.createRef(null);
   }
 
@@ -106,12 +107,18 @@ class CalendarClass extends React.Component {
     });
   }
 
+  toDoDropped (info) {
+    let time = info.dateStr;
+    let todo_id = info.draggedEl.getAttribute('data-todoid');
+    let index = info.draggedEl.getAttribute('data-index');
+    axios.put('/setTime', {
+      todo_id,
+      time
+    })
+    this.props.plannedToDo(index);
+  }
+
   render() {
-    // if (this.state.openTask === true) {
-    //   return (
-    //     <ClickTask openTask={this.state.openTask} userID={this.state.selectedTaskID}/>
-    //   )
-    // }
     return (
       <React.Fragment>
         <ul style={{marginTop: '5px', padding: 'unset', textAlign: 'right'}}>
@@ -155,15 +162,7 @@ class CalendarClass extends React.Component {
           events={this.props.events}
           eventClick={this.handleEventClick.bind(this)}
           draggable={true}
-          drop= {function(info) {
-              info.draggedEl.parentNode.removeChild(info.draggedEl);
-              let time = info.dateStr;
-              let todo_id = info.draggedEl.getAttribute('data-todoid');
-              axios.put('/setTime', {
-                todo_id,
-                time
-              })
-          }}
+          drop={(info) => {this.toDoDropped(info)}}
         />
         <AddEventModal isOpen={this.state.modalOpen} onClose={this.closeModal.bind(this)} onEventAdded={e => this.onEventAdded(e)} userID={this.props.userID} />
         {this.state.modalTask === true ? <ClickTask isOpen={this.state.modalTask} taskID={this.state.selectedTaskID} taskEvent={this.state.selectedTask} onClose={this.closeTask.bind(this)}/> : null}

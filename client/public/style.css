@@ -176,6 +176,14 @@ label {
   margin-right: auto;
 }
 
+.swiper-wrapper {
+  margin-bottom: 20px;
+}
+
+.swiper-pagination.swiper-pagination-clickable.swiper-pagination-bullets.swiper-pagination-horizontal {
+  bottom: -4px !important;
+}
+
 .swiper-slide {
   text-align: center;
   font-size: 14px;
