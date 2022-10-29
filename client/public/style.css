@@ -107,24 +107,24 @@ label {
 }
 
 .todo-form {
-  font-family: Sans-Serif;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
   align-items: flex-start;
   align-content: center;
-  width: 60%;
-  padding: 0% 15% 0% 25%;
+  width: 360px;
 }
 
 .input {
-  font-family: Sans-Serif;
-  width: 225px;
+  width: 360px;
+}
+
+.custom-select {
+  width: 360px;
 }
 
 .description-input {
-  font-family: Sans-Serif;
-  width: 225px;
+  width: 354px;
   height: 75px;
 }
 
@@ -147,12 +147,12 @@ label {
 .modal-content {
   background-color: rgb(200, 244, 249);
   margin: auto;
-  padding: 20px;
   border: 2px solid black;
   border-radius: 5%;
   width: 150px;
   height: 150px;
-  align-content: center
+  align-content: center;
+  padding: 0px 10px 15px 15px
 }
 
 .close {

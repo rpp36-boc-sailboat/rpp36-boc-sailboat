@@ -3,6 +3,7 @@ import { useFormik, useField } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
 import CategoryCreate from './CategoryCreate.jsx';
+import Button from '@mui/material/Button';
 
 const TodoCreate = (props) => {
 
@@ -46,10 +47,30 @@ const TodoCreate = (props) => {
       class="input"
       onChange={formik.handleChange}
       value={formik.values.taskName}
+      style={{width: '352px'}}
       />
       {formik.touched.taskName && formik.errors.taskName ? (
       <div>{formik.errors.taskName}</div>
       ) : null}
+    </div>
+
+    <div>
+      <label htmlFor="category">Category </label>
+      <select
+          name="category"
+          class="custom-select"
+          value={formik.values.category}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          style={{ display: "block" }}
+        >
+          {props.categories.map((option, i) => {
+            return (
+              <option value={option.value} label={option.key} key={i}/>
+            )
+          })}
+      </select>
+      <Button variant="contained" style={{marginTop: '7px', marginBottom: '3px', height: '35px', width: '150px', fontSize: '0.675rem'}} onClick={props.handleClick}>Create Category</Button>
     </div>
 
     <div>
@@ -61,6 +82,7 @@ const TodoCreate = (props) => {
       class="input"
       onChange={formik.handleChange}
       value={formik.values.start}
+      style={{width: '355px'}}
       />
     </div>
 
@@ -73,26 +95,8 @@ const TodoCreate = (props) => {
       class="input"
       onChange={formik.handleChange}
       value={formik.values.end}
+      style={{width: '355px'}}
       />
-    </div>
-
-    <div>
-      <label htmlFor="category">Category </label>
-      <select
-          name="category"
-          class="input"
-          value={formik.values.category}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          style={{ display: "block" }}
-        >
-          {props.categories.map((option, i) => {
-            return (
-              <option value={option.value} label={option.key} key={i}/>
-            )
-          })}
-      </select>
-      <button type="button" onClick={props.handleClick}>Add Category</button>
     </div>
 
     <div>
@@ -106,7 +110,7 @@ const TodoCreate = (props) => {
       />
     </div>
 
-    <button type="submit">Submit</button>
+    <Button variant="contained" style={{marginTop: '10px', width: '360px'}} type="submit">Submit</Button>
   </form>
   {categoryModal}
   </>
