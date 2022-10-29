@@ -5,7 +5,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
+// import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -14,6 +14,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useForm } from 'react-hook-form';
 import jwt_decode from 'jwt-decode';
+import { Link } from "react-router-dom";
 
 function Copyright(props) {
   return (
@@ -30,7 +31,8 @@ function Copyright(props) {
 
 const theme = createTheme();
 
-export default function SignUp() {
+export default function SignUp(props) {
+  const { signUpClick } = props;
   const {
     register,
     watch,
@@ -39,19 +41,19 @@ export default function SignUp() {
   } = useForm();
 
 
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = (data) => signUpClick(data);
 
   var handleCallbackResponse = function(response) {
     console.log("Encoded JWT ID token: " + response.credential);
     var googleUser = jwt_decode(response.credential);
     console.log(googleUser);
     setUser(googleUser);
-    document.getElementById("googleSignUp").hidden=true;
+    document.getElementById("google-signup").hidden=true;
   };
 
   var handleSignOut = function(event) {
     setUser({});
-    document.getElementById("googleSignUp").hidden=false;
+    document.getElementById("google-signup").hidden=false;
   };
 
   React.useEffect(() => {
@@ -62,7 +64,7 @@ export default function SignUp() {
     });
 
     google.accounts.id.renderButton(
-      document.getElementById("googleSignUp"),
+      document.getElementById("google-signup"),
       { theme: "outline", size: "large" }
     );
 
@@ -71,7 +73,7 @@ export default function SignUp() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs">
+      <Container id="signup" component="main" maxWidth="xs">
         <Typography variant="h3" color="primary" align="center">
           Encompass
         </Typography>
@@ -95,7 +97,7 @@ export default function SignUp() {
           </Typography>
           <Box sx={{ mt: 5 }}>
             <div
-              id="googleSignUp"
+              id="google-signup"
               align="center"
             >
             </div>
@@ -107,7 +109,6 @@ export default function SignUp() {
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  autoFocus
                   fullWidth
                   required
                   autoComplete="given-name"
@@ -127,7 +128,6 @@ export default function SignUp() {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  autoFocus
                   fullWidth
                   required
                   autoComplete="family-name"
@@ -147,11 +147,10 @@ export default function SignUp() {
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  autoFocus
                   fullWidth
                   required
                   autoComplete="email"
-                  id="email"
+                  id="email-signup"
                   label="Email Address"
                   name="email"
                   {...register('email', {
@@ -167,18 +166,17 @@ export default function SignUp() {
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  autoFocus
                   fullWidth
                   required
                   autoComplete="new-password"
-                  id="password"
+                  id="password-signup"
                   label="Password"
                   name="password"
                   type="password"
                   {...register('password', {
                     required: 'Required field',
                     pattern: {
-                      value: /(?=^.{8,}$)(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[^A-Za-z0-9])(\S+$).*/,
+                      value: /^[A-Z0-9._%+-]/i,
                       message: 'Incorrect password',
                     },
                   })}
@@ -188,11 +186,10 @@ export default function SignUp() {
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  autoFocus
                   fullWidth
                   required
                   autoComplete="confirm-password"
-                  id="confirmPassword"
+                  id="confirmPassword-signup"
                   label="Confirm Password"
                   name="confirmPassword"
                   type="password"
@@ -223,17 +220,22 @@ export default function SignUp() {
             >
               Sign Up
             </Button>
-            <Grid container justifyContent="flex-end">
+            <Grid container justifyContent="center">
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link to="/signin" color="inherit" variant="body2">
                   Already have an account? Sign in
                 </Link>
               </Grid>
             </Grid>
           </Box>
         </Box>
-        <Copyright sx={{ mt: 5 }} />
       </Container>
     </ThemeProvider>
   );
 }
+
+// Strict password validations:
+// value: /(?=^.{8,}$)(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[^A-Za-z0-9])(\S+$).*/,
+// - At least 8 characters required, including:
+// - At least 1 of each: uppercase letter, lowercase letter, number and special character
+// - No spaces allowed
