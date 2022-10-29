@@ -63,6 +63,7 @@ describe('Task List and related features', () => {
         configure({testIdAttribute: 'id'});
         expect(screen.getByTestId('detailedTask')).toBeInTheDocument();
         expect(screen.getByText('Morning debrief')).toBeInTheDocument();
+        //Potential mock function to handle the taskID and spit data to replicate changing of state
     });
   });
 });
