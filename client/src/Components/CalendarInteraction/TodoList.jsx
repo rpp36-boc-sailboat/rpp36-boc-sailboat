@@ -20,7 +20,7 @@ class TodoList extends React.Component {
           slidesPerView={6}
           grid={{ rows: 1 }}
           spaceBetween={10}
-          pagination={{ clickable: true }}
+          pagination={{ clickable: true}}
           modules={[Grid, Pagination]}
         >
           {this.props.todos.map((todo, i) => (

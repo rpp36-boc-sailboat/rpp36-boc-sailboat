@@ -20,13 +20,6 @@ const Navbar= (props) =>{
         </Link>
       </li>
       <li >
-        <Link to="/metrics">
-          <Tooltip title="Metrics" placement="bottom" arrow>
-            <BarChartIcon/>
-          </Tooltip>
-        </Link>
-      </li>
-      <li >
         <Link to="/forms">
           <Tooltip title="To-dos" placement="bottom" arrow>
             <AddTaskIcon/>
@@ -34,12 +27,12 @@ const Navbar= (props) =>{
         </Link>
       </li>
       <li className="titleText">
-        ENCOMPASS app
+        ENCOMPASS
       </li>
       <li >
-        <Link to="/settings">
-          <Tooltip title="Create Appointment" placement="bottom" arrow>
-            <SettingsApplicationsIcon/>
+        <Link to="/metrics">
+          <Tooltip title="Metrics" placement="bottom" arrow>
+            <BarChartIcon/>
           </Tooltip>
         </Link>
       </li>

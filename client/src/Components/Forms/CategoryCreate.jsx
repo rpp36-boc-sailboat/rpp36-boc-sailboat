@@ -36,6 +36,7 @@ const CategoryCreate = (props) => {
         id="category"
         name="category"
         type="text"
+        style={{width: '140px'}}
         onChange={formik.handleChange}
         value={formik.values.category}
         />
