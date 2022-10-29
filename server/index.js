@@ -19,6 +19,7 @@ const sessionConfig = {
   store: new pgSession({
     pool: pgPool,
     tableName: 'session',
+    createTableIfMissing: true,
   }),
   name: 'SID',
   secret: secret,
