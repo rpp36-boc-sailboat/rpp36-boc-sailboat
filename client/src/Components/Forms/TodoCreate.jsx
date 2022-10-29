@@ -2,7 +2,7 @@ import React from 'react';
 import { useFormik, useField } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
-import CategoryCreate from './CategoryCreate.jsx';git
+import CategoryCreate from './CategoryCreate.jsx';
 
 const TodoCreate = (props) => {
 
