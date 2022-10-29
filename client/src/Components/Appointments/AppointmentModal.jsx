@@ -4,24 +4,22 @@ import Button from '@mui/material/Button';
 import CloseIcon from '@mui/icons-material/Close';
 import axios from 'axios';
 
-export default function ({isOpen, onClose, onEventAdded, userID}) {
+export default function ({isOpen, onClose, onEventAdded, userID, categories}) {
   const [title, setTitle] = useState('');
   const [start, setStart] = useState('');
   const [end, setEnd] = useState('');
 
-  const onSubmit = (e) => {
-    e.preventDefault();
+  const onSubmit = () => {
     let eventObj = {
       userID: userID,
       taskName: title,
       description: '',
-      category: 1,
+      category: categories.value || 1,
       start: start,
       end: end,
       completed: false,
       appointment: true,
     };
-
     axios.post('/todo', eventObj)
     .then((result) => {
       onEventAdded({
@@ -38,7 +36,7 @@ export default function ({isOpen, onClose, onEventAdded, userID}) {
 
   return (
     <Modal overlayClassName='Overlay' className='Modal' isOpen={isOpen} onRequestClose={onClose}>
-      <form onSubmit={onSubmit}>
+      <form>
         <div>
           <CloseIcon fontSize='small' style={{float: 'right', cursor: 'pointer'}} onClick={() => onClose()}/>
           <label>Task Name</label>
@@ -52,7 +50,7 @@ export default function ({isOpen, onClose, onEventAdded, userID}) {
           <label>End</label>
           <input type="datetime-local" onChange={e => setEnd(e.target.value)} />
         </div>
-        <Button variant="contained" style={{marginTop: '15px'}}>Create Appointment</Button>
+        <Button variant="contained" style={{marginTop: '15px'}} onClick={() => onSubmit()}>Create Appointment</Button>
       </form>
     </Modal>
   )
