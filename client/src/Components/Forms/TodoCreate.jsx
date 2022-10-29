@@ -3,6 +3,11 @@ import { useFormik, useField } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
 import CategoryCreate from './CategoryCreate.jsx';
+import Box from '@mui/material/Box';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 
 const TodoCreate = (props) => {
 
@@ -76,24 +81,54 @@ const TodoCreate = (props) => {
       />
     </div>
 
-    <div>
-      <label htmlFor="category">Category </label>
-      <select
-          name="category"
-          class="input"
+    <Box sx={{width: 360, marginTop: '20px'}}>
+      <FormControl fullWidth>
+        <InputLabel id="demo-simple-select-label">Category</InputLabel>
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          value={5}
+          label="Age"
           value={formik.values.category}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
-          style={{ display: "block" }}
         >
           {props.categories.map((option, i) => {
             return (
-              <option value={option.value} label={option.key} key={i}/>
+              <MenuItem value={option.value} label={option.key} key={i}/>
             )
           })}
-      </select>
+        </Select>
+      </FormControl>
+    </Box>
+    <button type="button" onClick={props.handleClick}>Add Category</button>
+
+
+    {/* <div>
+      <label htmlFor="category">Category </label>
+      <Box sx={{ minWidth: 120 }}>
+        <FormControl fullWidth>
+          <InputLabel id="category">Category2</InputLabel>
+          <select
+            labelId="category"
+            id="category"
+            name="category"
+            // class="input"
+            value={formik.values.category}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            // style={{ display: "block" }}
+          >
+            {props.categories.map((option, i) => {
+              return (
+                <option value={option.value} label={option.key} key={i}/>
+              )
+            })}
+          </select>
+        </FormControl>
+      </Box>
       <button type="button" onClick={props.handleClick}>Add Category</button>
-    </div>
+    </div> */}
 
     <div>
       <label htmlFor="description">Description </label>

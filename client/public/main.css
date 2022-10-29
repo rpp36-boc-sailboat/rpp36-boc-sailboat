@@ -1470,7 +1470,7 @@ label {
   align-items: flex-start;
   align-content: center;
   width: 60%;
-  padding: 0% 15% 0% 25%;
+  /* padding: 0% 15% 0% 25%; */
 }
 
 .input {
