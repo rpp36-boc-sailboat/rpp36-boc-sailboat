@@ -110,7 +110,7 @@ const TodoCreate = (props) => {
       />
     </div>
 
-    <Button variant="contained" style={{marginTop: '15px', width: '360px'}} type="submit">Submit</Button>
+    <Button variant="contained" style={{marginTop: '10px', width: '360px'}} type="submit">Submit</Button>
   </form>
   {categoryModal}
   </>
