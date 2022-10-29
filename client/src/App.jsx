@@ -41,9 +41,9 @@ class App extends React.Component {
             isLoggedIn: JSON.parse(localStorage.getItem('user')).isLoggedIn
           }
         : {
-            id: 1,
+            id: 0,
             firstname: 'Guest',
-            isLoggedIn: true
+            isLoggedIn: false
           },
       todos: [],
       categories: [],

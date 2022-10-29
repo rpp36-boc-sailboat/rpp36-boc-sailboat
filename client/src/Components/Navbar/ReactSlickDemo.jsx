@@ -34,7 +34,7 @@ export default class ReactSlickDemo extends React.Component {
           </div>
           <div>
             <h3>Custom your tasks Feature</h3>
-            <img src="https://i.postimg.cc/hPSW6FxX/Screen-Shot-2022-10-28-at-4-04-24-PM.png"
+            <img src="https://i.imgur.com/XunyDwH.png"
            alt="custom tasks" />
           </div>
           <div>

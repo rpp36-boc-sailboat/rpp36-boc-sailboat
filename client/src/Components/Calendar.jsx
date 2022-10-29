@@ -121,23 +121,25 @@ class CalendarClass extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <ul style={{marginTop: '5px', padding: 'unset', textAlign: 'right'}}>
-          <li>
-            <Tooltip title="Create Appointment" placement="bottom-end" arrow>
-              <InsertInvitationIcon sx={{cursor: 'pointer'}} onClick={() => this.setState({modalOpen: true})} />
-            </Tooltip>
-          </li>
-          <li>
-            <Tooltip title="Share To-dos" placement="bottom-end" arrow>
-              <CalendarMonthIcon sx={{my: 0.1, cursor: 'pointer'}} name='calendar' onClick={this.shareClick('calendar')} />
-            </Tooltip>
-          </li>
-          <li>
-            <Tooltip title="Share Appointments" placement="bottom-end" arrow>
-              <EventAvailableIcon sx={{cursor: 'pointer'}} name='appointments' onClick={this.shareClick('appointments')} />
-            </Tooltip>
-          </li>
-        </ul >
+        <div style={{marginTop: '5px', padding: 'unset', textAlign: 'right'}}>
+          <ul>
+            <li>
+              <Tooltip title="Create Appointment" placement="bottom-end" arrow>
+                <InsertInvitationIcon sx={{cursor: 'pointer'}} onClick={() => this.setState({modalOpen: true})} />
+              </Tooltip>
+            </li>
+            <li>
+              <Tooltip title="Share To-dos" placement="bottom-end" arrow>
+                <CalendarMonthIcon sx={{my: 0.1, cursor: 'pointer'}} name='calendar' onClick={this.shareClick('calendar')} />
+              </Tooltip>
+            </li>
+            <li>
+              <Tooltip title="Share Appointments" placement="bottom-end" arrow>
+                <EventAvailableIcon sx={{cursor: 'pointer'}} name='appointments' onClick={this.shareClick('appointments')} />
+              </Tooltip>
+            </li>
+          </ul >
+        </div>
         <FullCalendar
           ref={this.calendarRef}
           plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
