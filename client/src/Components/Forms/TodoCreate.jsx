@@ -81,54 +81,24 @@ const TodoCreate = (props) => {
       />
     </div>
 
-    <Box sx={{width: 360, marginTop: '20px'}}>
-      <FormControl fullWidth>
-        <InputLabel id="demo-simple-select-label">Category</InputLabel>
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          value={5}
-          label="Age"
+    <div>
+      <label htmlFor="category">Category </label>
+      <select
+          name="category"
+          class="input"
           value={formik.values.category}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
+          style={{ display: "block" }}
         >
           {props.categories.map((option, i) => {
             return (
-              <MenuItem value={option.value} label={option.key} key={i}/>
+              <option value={option.value} label={option.key} key={i}/>
             )
           })}
-        </Select>
-      </FormControl>
-    </Box>
-    <button type="button" onClick={props.handleClick}>Add Category</button>
-
-
-    {/* <div>
-      <label htmlFor="category">Category </label>
-      <Box sx={{ minWidth: 120 }}>
-        <FormControl fullWidth>
-          <InputLabel id="category">Category2</InputLabel>
-          <select
-            labelId="category"
-            id="category"
-            name="category"
-            // class="input"
-            value={formik.values.category}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            // style={{ display: "block" }}
-          >
-            {props.categories.map((option, i) => {
-              return (
-                <option value={option.value} label={option.key} key={i}/>
-              )
-            })}
-          </select>
-        </FormControl>
-      </Box>
+      </select>
       <button type="button" onClick={props.handleClick}>Add Category</button>
-    </div> */}
+    </div>
 
     <div>
       <label htmlFor="description">Description </label>
