@@ -1,25 +1,25 @@
 import React from 'react';
 import {Outlet,Link } from "react-router-dom";
+import Button from '@mui/material/Button';
 
 const LandingNav= () =>{
   return (
-  <div className ="header">
-    <ul>
+  <div >
+    <ul className ="header2">
       <li>
-        <Link to="/"></Link>
+        <Link to="/*"></Link>
       </li>
-      <li>
+      <li className="buttonNav">
         <Link to="/signin">
-          <button>Sign In</button></Link>
+          <Button  variant="contained">Sign In</Button></Link>
       </li>
       <li>
         <Link to="/signup">
-          <button>Sign up</button></Link>
+          <Button className="small" variant="contained">Sign up</Button></Link>
       </li>
+      <Outlet />
 
-
-    <Outlet />
-    </ul>
+     </ul>
   </div>
   );
 }

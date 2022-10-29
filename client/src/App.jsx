@@ -27,6 +27,7 @@ class App extends React.Component {
     this.handleTodoSubmit = this.handleTodoSubmit.bind(this);
     this.handleAddCategoryClick = this.handleAddCategoryClick.bind(this);
     this.handleAddCategorySubmit = this.handleAddCategorySubmit.bind(this);
+    this.loginToggel = this.loginToggel.bind(this);
     this.handleSignInUser = this.handleSignInUser.bind(this);
     this.handleSignUpUser = this.handleSignUpUser.bind(this);
     this.getTodos = this.getTodos.bind(this);
@@ -40,9 +41,9 @@ class App extends React.Component {
             isLoggedIn: JSON.parse(localStorage.getItem('user')).isLoggedIn
           }
         : {
-            id: 0,
+            id: 1,
             firstname: 'Guest',
-            isLoggedIn: false
+            isLoggedIn: true
           },
       todos: [],
       categories: [],
@@ -92,6 +93,7 @@ class App extends React.Component {
         this.setState({ categories, categoryColors });
       });
   }
+
 
   componentDidUpdate() {
     if (
@@ -180,6 +182,24 @@ class App extends React.Component {
       });
       this.setState({categories, categoryColors})
     });
+  }
+  loginToggel(event){
+    console.log('debug')
+
+
+    this.setState({user:{
+      id: 0,
+      firstname: 'Guest',
+      isLoggedIn: false
+      },
+      todoID: 124,
+      todos: [],
+      categories: [],
+      categoryColors: {},
+      currentEvents: [],
+      unplannedEvents: [],
+      addCategory: false})
+
   }
 
   updateCompleted() {
@@ -291,7 +311,7 @@ class App extends React.Component {
       <>
         {status && (
           <BrowserRouter>
-            <Navbar />
+            <Navbar loginToggel ={this.loginToggel}/>
             <Routes>
               <Route
                 exact
@@ -316,7 +336,7 @@ class App extends React.Component {
                 path="/share/calendar"
                 element={<TodoShare userID={this.state.user.id} />}
               />
-              <Route exact path="/metrics" element={<Metrics />}></Route>
+              <Route exact path="/metrics" element={<><Metrics /></>}></Route>
               <Route
                 exact
                 path="/forms"

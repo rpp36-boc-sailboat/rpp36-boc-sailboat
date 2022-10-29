@@ -207,20 +207,45 @@ label {
 }
 
 .header {
-  padding: 1px;
-  background: #edf2f4;
+  background: #d9ecf4;
   border-bottom: 1px solid #999;
-}
-ul {
-  list-style-type: none;
-  margin: auto;
-  padding: auto;
+  margin-left:0em;
+  margin-bottom: 0.5em;
+  width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between
+
 }
 
-li {
+ul{
+  list-style: none ;
+  margin:0;
+  padding: 0;
+  text-align: center;
+  overflow: hidden;
   display: inline-block;
-  margin:0.25em
+
+
 }
+
+
+li{
+  display: inline;
+  text-align: center;
+
+}
+
+
+
+
+.titleText{
+  font-size:24px;
+  font-weight: bold;
+
+}
+  /* margin:0.25em
+} */
 
 
 /* React Modals */
@@ -247,3 +272,27 @@ li {
 }
 
 /* React Modals End */
+.contain{
+  margin-left:2%;
+  margin-right:2%
+}
+.textp{
+  margin-left:3%;
+  margin-right:3%;
+  text-align:center
+}
+.buttonNav{
+  margin-right: 24px
+
+}
+.header2{
+  background: #d9ecf4;
+  border-bottom: 1px solid #999;
+  margin-left: 0em;
+  margin-bottom: 0.5em;
+  width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  align-content: center;
+}
