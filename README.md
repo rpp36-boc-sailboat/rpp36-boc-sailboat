@@ -20,4 +20,19 @@ This was a month long project where our team completed an MVP full stack applica
 
 ## Tech Stack
 
+## Installation
+1. Fork and/or clone the project.
+2. Install dependencies required to run the project:
+```
+npm install
+```
+3. Initialize Webpack (with Bundle):
+```
+npm run webpack
+```
+4. Launch the local server:
+```
+npm start
+```
+*When using locally, make sure postgreSQL is connected and correct for the route variables*
 ## Future Features 
