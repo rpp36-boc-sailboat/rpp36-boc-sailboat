@@ -11,7 +11,7 @@ const CategoryCreate = (props) => {
   const formik = useFormik({
     initialValues: {
       userID: props.userID,
-      category: 'none',
+      category: '',
       color: '#BEBEBE'
     },
     validationSchema: Yup.object({
@@ -31,7 +31,7 @@ const CategoryCreate = (props) => {
     <div class="modal-content">
       <span class="close" onClick={props.close}>&times;</span>
       <div>
-        <label htmlFor="category">Category </label>
+        <label htmlFor="category" style={{marginTop: '15px'}}>Category </label>
         <input
         id="category"
         name="category"
@@ -42,7 +42,7 @@ const CategoryCreate = (props) => {
       </div>
 
       <div>
-        <label htmlFor="color">Color </label>
+        <label htmlFor="color" style={{marginTop: '7px'}}>Color </label>
         <input
         id="color"
         name="color"
@@ -53,7 +53,7 @@ const CategoryCreate = (props) => {
       </div>
 
       <div>
-        <button type="submit">Submit</button>
+        <Button variant="contained" style={{marginTop: '15px', width: '145px'}} type="submit">Submit</Button>
       </div>
     </div>
   </form>

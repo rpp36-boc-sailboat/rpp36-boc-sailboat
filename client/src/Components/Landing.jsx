@@ -4,7 +4,14 @@ import SignUp from "./Accounts/SignUp.jsx";
 import LandingNav from "./Navbar/LandingNav.jsx"
 import {BrowserRouter, Routes, Route } from "react-router-dom";
 import ReactSlickDemo from "./Navbar/ReactSlickDemo.jsx"
-const Landing =()=>{
+
+
+const Landing =(props)=>{
+  const {
+    userId,
+    signInClick,
+    signUpClick
+  } = props;
 
   return (
     <>
@@ -19,10 +26,8 @@ const Landing =()=>{
               <ReactSlickDemo />
 
           </div>}/>
-
-          <Route path ='/signin' element={<SignIn />}/>
-          <Route path ='/signup' element={<SignUp />}/>
-
+          <Route  path ='/signin' element={<SignIn userId={userId} signInClick={signInClick} />}></Route>
+          <Route  path ='/signup' element={<SignUp signUpClick={signUpClick} />}></Route>
         </Routes>
 
 

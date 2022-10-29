@@ -5,7 +5,6 @@ import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -14,12 +13,13 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useForm } from 'react-hook-form';
 import jwt_decode from 'jwt-decode';
+import { Link } from "react-router-dom";
 
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
+      <Link color="inherit" to="https://mui.com/">
         Encompass
       </Link>{' '}
       {new Date().getFullYear()}
@@ -30,7 +30,8 @@ function Copyright(props) {
 
 const theme = createTheme();
 
-export default function SignIn() {
+export default function SignIn(props) {
+  const { userId, signInClick } = props;
   const [ user, setUser ] = React.useState([]);
 
   const {
@@ -39,19 +40,19 @@ export default function SignIn() {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = (data) => signInClick(data);
 
   var handleCallbackResponse = function(response) {
     console.log("Encoded JWT ID token: " + response.credential);
     var googleUser = jwt_decode(response.credential);
     console.log(googleUser);
     setUser(googleUser);
-    document.getElementById("googleSignIn").hidden=true;
+    document.getElementById("google-signin").hidden=true;
   };
 
   var handleSignOut = function(event) {
     setUser({});
-    document.getElementById("googleSignIn").hidden=false;
+    document.getElementById("google-signin").hidden=false;
   };
 
   React.useEffect(() => {
@@ -62,7 +63,7 @@ export default function SignIn() {
     });
 
     google.accounts.id.renderButton(
-      document.getElementById("googleSignIn"),
+      document.getElementById("google-signin"),
       { theme: "outline", size: "large" }
     );
 
@@ -95,7 +96,7 @@ export default function SignIn() {
           </Typography>
           <Box sx={{ mt: 5 }}>
             <div
-              id="googleSignIn"
+              id="google-signin"
               align="center"
             >
             </div>
@@ -107,11 +108,10 @@ export default function SignIn() {
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextField
-                  autoFocus
                   fullWidth
                   required
                   autoComplete="email"
-                  id="email"
+                  id="email-signin"
                   label='Email Address'
                   name="email"
                   {...register("email", {
@@ -127,18 +127,17 @@ export default function SignIn() {
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  autoFocus
                   fullWidth
                   required
                   autoComplete="current-password"
-                  id="password"
+                  id="password-signin"
                   label="Password"
                   name="password"
                   type="password"
                   {...register('password', {
                     required: 'Required field',
                     pattern: {
-                      value: /(?=^.{8,}$)(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[^A-Za-z0-9])(\S+$).*/,
+                      value: /^[A-Z0-9._%+-]/i,
                       message: 'Incorrect password',
                     },
                   })}
@@ -168,15 +167,20 @@ export default function SignIn() {
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link to="/signup" >
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>
             </Grid>
           </Box>
         </Box>
-        <Copyright sx={{ mt: 3, mb: 3 }} />
       </Container>
     </ThemeProvider>
   );
 }
+
+// Strict password validations:
+// value: /(?=^.{8,}$)(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[^A-Za-z0-9])(\S+$).*/,
+// - At least 8 characters required, including:
+// - At least 1 of each: uppercase letter, lowercase letter, number and special character
+// - No spaces allowed
