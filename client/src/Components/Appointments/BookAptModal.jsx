@@ -18,7 +18,7 @@ export default function ({isOpen, onClose, onEventBooked, selectedEventID, selec
   }
   return (
     <Modal overlayClassName='Overlay' className='Modal' isOpen={isOpen} onRequestClose={onClose}>
-      <form onSubmit={onSubmit}>
+      <form>
           <CloseIcon fontSize='small' style={{float: 'right', top: '5px', right: '5px'}} onClick={() => onClose()}/>
         <div>
           <label>Appointment Booking</label>
@@ -26,7 +26,7 @@ export default function ({isOpen, onClose, onEventBooked, selectedEventID, selec
         <div>
           <p>Would you like to <br/>book this appointment?</p>
         </div>
-      <Button variant="contained" style={{marginTop: '15px'}}>Book Appointment</Button>
+      <Button variant="contained" style={{marginTop: '15px'}} onClick={() => onSubmit()}>Book Appointment</Button>
       </form>
     </Modal>
   )

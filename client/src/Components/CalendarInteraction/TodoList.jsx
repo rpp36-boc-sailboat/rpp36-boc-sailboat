@@ -6,7 +6,6 @@ import "swiper/css";
 import "swiper/css/grid";
 import "swiper/css/pagination";
 import { Grid, Pagination } from "swiper";
-
 import styles from "../../../public/style.css";
 
 class TodoList extends React.Component {
@@ -24,14 +23,16 @@ class TodoList extends React.Component {
           pagination={{ clickable: true}}
           modules={[Grid, Pagination]}
         >
-          {this.props.todos.map((todo) => (
+          {this.props.todos.map((todo, i) => (
             <SwiperSlide key={todo.todo_id}>
-              {" "}
+            {/* {" "} */}
               <Todo
                 todo={todo}
                 color={todo.backgroundColor}
                 textColor={todo.textColor}
-              />{" "}
+                index={i}
+              />
+              {/* {" "} */}
             </SwiperSlide>
           ))}
         </Swiper>
