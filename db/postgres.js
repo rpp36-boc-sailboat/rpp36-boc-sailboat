@@ -1,4 +1,4 @@
-require("dotenv").config({path: __dirname + '/../../../../.env'});
+require("dotenv").config();
 const { Pool } = require("pg");
 const { PGHOST, PGUSER, PGDATABASE, PGPASSWORD, PGPORT } = process.env;
 
