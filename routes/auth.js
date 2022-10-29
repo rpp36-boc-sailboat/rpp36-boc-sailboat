@@ -88,8 +88,12 @@ router.post('/signup', (req, res) => {
         if (err) {
           res.status(err.status).send(err.message);
          } else {
-          createCategory({userID: user[0].user_id, category: 'Miscellaneous', color: '#d6e9f2'});
-          res.status(201).send(user);
+          await createCategory({userID: user[0].user_id, category: 'Miscellaneous', color: '#d6e9f2'});
+            if (err) {
+              res.status(err.status).send(err.message);
+            } else {
+              res.status(201).send(user);
+            }
          }
       });
     }
