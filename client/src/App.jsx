@@ -274,6 +274,7 @@ class App extends React.Component {
                       events={this.state.currentEvents}
                       userID={this.state.user.id}
                       plannedToDo={this.plannedToDo}
+                      categories={this.state.categories}
                     />
                   </>
                 }

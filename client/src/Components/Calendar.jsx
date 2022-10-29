@@ -164,7 +164,7 @@ class CalendarClass extends React.Component {
           draggable={true}
           drop={(info) => {this.toDoDropped(info)}}
         />
-        <AddEventModal isOpen={this.state.modalOpen} onClose={this.closeModal.bind(this)} onEventAdded={e => this.onEventAdded(e)} userID={this.props.userID} />
+        <AddEventModal isOpen={this.state.modalOpen} onClose={this.closeModal.bind(this)} onEventAdded={e => this.onEventAdded(e)} userID={this.props.userID} categories={this.props.categories.filter(x => x.key === 'Miscellaneous')[0]}/>
         {this.state.modalTask === true ? <ClickTask isOpen={this.state.modalTask} taskID={this.state.selectedTaskID} taskEvent={this.state.selectedTask} onClose={this.closeTask.bind(this)}/> : null}
       </React.Fragment>
     );
