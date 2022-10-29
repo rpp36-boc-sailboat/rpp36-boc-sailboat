@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import axios from "axios";
 import SignIn from "./Components/Accounts/SignIn.jsx";
+import SignOut from "./Components/Accounts/SignOut.jsx";
 import SignUp from "./Components/Accounts/SignUp.jsx";
 import Metrics from "./Components/Metrics/index.jsx";
 import CalendarClass from "./Components/Calendar.jsx";
@@ -30,6 +31,7 @@ class App extends React.Component {
     this.handleSignUpUser = this.handleSignUpUser.bind(this);
     this.getTodos = this.getTodos.bind(this);
     this.getCategories = this.getCategories.bind(this);
+    this.handleSignOutUser = this.handleSignOutUser.bind(this);
     this.state = {
       user: JSON.parse(localStorage.getItem('user'))
         ? {
@@ -42,7 +44,6 @@ class App extends React.Component {
             firstname: 'Guest',
             isLoggedIn: false
           },
-      todoID: 124,
       todos: [],
       categories: [],
       categoryColors: {},
@@ -54,9 +55,9 @@ class App extends React.Component {
     this.plannedToDo = this.plannedToDo.bind(this);
   }
 
-  componentDidMount(id) {
-    this.getTodos(id);
-    this.getCategories(id);
+  componentDidMount() {
+    this.getTodos();
+    this.getCategories();
   }
 
   getTodos(id = this.state.user.id) {
@@ -256,6 +257,34 @@ class App extends React.Component {
     })
   }
 
+  handleSignOutUser (e) {
+    let user = this.state.user;
+    let guestUser = {
+      id: 0,
+      firstname: 'Guest',
+      isLoggedIn: false
+    };
+    axios({
+      method: 'POST',
+      data: {
+        id: user.id
+      },
+      withCredentials: true,
+      url: '/auth/signout',
+    })
+    .then((res) => {
+      this.setState({ user: guestUser});
+      localStorage.clear();
+    })
+    .catch((err) => {
+      this.setState({ guestUser });
+      localStorage.clear();
+      err.response.status === 404
+        ? alert('Error logging out')
+        : alert(err.message);
+    })
+  }
+
   render() {
     const status = this.state.user.id >= 1 && this.state.user.isLoggedIn;
     return (
@@ -305,8 +334,9 @@ class App extends React.Component {
               ></Route>
               {status && <Route exact path="/signup" element={<Navigate replace to="/" />}></Route>}
               {status && <Route exact path="/signin" element={<Navigate replace to="/" />}></Route>}
+              {!status && <Route exact path="/signout" element={<Navigate replace to="/" />}></Route>}
               <Route exact path="/settings" element={<>settings</>}></Route>
-              <Route exact path="/signout" element={<>signout</>}></Route>
+              <Route exact path="/signout" element={<><SignOut user={this.state.user} signOutClick={this.handleSignOutUser} /></>}></Route>
             </Routes>
           </BrowserRouter>
         )}
