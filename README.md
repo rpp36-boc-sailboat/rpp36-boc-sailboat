@@ -2,6 +2,29 @@
 This was a month long project where our team completed an MVP full stack application for a new client that we worked with closely
 > Interact, create tasks, and form your calendar however it suits your needs!
 
+## Tech Stack
+
+<div align='center'>
+
+<img src="https://raw.githubusercontent.com/devicons/devicon/1119b9f84c0290e0f0b38982099a2bd027a48bf1/icons/react/react-original-wordmark.svg" width="50">
+<img src="https://github.com/devicons/devicon/blob/master/icons/postgresql/postgresql-original-wordmark.svg" width="50">
+<img src="https://github.com/devicons/devicon/blob/master/icons/babel/babel-original.svg" width="50">
+<img src="https://github.com/devicons/devicon/blob/master/icons/express/express-original-wordmark.svg" width="50">
+<img src="https://github.com/devicons/devicon/blob/master/icons/javascript/javascript-original.svg" width="50">
+<img src="https://github.com/devicons/devicon/blob/master/icons/jest/jest-plain.svg" width="50">
+<img src="https://github.com/devicons/devicon/blob/master/icons/jquery/jquery-original-wordmark.svg" width="50">
+<img src="https://github.com/devicons/devicon/blob/master/icons/nodejs/nodejs-original-wordmark.svg" width="75">
+<img src="https://raw.githubusercontent.com/webpack/media/master/logo/logo-on-white-bg.png" width="100">
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Axios_%28computer_library%29_logo.svg/1280px-Axios_%28computer_library%29_logo.svg.png" width="100">
+<img src="https://user-images.githubusercontent.com/4060187/61057426-4e5a4600-a3c3-11e9-9114-630743e05814.png" width="50">
+<img src="https://i.imgur.com/RQ4ZoWc.png" width="100">
+<img src="https://i.imgur.com/ty4pyuh.png" width="50">
+<img src="https://mui.com/static/logo.png" width="50">
+<img src="https://res.cloudinary.com/practicaldev/image/fetch/s--kyypBiVD--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://dev-to-uploads.s3.amazonaws.com/i/9ngdmhfexbyafu2p5cll.png" width="100">
+
+
+</div>
+
 ## Contributors
 - [Othniel Chan](https://github.com/othnielhr)
 - [Filimon Kiros](https://github.com/FilimonK-Git)
@@ -109,29 +132,6 @@ This was a month long project where our team completed an MVP full stack applica
 
 </Details>
 
-## Tech Stack
-
-<div align='center'>
-
-<img src="https://raw.githubusercontent.com/devicons/devicon/1119b9f84c0290e0f0b38982099a2bd027a48bf1/icons/react/react-original-wordmark.svg" width="50">
-<img src="https://github.com/devicons/devicon/blob/master/icons/postgresql/postgresql-original-wordmark.svg" width="50">
-<img src="https://github.com/devicons/devicon/blob/master/icons/babel/babel-original.svg" width="50">
-<img src="https://github.com/devicons/devicon/blob/master/icons/express/express-original-wordmark.svg" width="50">
-<img src="https://github.com/devicons/devicon/blob/master/icons/javascript/javascript-original.svg" width="50">
-<img src="https://github.com/devicons/devicon/blob/master/icons/jest/jest-plain.svg" width="50">
-<img src="https://github.com/devicons/devicon/blob/master/icons/jquery/jquery-original-wordmark.svg" width="50">
-<img src="https://github.com/devicons/devicon/blob/master/icons/nodejs/nodejs-original-wordmark.svg" width="75">
-<img src="https://raw.githubusercontent.com/webpack/media/master/logo/logo-on-white-bg.png" width="100">
-<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Axios_%28computer_library%29_logo.svg/1280px-Axios_%28computer_library%29_logo.svg.png" width="100">
-<img src="https://user-images.githubusercontent.com/4060187/61057426-4e5a4600-a3c3-11e9-9114-630743e05814.png" width="50">
-<img src="https://i.imgur.com/RQ4ZoWc.png" width="100">
-<img src="https://i.imgur.com/ty4pyuh.png" width="50">
-<img src="https://mui.com/static/logo.png" width="50">
-<img src="https://res.cloudinary.com/practicaldev/image/fetch/s--kyypBiVD--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://dev-to-uploads.s3.amazonaws.com/i/9ngdmhfexbyafu2p5cll.png" width="100">
-
-
-</div>
-
 ## Installation
 1. Fork and/or clone the project.
 2. Install dependencies required to run the project:
@@ -147,4 +147,3 @@ npm run webpack
 npm start
 ```
 *When using locally, make sure postgreSQL is connected and correct for the route variables*
-## Future Features 
