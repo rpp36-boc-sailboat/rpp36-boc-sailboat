@@ -93,7 +93,7 @@ This was a month long project where our team completed an MVP full stack applica
 </Details>
 
 ### Metrics
-> analytical report to help visualize time allocation
+> Analytical report to help visualize time allocation
 
 <Details>
 
