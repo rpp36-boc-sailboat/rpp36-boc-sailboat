@@ -61,10 +61,13 @@ This was a month long project where our team completed an MVP full stack applica
 
 </Details>
 
+<div align="left">
+ 
 ![Sign-up](https://media.giphy.com/media/s9dL1P50Hg7BUd18L1/giphy.gif)
 
 ![Sign-in](https://media.giphy.com/media/LdeCiV68ix6UiYxiLm/giphy.gif)
 
+ </div>
 
 ### Navigation
 > Clean and easy to use navigation bar to help the user quickly access what they need from our application
