@@ -6,23 +6,25 @@ This was a month long project where our team completed an MVP full stack applica
 
 <div align='center'>
 
-<img src="https://raw.githubusercontent.com/devicons/devicon/1119b9f84c0290e0f0b38982099a2bd027a48bf1/icons/react/react-original-wordmark.svg" width="50">
-<img src="https://github.com/devicons/devicon/blob/master/icons/postgresql/postgresql-original-wordmark.svg" width="50">
-<img src="https://github.com/devicons/devicon/blob/master/icons/babel/babel-original.svg" width="50">
-<img src="https://github.com/devicons/devicon/blob/master/icons/express/express-original-wordmark.svg" width="50">
-<img src="https://github.com/devicons/devicon/blob/master/icons/javascript/javascript-original.svg" width="50">
-<img src="https://github.com/devicons/devicon/blob/master/icons/jest/jest-plain.svg" width="50">
-<img src="https://github.com/devicons/devicon/blob/master/icons/jquery/jquery-original-wordmark.svg" width="50">
-<img src="https://github.com/devicons/devicon/blob/master/icons/nodejs/nodejs-original-wordmark.svg" width="75">
-<img src="https://raw.githubusercontent.com/webpack/media/master/logo/logo-on-white-bg.png" width="100">
-<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Axios_%28computer_library%29_logo.svg/1280px-Axios_%28computer_library%29_logo.svg.png" width="100">
-<img src="https://user-images.githubusercontent.com/4060187/61057426-4e5a4600-a3c3-11e9-9114-630743e05814.png" width="50">
-<img src="https://i.imgur.com/RQ4ZoWc.png" width="100">
-<img src="https://i.imgur.com/ty4pyuh.png" width="50">
-<img src="https://mui.com/static/logo.png" width="50">
-<img src="https://res.cloudinary.com/practicaldev/image/fetch/s--kyypBiVD--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://dev-to-uploads.s3.amazonaws.com/i/9ngdmhfexbyafu2p5cll.png" width="100">
-
-
+<img src="https://img.shields.io/badge/-ReactJs-61DAFB?logo=react&style=for-the-badge&logoColor=black">
+<img src="https://shields.io/badge/Jest-C21325?logo=jest&logoColor=white&style=for-the-badge">
+<img src="https://shields.io/badge/PostgreSQL-4169E1?logo=postgresql&logoColor=white&style=for-the-badge">
+<img src="https://shields.io/badge/Babel-F9DC3E?logo=babel&logoColor=black&style=for-the-badge">
+<img src="https://shields.io/badge/Node-339933?logo=node.js&logoColor=black&style=for-the-badge">
+<img src="https://shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=black&style=for-the-badge">
+<img src="https://shields.io/badge/Express-000000?logo=express&logoColor=white&style=for-the-badge">
+<img src="https://shields.io/badge/Jquery-0769AD?logo=jquery&logoColor=white&style=for-the-badge">
+<img src="https://shields.io/badge/Webpack-8DD6F9?logo=webpack&logoColor=black&style=for-the-badge">
+<img src="https://shields.io/badge/Axios-5A29E4?logo=axios&logoColor=white&style=for-the-badge">
+<img src="https://shields.io/badge/.Env-ECD53F?logo=.env&logoColor=black&style=for-the-badge">
+<img src="https://shields.io/badge/MaterialUI-007FFF?logo=mui&logoColor=white&style=for-the-badge">
+<img src="https://shields.io/badge/Passport-34E27A?logo=passport&logoColor=white&style=for-the-badge">
+<img src="https://shields.io/badge/Swiper-6332F6?logo=swiper&logoColor=white&style=for-the-badge">
+<img src="https://shields.io/badge/Npm-CB3837?logo=npm&logoColor=white&style=for-the-badge">
+<img src="https://shields.io/badge/Reacttestinglibrary-E33332?logo=TestingLibrary&logoColor=white&style=for-the-badge">
+<img src="https://shields.io/badge/Fullcalendar-0088CC?&&style=for-the-badge">
+<img src="https://shields.io/badge/Formik-2C3454?&&style=for-the-badge">
+ 
 </div>
 
 ## Contributors
