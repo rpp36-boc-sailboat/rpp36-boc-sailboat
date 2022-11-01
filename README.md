@@ -63,11 +63,13 @@ This was a month long project where our team completed an MVP full stack applica
 </Details>
 
 ### Appointments
->
+> User to user calendar sharing and interacting
 
 <Details>
 
-
+* Provides users with an icon button which opens a modal to add appointments onto their calendar.
+* Offers two icon buttons for tasks or appointments calendar to be shared to other users via the provided link.
+* On viewing the shared appointments calendar, other users may book available appointments which automatically adds the event to their calendar.
 
 </Details>
 
