@@ -16,7 +16,90 @@ This was a month long project where our team completed an MVP full stack applica
 - More customization in colors and categories
 - Detailed metrics about the tasks you do from preset timelines, to creating your own time period
 
-## Description and Demo
+![landingPage](https://media.giphy.com/media/D1aIZBiOWyM9gdNhjM/giphy.gif)
+
+## Table of Contents
+1. [Authentication](#authentication)
+2. [Navigation](#navigation)
+3. [Calendar](#calendar)
+4. [Appointments](#appointments)
+5. [Task and Category Form](#create-new-tasks-and-categories)
+6. [Task List](#task-list)
+7. [Metrics](#metrics)
+
+### Authentication
+> Simple Log-in & Sign-up, asking for little information and using encryption to protect the users information that is used to create an account
+
+<Details>
+
+* Leveraging Postgres' hashing and salting to protect user information
+* Offer cookies / localstorage to keep user logged in
+* Using native alerts to inform the user when their information is incorrect 
+
+</Details>
+
+![Sign-up](https://media.giphy.com/media/s9dL1P50Hg7BUd18L1/giphy.gif)
+### Navigation
+> Clean and easy to use navigation bar to help the user quickly access what they need from our application
+
+<Details>
+
+* Home Icon: Takes you back to the main page of the calendar (as a signed in user)
+* Checkmark Icon: Takes you to the main view of all tasks and the forms to create new tasks or categories
+* Bar Chart Icon: Takes you to the metrics for a more detailed look about your tasks and categories
+* Exit Icon: Logs off the user and redirects to the landing page that is displayed for non-logged in users
+ 
+</Details>
+
+![navigation](https://media.giphy.com/media/CXm2mWH5T4lBzd0kna/giphy.gif)
+
+### Calendar
+>
+
+<Details>
+
+
+
+</Details>
+
+### Appointments
+>
+
+<Details>
+
+
+
+</Details>
+
+### Create new tasks and categories
+>
+
+<Details>
+
+
+
+</Details>
+
+### Task List
+> List of all existing tasks in the database for the user and can be interacted with for more information or changes
+
+<Details>
+
+* Filter tasks based on complete or incomplete, with the ability to reset back to showing all tasks
+* Checkmark boxes to easily showcase which tasks are considered complete. Can be interacted with to update in real time if they are complete or incomplete
+* Comment bubble icon is interactable to have a pop up modle showcase more information about the task, as well as delete the task if the user chooses to do so
+* Any tasks not 'scheduled' with a start time will show up by the calendar with matching color related to the category and color the user specified
+
+</Details>
+
+### Metrics
+>
+
+<Details>
+
+
+
+</Details>
 
 ## Tech Stack
 
