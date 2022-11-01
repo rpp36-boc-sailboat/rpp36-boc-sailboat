@@ -98,11 +98,13 @@ This was a month long project where our team completed an MVP full stack applica
 </Details>
 
 ### Create new tasks and categories
->
+> Now with more customizable options!
 
 <Details>
 
-
+* Powered by Formik, allow the user to name their task, choose and create categories, give it a set time, and extra description if needed
+* Customizable categories where you can give the new category name a color you can identify with and recognize when looking quickly at your calendar
+* Instant feedback on the creation of new cateogires and tasks, no reload required from the user
 
 </Details>
 
