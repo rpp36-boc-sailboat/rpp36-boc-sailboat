@@ -102,7 +102,7 @@ This was a month long project where our team completed an MVP full stack applica
 * Descriptive text indicating the number of tasks completed, including aggreate duration taken
 * Pie chart displays time percentage allocated per category (chart legend clickable to add/remove a category from chart)
 * Upon a specific category elected, bar chart displays time (in min) taken to complete each task in the category
-* A sortable table showing a list of completed tasks with an editable duration's column (user can update the time spent on particular task)
+* A sortable table showing a list of completed tasks with an editable duration's column (user can update the time spent on tasks)
 
 
 </Details>
