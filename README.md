@@ -110,6 +110,9 @@ This was a month long project where our team completed an MVP full stack applica
 
 </Details>
 
+![newTask](https://media.giphy.com/media/2g4chBn3c627qewSXy/giphy.gif)
+
+
 ### Task List
 > List of all existing tasks in the database for the user and can be interacted with for more information or changes
 
