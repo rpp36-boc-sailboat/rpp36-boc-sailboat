@@ -122,6 +122,9 @@ This was a month long project where our team completed an MVP full stack applica
 
 </Details>
 
+![taskList](https://media.giphy.com/media/8OHsGiHA2xsRC1S5F3/giphy.gif)
+
+
 ### Metrics
 > Analytical report to help visualize time allocation
 
