@@ -102,8 +102,7 @@ This was a month long project where our team completed an MVP full stack applica
 
 </Details>
 
-![opnMdl](https://media.giphy.com/media/QyuAp2tOZXvKBXLWRe/giphy.gif) ![newApp](https://media.giphy.com/media/F4J0tji5xrrAruYZNW/giphy.gif) <br>
-![share](https://media.giphy.com/media/wiu7Iphz55KYqdn1qI/giphy.gif) ![book](https://media.giphy.com/media/JmlqhJyOVZDPWuQH6U/giphy.gif)
+![vid1 (2)](https://user-images.githubusercontent.com/84869743/199594771-ff16205b-0b37-429d-9969-676dc2a1f059.gif) ![share](https://media.giphy.com/media/wiu7Iphz55KYqdn1qI/giphy.gif) ![book](https://media.giphy.com/media/JmlqhJyOVZDPWuQH6U/giphy.gif)
 
 ### Create new tasks and categories
 > Now with more customizable options!
