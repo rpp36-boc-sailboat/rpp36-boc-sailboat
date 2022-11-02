@@ -137,7 +137,7 @@ This was a month long project where our team completed an MVP full stack applica
 
 </Details>
 
-![chart1](https://media.giphy.com/media/uQM8jJle9tzRdG1ZE9/giphy.gif) ..... ![table1](https://media.giphy.com/media/2sVBiaT5i4CSI9orFK/giphy.gif) ..... ![custom](https://media.giphy.com/media/qQIHFO3lPHhevfFptZ/giphy.gif)
+![chart1](https://media.giphy.com/media/uQM8jJle9tzRdG1ZE9/giphy.gif) ![table1](https://media.giphy.com/media/2sVBiaT5i4CSI9orFK/giphy.gif) ![custom](https://media.giphy.com/media/qQIHFO3lPHhevfFptZ/giphy.gif)
 
 ## Installation
 1. Fork and/or clone the project.
