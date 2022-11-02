@@ -137,7 +137,7 @@ This was a month long project where our team completed an MVP full stack applica
 
 </Details>
 
-![Pie](https://media.giphy.com/media/LagCmo06rcalPsLY03/giphy.gif) 
+![chart1](https://media.giphy.com/media/LagCmo06rcalPsLY03/giphy.gif)
 
 ## Installation
 1. Fork and/or clone the project.
