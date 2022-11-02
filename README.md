@@ -63,7 +63,7 @@ This was a month long project where our team completed an MVP full stack applica
 
 </Details>
  
-![Sign-up](https://media.giphy.com/media/s9dL1P50Hg7BUd18L1/giphy.gif) ![Sign-in](https://media.giphy.com/media/LdeCiV68ix6UiYxiLm/giphy.gif)
+![Sign-up](https://media.giphy.com/media/s9dL1P50Hg7BUd18L1/giphy.gif) ..... ![Sign-in](https://media.giphy.com/media/LdeCiV68ix6UiYxiLm/giphy.gif)
 
 ### Navigation
 > Clean and easy to use navigation bar to help the user quickly access what they need from our application
@@ -137,7 +137,7 @@ This was a month long project where our team completed an MVP full stack applica
 
 </Details>
 
-![chart1](https://media.giphy.com/media/LagCmo06rcalPsLY03/giphy.gif)
+![chart1](https://media.giphy.com/media/uQM8jJle9tzRdG1ZE9/giphy.gif) ..... ![table1](https://media.giphy.com/media/2sVBiaT5i4CSI9orFK/giphy.gif) ..... ![custom](https://media.giphy.com/media/qQIHFO3lPHhevfFptZ/giphy.gif)
 
 ## Installation
 1. Fork and/or clone the project.
