@@ -80,12 +80,15 @@ This was a month long project where our team completed an MVP full stack applica
 ![navigation](https://media.giphy.com/media/CXm2mWH5T4lBzd0kna/giphy.gif)
 
 ### Calendar
->
+> Simple calendar with day/week/month views that lets the user easily schedule/ reschedule tasks
 
 <Details>
 
-
-
+* Provides users with easy access to unscheduled tasks in the form of cards.
+* Integrated with draggable to allow drag and drop of unscheduled task cards onto the calendar for easy scheduling.
+* Can reschedule or extend the end time of a scheduled task by simply dragging the event from one time slot to another.
+* Each scheduled event on the calendar can be clicked on to view or edit more details.
+ 
 </Details>
 
 ### Appointments
